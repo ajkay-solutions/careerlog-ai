@@ -1,0 +1,63 @@
+XMLHttpRequest { _sanitizedPath: "/li/track", readyState: 4, timeout: 0, withCredentials: true, upload: XMLHttpRequestUpload, responseURL: "https://www.linkedin.com/li/track", status: 0, statusText: "", responseType: "", response: "" }
+8aidj8cqawduo88wnxdz9a7h0:8:27017
+Loading failed for the <script> with source “https://platform.linkedin.com/litms/utag/checkpoint-frontend/utag.118.js?utv=ut4.51.202507291840”. login:1:1
+Clear-Site-Data header forced the clean up of “storage” data. track
+[vite] connecting... client.ts:19:8
+[vite] connected. client.ts:155:14
+Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools react-dom.development.js:29895:16
+🔧 Environment check: 
+Object { VITE_API_URL: "http://localhost:3004", NODE_ENV: undefined, MODE: "development" }
+App.jsx:16:10
+🔧 Environment check: 
+Object { VITE_API_URL: "http://localhost:3004", NODE_ENV: undefined, MODE: "development" }
+App.jsx:16:10
+🔧 Environment check: 
+Object { VITE_API_URL: "http://localhost:3004", NODE_ENV: undefined, MODE: "development" }
+App.jsx:16:10
+🔧 Environment check: 
+Object { VITE_API_URL: "http://localhost:3004", NODE_ENV: undefined, MODE: "development" }
+App.jsx:16:10
+🔍 Loading entry for date: 
+Object { selectedDate: Date Thu Oct 02 2025 12:16:03 GMT+0530 (India Standard Time), dateString: "2025-10-02", dateType: "object" }
+JournalEntry.jsx:52:12
+🔍 Loading entry for date: 
+Object { selectedDate: Date Thu Oct 02 2025 12:16:03 GMT+0530 (India Standard Time), dateString: "2025-10-02", dateType: "object" }
+JournalEntry.jsx:52:12
+🔧 Environment check: 
+Object { VITE_API_URL: "http://localhost:3004", NODE_ENV: undefined, MODE: "development" }
+App.jsx:16:10
+🔧 Environment check: 
+Object { VITE_API_URL: "http://localhost:3004", NODE_ENV: undefined, MODE: "development" }
+App.jsx:16:10
+XHRGET
+http://localhost:3004/api/entries/2025-10-02
+[HTTP/1.1 500 Internal Server Error 695ms]
+
+📄 Load entry response: 
+Object { success: true, hasData: true, data: {…} }
+JournalEntry.jsx:61:14
+✅ Entry loaded successfully JournalEntry.jsx:72:16
+❌ Error loading entry: ApiError: Failed to fetch entry
+    ApiError api.js:6
+    request api.js:49
+    get api.js:70
+    getEntryByDate api.js:125
+    loadEntry JournalEntry.jsx:59
+    JournalEntry JournalEntry.jsx:196
+    React 7
+    workLoop scheduler.development.js:266
+    flushWork scheduler.development.js:239
+    performWorkUntilDeadline scheduler.development.js:533
+    js scheduler.development.js:571
+    js scheduler.development.js:633
+    __require chunk-3ON3CNAS.js:3
+    js index.js:6
+    __require chunk-3ON3CNAS.js:3
+    React 2
+    __require chunk-3ON3CNAS.js:3
+    js React
+    __require chunk-3ON3CNAS.js:3
+    js React
+    __require chunk-3ON3CNAS.js:3
+    <anonymous> react-dom_client.js:37
+JournalEntry.jsx:82:14
