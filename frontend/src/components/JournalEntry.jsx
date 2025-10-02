@@ -254,26 +254,31 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
             <div className="text-gray-500">Loading entry...</div>
           </div>
         ) : (
-          <div className="h-full">
-            <textarea
-              ref={textareaRef}
-              value={rawText}
-              onChange={handleTextChange}
-              onKeyDown={handleKeyDown}
-              placeholder="What did you accomplish today? Document your work, projects, learnings, and wins..."
-              className="w-full h-full resize-none border border-gray-300 rounded-lg p-4 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-              style={{ minHeight: '400px' }}
-            />
-            
-            <div className="mt-4 text-xs text-gray-400">
-              💡 Tip: Press Ctrl+S to save manually. Auto-save happens every 2 seconds.
+          <div className="h-full flex flex-col lg:flex-row gap-6">
+            {/* Main Editor Section */}
+            <div className="flex-1 flex flex-col">
+              <textarea
+                ref={textareaRef}
+                value={rawText}
+                onChange={handleTextChange}
+                onKeyDown={handleKeyDown}
+                placeholder="What did you accomplish today? Document your work, projects, learnings, and wins..."
+                className="flex-1 resize-none border border-gray-300 rounded-lg p-4 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                style={{ minHeight: '400px' }}
+              />
+              
+              <div className="mt-4 text-xs text-gray-400">
+                💡 Tip: Press Ctrl+S to save manually. Auto-save happens every 2 seconds.
+              </div>
             </div>
 
-            {/* AI Insights */}
-            <AIInsights 
-              entry={entry} 
-              onAnalysisRequest={handleAIAnalysis}
-            />
+            {/* AI Insights Sidebar - Now Visible! */}
+            <div className="lg:w-80 flex-shrink-0">
+              <AIInsights 
+                entry={entry} 
+                onAnalysisRequest={handleAIAnalysis}
+              />
+            </div>
           </div>
         )}
       </div>
