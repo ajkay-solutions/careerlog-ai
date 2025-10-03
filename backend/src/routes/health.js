@@ -20,29 +20,20 @@ router.get('/', async (req, res) => {
     const dbHealth = await dbService.healthCheck();
     healthReport.services.database = dbHealth;
 
-    // Test Prisma Operations
+    // Test Prisma Operations (single connection for all queries)
     const operationsTest = await dbService.executeOperation(async (prismaClient) => {
       console.log('🔍 Testing basic Prisma operations...');
       
-      // Test User operations
-      const userCount = await prismaClient.user.count();
-      console.log(`✅ User count query: ${userCount}`);
+      // Execute all count operations in a single transaction/connection
+      const [userCount, entryCount, projectCount, skillCount, competencyCount] = await Promise.all([
+        prismaClient.user.count(),
+        prismaClient.entry.count(),
+        prismaClient.project.count(),
+        prismaClient.skill.count(),
+        prismaClient.competency.count()
+      ]);
 
-      // Test Entry operations  
-      const entryCount = await prismaClient.entry.count();
-      console.log(`✅ Entry count query: ${entryCount}`);
-
-      // Test Project operations
-      const projectCount = await prismaClient.project.count();
-      console.log(`✅ Project count query: ${projectCount}`);
-
-      // Test Skill operations
-      const skillCount = await prismaClient.skill.count();
-      console.log(`✅ Skill count query: ${skillCount}`);
-
-      // Test Competency operations
-      const competencyCount = await prismaClient.competency.count();
-      console.log(`✅ Competency count query: ${competencyCount}`);
+      console.log(`✅ Count queries completed: Users(${userCount}), Entries(${entryCount}), Projects(${projectCount}), Skills(${skillCount}), Competencies(${competencyCount})`);
 
       return {
         userCount,
