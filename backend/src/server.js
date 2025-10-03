@@ -46,9 +46,16 @@ app.use(helmet({
 // CORS configuration
 const corsOptions = {
   origin: function (origin, callback) {
-    const allowedOrigins = process.env.NODE_ENV === 'production' 
-      ? ['https://worklog.ajkaysolutions.com'] 
-      : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3004'];
+    let allowedOrigins;
+    
+    if (process.env.NODE_ENV === 'production') {
+      // Use environment variable for production origins, fallback to default
+      allowedOrigins = process.env.ALLOWED_ORIGINS 
+        ? process.env.ALLOWED_ORIGINS.split(',').map(url => url.trim())
+        : ['https://worklog.ajkaysolutions.com'];
+    } else {
+      allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3004'];
+    }
     
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
