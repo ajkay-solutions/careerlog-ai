@@ -13,17 +13,28 @@ function generateToken(user) {
     provider: user.provider,
     displayName: user.displayName,
     email: user.email,
-    userKeys: Object.keys(user)
+    userKeys: Object.keys(user),
+    profilePhotoLength: user.profilePhoto?.length || 0
   });
   
-  return jwt.sign({
+  // Create payload with basic user info
+  const payload = {
     id: user.id,
     provider: user.provider,
     displayName: user.displayName,
     name: user.name,
-    email: user.email,
-    profilePhoto: user.profilePhoto
-  }, JWT_SECRET, { expiresIn: '24h' });
+    email: user.email
+  };
+  
+  // Only include profile photo if it's short enough to avoid URL length issues
+  if (user.profilePhoto && user.profilePhoto.length < 100) {
+    payload.profilePhoto = user.profilePhoto;
+  }
+  
+  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '24h' });
+  console.log('🔑 JWT token length:', token.length);
+  
+  return token;
 }
 
 // LinkedIn OAuth routes
