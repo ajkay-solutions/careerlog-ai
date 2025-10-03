@@ -17,7 +17,7 @@ class ApiService {
 
   // Get auth token from localStorage
   getAuthToken() {
-    return localStorage.getItem('worklog_auth_token');
+    return localStorage.getItem('auth_token');
   }
 
   // Make authenticated API request with timeout
@@ -174,7 +174,7 @@ class ApiService {
 
   async logout() {
     // JWT logout is handled client-side (stateless tokens)
-    localStorage.removeItem('worklog_auth_token');
+    localStorage.removeItem('auth_token');
     return { success: true, message: 'Logged out successfully' };
   }
 
