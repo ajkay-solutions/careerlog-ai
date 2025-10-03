@@ -137,10 +137,7 @@ class LinkedInProvider {
               last: linkedinProfile.family_name || ''
             },
             email: dbUser.email,
-            profilePhoto: dbUser.profilePhoto,
-            accessToken,
-            refreshToken,
-            profile: linkedinProfile
+            profilePhoto: dbUser.profilePhoto
           };
 
           return done(null, user);

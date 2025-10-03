@@ -8,6 +8,14 @@ const JWT_SECRET = process.env.JWT_SECRET || process.env.SESSION_SECRET || 'fall
 
 // Generate JWT token for user
 function generateToken(user) {
+  console.log('🔑 Generating JWT for user:', {
+    id: user.id,
+    provider: user.provider,
+    displayName: user.displayName,
+    email: user.email,
+    userKeys: Object.keys(user)
+  });
+  
   return jwt.sign({
     id: user.id,
     provider: user.provider,
