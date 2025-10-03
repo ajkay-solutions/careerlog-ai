@@ -89,27 +89,41 @@ class LinkedInProvider {
         };
 
         try {
-          // Upsert user to database
+          // Handle user creation/update with email uniqueness
           const dbUser = await safeDbOperation(async (prismaClient) => {
-            return await prismaClient.user.upsert({
-              where: { id: linkedinProfile.sub },
-              update: {
-                displayName: linkedinProfile.name,
-                email: linkedinProfile.email || '',
-                profilePhoto: linkedinProfile.picture || '',
-                lastLoginAt: new Date()
-              },
-              create: {
-                id: linkedinProfile.sub,
-                provider: 'linkedin',
-                providerId: linkedinProfile.sub,
-                displayName: linkedinProfile.name,
-                email: linkedinProfile.email || '',
-                profilePhoto: linkedinProfile.picture || '',
-                createdAt: new Date(),
-                lastLoginAt: new Date()
-              }
+            // First, try to find existing user by email
+            const existingUser = await prismaClient.user.findUnique({
+              where: { email: linkedinProfile.email }
             });
+            
+            if (existingUser) {
+              // User exists with this email, update their info and add LinkedIn as additional provider
+              console.log('🔄 Updating existing user with LinkedIn info:', existingUser.id);
+              return await prismaClient.user.update({
+                where: { id: existingUser.id },
+                data: {
+                  displayName: linkedinProfile.name, // Update display name
+                  profilePhoto: linkedinProfile.picture || existingUser.profilePhoto, // Keep existing if no new photo
+                  lastLoginAt: new Date()
+                  // Note: We keep the original provider and ID, but user can login via LinkedIn
+                }
+              });
+            } else {
+              // No existing user, create new LinkedIn user
+              console.log('✅ Creating new LinkedIn user:', linkedinProfile.sub);
+              return await prismaClient.user.create({
+                data: {
+                  id: linkedinProfile.sub,
+                  provider: 'linkedin',
+                  providerId: linkedinProfile.sub,
+                  displayName: linkedinProfile.name,
+                  email: linkedinProfile.email || '',
+                  profilePhoto: linkedinProfile.picture || '',
+                  createdAt: new Date(),
+                  lastLoginAt: new Date()
+                }
+              });
+            }
           });
 
           console.log('✅ User saved to database:', dbUser.id);

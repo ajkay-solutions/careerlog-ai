@@ -41,26 +41,43 @@ class GoogleProvider {
         const prisma = new PrismaClient();
 
         try {
-          // Upsert user to database
-          const dbUser = await prisma.user.upsert({
-            where: { id: profile.id },
-            update: {
-              displayName: profile.displayName,
-              email: profile.emails?.[0]?.value || '',
-              profilePhoto: profile.photos?.[0]?.value || '',
-              lastLoginAt: new Date()
-            },
-            create: {
-              id: profile.id,
-              provider: 'google',
-              providerId: profile.id,
-              displayName: profile.displayName,
-              email: profile.emails?.[0]?.value || '',
-              profilePhoto: profile.photos?.[0]?.value || '',
-              createdAt: new Date(),
-              lastLoginAt: new Date()
-            }
+          // Handle user creation/update with email uniqueness
+          const userEmail = profile.emails?.[0]?.value || '';
+          
+          // First, try to find existing user by email
+          const existingUser = await prisma.user.findUnique({
+            where: { email: userEmail }
           });
+          
+          let dbUser;
+          if (existingUser) {
+            // User exists with this email, update their info
+            console.log('🔄 Updating existing user with Google info:', existingUser.id);
+            dbUser = await prisma.user.update({
+              where: { id: existingUser.id },
+              data: {
+                displayName: profile.displayName,
+                profilePhoto: profile.photos?.[0]?.value || existingUser.profilePhoto,
+                lastLoginAt: new Date()
+                // Note: We keep the original provider and ID
+              }
+            });
+          } else {
+            // No existing user, create new Google user
+            console.log('✅ Creating new Google user:', profile.id);
+            dbUser = await prisma.user.create({
+              data: {
+                id: profile.id,
+                provider: 'google',
+                providerId: profile.id,
+                displayName: profile.displayName,
+                email: userEmail,
+                profilePhoto: profile.photos?.[0]?.value || '',
+                createdAt: new Date(),
+                lastLoginAt: new Date()
+              }
+            });
+          }
 
           console.log('✅ User saved to database:', dbUser.id);
 
