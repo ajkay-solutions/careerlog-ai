@@ -92,21 +92,20 @@ class AuthService {
     }
   }
   
-  // Logout user
+  // Logout user (JWT is stateless, so we just clear the token)
   async logout() {
     try {
-      if (this.token) {
-        await fetch(`${API_BASE}/auth/logout`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${this.token}`
-          }
-        });
-      }
-    } catch (error) {
-      console.error('Logout request failed:', error);
-    } finally {
+      // Since we're using JWT tokens (stateless), we don't need a server logout
+      // Just clear the token from localStorage
+      console.log('🔓 Logging out user...');
       this.clearToken();
+      
+      return { success: true, message: 'Logged out successfully' };
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Even if there's an error, clear the token
+      this.clearToken();
+      return { success: false, message: 'Logout error' };
     }
   }
   

@@ -20,10 +20,20 @@ class ApiService {
     return localStorage.getItem('worklog_auth_token');
   }
 
-  // Make authenticated API request
+  // Make authenticated API request with timeout
   async request(endpoint, options = {}) {
     const url = `${this.baseURL}${endpoint}`;
     const token = this.getAuthToken();
+    
+    // Set timeout based on endpoint type
+    let timeout;
+    if (endpoint.includes('/insights/')) {
+      timeout = 30000; // 30 seconds for insights
+    } else if (endpoint.includes('/export') || endpoint.includes('/generate')) {
+      timeout = 60000; // 60 seconds for export and generation
+    } else {
+      timeout = 10000; // 10 seconds for others
+    }
 
     const config = {
       mode: 'cors',
@@ -41,7 +51,14 @@ class ApiService {
     }
 
     try {
+      // Create abort controller for timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeout);
+      
+      config.signal = controller.signal;
+      
       const response = await fetch(url, config);
+      clearTimeout(timeoutId);
 
       const data = await response.json();
 
@@ -58,6 +75,12 @@ class ApiService {
       if (error instanceof ApiError) {
         throw error;
       }
+      
+      // Handle timeout errors
+      if (error.name === 'AbortError') {
+        throw new ApiError(`Request timeout (${timeout/1000}s) - ${endpoint}`, 408, { originalError: error });
+      }
+      
       throw new ApiError('Network error', 0, { originalError: error });
     }
   }
@@ -150,9 +173,9 @@ class ApiService {
   }
 
   async logout() {
-    const result = await this.post('/auth/logout');
+    // JWT logout is handled client-side (stateless tokens)
     localStorage.removeItem('worklog_auth_token');
-    return result;
+    return { success: true, message: 'Logged out successfully' };
   }
 
   // AI methods

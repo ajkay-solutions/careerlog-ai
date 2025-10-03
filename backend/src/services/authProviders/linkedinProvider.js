@@ -54,30 +54,62 @@ class LinkedInProvider {
           email: linkedinProfile.email
         });
 
-        // Create or update user in database
+        // Create or update user in database with safe operation
         const { PrismaClient } = require('@prisma/client');
-        const prisma = new PrismaClient();
+        
+        // Create a safe database operation wrapper
+        const safeDbOperation = async (operation) => {
+          const prismaClient = new PrismaClient();
+          try {
+            const result = await operation(prismaClient);
+            return result;
+          } catch (error) {
+            console.error('❌ Database operation failed:', error.message);
+            
+            // For prepared statement errors, wait a moment and retry once
+            if (error.message?.includes('prepared statement') || error.code === 'P1001') {
+              console.log('🔄 Retrying after prepared statement error...');
+              
+              // Wait 500ms before retry
+              await new Promise(resolve => setTimeout(resolve, 500));
+              
+              try {
+                const result = await operation(prismaClient);
+                return result;
+              } catch (retryError) {
+                console.error('❌ Retry failed:', retryError.message);
+                throw retryError;
+              }
+            }
+            
+            throw error;
+          } finally {
+            await prismaClient.$disconnect();
+          }
+        };
 
         try {
           // Upsert user to database
-          const dbUser = await prisma.user.upsert({
-            where: { id: linkedinProfile.sub },
-            update: {
-              displayName: linkedinProfile.name,
-              email: linkedinProfile.email || '',
-              profilePhoto: linkedinProfile.picture || '',
-              lastLoginAt: new Date()
-            },
-            create: {
-              id: linkedinProfile.sub,
-              provider: 'linkedin',
-              providerId: linkedinProfile.sub,
-              displayName: linkedinProfile.name,
-              email: linkedinProfile.email || '',
-              profilePhoto: linkedinProfile.picture || '',
-              createdAt: new Date(),
-              lastLoginAt: new Date()
-            }
+          const dbUser = await safeDbOperation(async (prismaClient) => {
+            return await prismaClient.user.upsert({
+              where: { id: linkedinProfile.sub },
+              update: {
+                displayName: linkedinProfile.name,
+                email: linkedinProfile.email || '',
+                profilePhoto: linkedinProfile.picture || '',
+                lastLoginAt: new Date()
+              },
+              create: {
+                id: linkedinProfile.sub,
+                provider: 'linkedin',
+                providerId: linkedinProfile.sub,
+                displayName: linkedinProfile.name,
+                email: linkedinProfile.email || '',
+                profilePhoto: linkedinProfile.picture || '',
+                createdAt: new Date(),
+                lastLoginAt: new Date()
+              }
+            });
           });
 
           console.log('✅ User saved to database:', dbUser.id);
@@ -101,8 +133,6 @@ class LinkedInProvider {
         } catch (dbError) {
           console.error('❌ Database error saving user:', dbError);
           return done(dbError, null);
-        } finally {
-          await prisma.$disconnect();
         }
       } catch (error) {
         console.error('❌ LinkedIn OAuth Error:', error.response?.data || error.message);

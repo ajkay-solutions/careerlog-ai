@@ -1,42 +1,11 @@
 const express = require('express');
-const { PrismaClient } = require('@prisma/client');
 const { requireAuth } = require('../middleware/auth');
 const { getJobQueue } = require('../services/ai/jobQueue');
+const dbService = require('../services/database');
+const cachedDbService = require('../services/cachedDatabase');
+const optimizedQueries = require('../services/optimizedQueries');
 
 const router = express.Router();
-
-// Prisma client with connection recovery
-let prisma = new PrismaClient({
-  log: process.env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error']
-});
-
-// Helper to handle Prisma connection errors
-const withPrismaRetry = async (operation) => {
-  try {
-    return await operation(prisma);
-  } catch (error) {
-    // Check if it's a connection error that can be recovered
-    if (error.code === 'P1001' || error.message?.includes('prepared statement')) {
-      console.log('🔄 Prisma connection error, attempting to reconnect...');
-      
-      try {
-        await prisma.$disconnect();
-        prisma = new PrismaClient({
-          log: process.env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error']
-        });
-        
-        // Retry the operation with fresh connection
-        return await operation(prisma);
-      } catch (retryError) {
-        console.error('❌ Prisma retry failed:', retryError);
-        throw retryError;
-      }
-    }
-    
-    // If not a connection error, throw original error
-    throw error;
-  }
-};
 
 const jobQueue = getJobQueue();
 
@@ -65,22 +34,16 @@ router.get('/', requireAuth, async (req, res) => {
       whereClause.date = targetDate;
     }
 
-    const entries = await prisma.entry.findMany({
-      where: whereClause,
-      orderBy: { date: 'desc' },
-      take: parseInt(limit),
-      skip: parseInt(offset),
-      select: {
-        id: true,
-        date: true,
-        rawText: true,
-        wordCount: true,
-        extractedData: true,
-        isHighlight: true,
-        sentiment: true,
-        createdAt: true,
-        updatedAt: true
-      }
+    // Use optimized queries with caching for best performance
+    const entries = await cachedDbService.getCachedUserEntries(userId, date, async () => {
+      // Use optimized query that leverages indexes and minimal data transfer
+      return await optimizedQueries.getUserEntriesOptimized(userId, {
+        date: date ? formatDate(date) : null,
+        limit: parseInt(limit),
+        offset: parseInt(offset),
+        includeText: true,  // Include text for journal display
+        includeExtractedData: true  // Include AI data for display
+      });
     });
 
     res.json({
@@ -107,16 +70,14 @@ router.get('/:date', requireAuth, async (req, res) => {
     const userId = req.user.id;
     const targetDate = formatDate(req.params.date);
 
-    const entry = await withPrismaRetry(async (prismaClient) => {
-      return await prismaClient.entry.findUnique({
-        where: {
-          userId_date: {
-            userId,
-            date: targetDate
-          }
-        }
-      });
+    // Use optimized single entry query with caching
+    const singleEntry = await cachedDbService.getCachedUserEntries(userId, req.params.date, async () => {
+      const result = await optimizedQueries.getSingleEntryOptimized(userId, targetDate, true);
+      return result ? [result] : []; // Wrap in array for consistent caching
     });
+    
+    // Extract single entry from cached array
+    const entry = Array.isArray(singleEntry) ? singleEntry[0] : singleEntry;
 
     if (!entry) {
       return res.json({
@@ -156,14 +117,16 @@ router.post('/', requireAuth, async (req, res) => {
     const wordCount = countWords(rawText);
 
     // Check if entry already exists for this date
-    const existingEntry = await prisma.entry.findUnique({
-      where: {
-        userId_date: {
-          userId,
-          date: entryDate
+    const existingEntry = await dbService.executeOperation(async (prismaClient) => {
+      return await prismaClient.entry.findUnique({
+        where: {
+          userId_date: {
+            userId,
+            date: entryDate
+          }
         }
-      }
-    });
+      });
+    }, `check existing entry for user ${userId}`);
 
     if (existingEntry) {
       return res.status(409).json({
@@ -172,7 +135,8 @@ router.post('/', requireAuth, async (req, res) => {
       });
     }
 
-    const entry = await prisma.entry.create({
+    // Create entry and invalidate relevant caches
+    const entry = await cachedDbService.createAndInvalidateCache('entry', {
       data: {
         userId,
         date: entryDate,
@@ -184,7 +148,7 @@ router.post('/', requireAuth, async (req, res) => {
         skillIds: [],
         competencyIds: []
       }
-    });
+    }, ['entries', 'counts', 'dashboard']);
 
     // Trigger AI analysis asynchronously (non-blocking)
     try {
@@ -230,7 +194,8 @@ router.put('/:date', requireAuth, async (req, res) => {
     if (skillIds !== undefined) updateData.skillIds = skillIds;
     if (competencyIds !== undefined) updateData.competencyIds = competencyIds;
 
-    const entry = await prisma.entry.update({
+    // Update entry and invalidate relevant caches
+    const entry = await cachedDbService.updateAndInvalidateCache('entry', {
       where: {
         userId_date: {
           userId,
@@ -238,7 +203,7 @@ router.put('/:date', requireAuth, async (req, res) => {
         }
       },
       data: updateData
-    });
+    }, ['entries', 'dashboard']);
 
     // Trigger AI analysis if rawText was updated
     try {
@@ -278,7 +243,8 @@ router.delete('/:date', requireAuth, async (req, res) => {
     const userId = req.user.id;
     const targetDate = formatDate(req.params.date);
 
-    await prisma.entry.delete({
+    // Delete entry using cached database service
+    await cachedDbService.delete('entry', {
       where: {
         userId_date: {
           userId,
@@ -314,14 +280,16 @@ router.patch('/:date/highlight', requireAuth, async (req, res) => {
     const targetDate = formatDate(req.params.date);
 
     // Get current entry to toggle highlight
-    const currentEntry = await prisma.entry.findUnique({
-      where: {
-        userId_date: {
-          userId,
-          date: targetDate
+    const currentEntry = await dbService.executeOperation(async (prismaClient) => {
+      return await prismaClient.entry.findUnique({
+        where: {
+          userId_date: {
+            userId,
+            date: targetDate
+          }
         }
-      }
-    });
+      });
+    }, `find entry for highlight toggle user ${userId}`);
 
     if (!currentEntry) {
       return res.status(404).json({
@@ -330,7 +298,8 @@ router.patch('/:date/highlight', requireAuth, async (req, res) => {
       });
     }
 
-    const entry = await prisma.entry.update({
+    // Update entry and invalidate relevant caches
+    const entry = await cachedDbService.updateAndInvalidateCache('entry', {
       where: {
         userId_date: {
           userId,
@@ -340,7 +309,7 @@ router.patch('/:date/highlight', requireAuth, async (req, res) => {
       data: {
         isHighlight: !currentEntry.isHighlight
       }
-    });
+    }, ['entries', 'dashboard']);
 
     res.json({
       success: true,

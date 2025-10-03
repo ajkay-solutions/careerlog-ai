@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -82,9 +83,14 @@ model Entry {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   
-  @@index([userId, date])
-  @@index([userId, createdAt])
-  @@unique([userId, date]) // One entry per user per date
+  // Optimized indexes for better query performance
+  @@index([userId, date])           // Primary lookup (userId + date)
+  @@index([userId, createdAt])      // Chronological queries
+  @@index([userId, isHighlight])    // Filtered queries by highlight
+  @@index([userId, sentiment])      // Sentiment analysis queries
+  @@index([userId, wordCount])      // Word count sorting/filtering
+  @@index([date])                   // Global date queries (for admin)
+  @@unique([userId, date])          // One entry per user per date
 }
 
 model Project {
@@ -106,9 +112,12 @@ model Project {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   
-  @@index([userId])
-  @@index([userId, status])
-  @@unique([userId, name]) // Prevent duplicate project names per user
+  // Optimized indexes for dashboard queries
+  @@index([userId])                    // Basic user lookup
+  @@index([userId, status])            // Status filtering
+  @@index([userId, entryCount])        // Sorting by usage
+  @@index([userId, updatedAt])         // Recent projects
+  @@unique([userId, name])             // Prevent duplicate project names per user
 }
 
 model Skill {
@@ -127,9 +136,12 @@ model Skill {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   
-  @@index([userId])
-  @@index([userId, category])
-  @@unique([userId, name])
+  // Optimized indexes for dashboard queries
+  @@index([userId])                    // Basic user lookup
+  @@index([userId, category])          // Category filtering
+  @@index([userId, usageCount])        // Sorting by usage frequency
+  @@index([userId, lastUsed])          // Recent skills
+  @@unique([userId, name])             // Prevent duplicate skill names per user
 }
 
 model Competency {
@@ -148,7 +160,10 @@ model Competency {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   
-  @@index([userId])
-  @@index([userId, framework])
-  @@unique([userId, name])
+  // Optimized indexes for dashboard queries
+  @@index([userId])                         // Basic user lookup
+  @@index([userId, framework])              // Framework filtering
+  @@index([userId, demonstrationCount])     // Sorting by demonstration frequency
+  @@index([userId, lastDemonstrated])       // Recent competencies
+  @@unique([userId, name])                  // Prevent duplicate competency names per user
 }

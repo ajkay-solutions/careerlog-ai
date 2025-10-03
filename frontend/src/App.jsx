@@ -4,6 +4,8 @@ import Navigation from './components/Navigation';
 import DateNavigation from './components/DateNavigation';
 import EntryList from './components/EntryList';
 import JournalEntry from './components/JournalEntry';
+import InsightsDashboard from './components/InsightsDashboard';
+import GenerateView from './pages/GenerateView';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -169,21 +171,11 @@ function App() {
       )}
 
       {currentView === 'insights' && (
-        <div className="flex-1 flex items-center justify-center">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">📊 Insights Dashboard</h2>
-            <p className="text-gray-600">Coming soon in Week 4 - Analytics and career insights</p>
-          </div>
-        </div>
+        <InsightsDashboard />
       )}
 
       {currentView === 'generate' && (
-        <div className="flex-1 flex items-center justify-center">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">✨ Generate Content</h2>
-            <p className="text-gray-600">Coming soon in Week 5 - Performance reviews and resume bullets</p>
-          </div>
-        </div>
+        <GenerateView />
       )}
     </div>
   );

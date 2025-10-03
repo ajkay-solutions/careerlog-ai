@@ -7,9 +7,17 @@ const path = require('path');
 require('dotenv').config();
 
 const { passport, initializePassport } = require('./config/passport');
+const connectionWarmer = require('./services/connectionWarmer');
 const authRoutes = require('./routes/auth');
 const entriesRoutes = require('./routes/entries');
 const aiRoutes = require('./routes/ai');
+const insightsRoutes = require('./routes/insights');
+const projectsRoutes = require('./routes/projects');
+const healthRoutes = require('./routes/health');
+const performanceRoutes = require('./routes/performance');
+const quickTestRoutes = require('./routes/quick-test');
+const exportRoutes = require('./routes/export');
+const generateRoutes = require('./routes/generate');
 
 const app = express();
 const PORT = process.env.PORT || 3004;
@@ -37,7 +45,7 @@ const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = process.env.NODE_ENV === 'production' 
       ? ['https://worklog.ajkaysolutions.com'] 
-      : ['http://localhost:5173', 'http://localhost:3004'];
+      : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3004'];
     
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
@@ -80,10 +88,20 @@ app.use(passport.session());
 const enabledStrategies = initializePassport();
 console.log('🔐 OAuth strategies enabled:', enabledStrategies);
 
+// Connection warmup middleware (for cold start optimization)
+app.use(connectionWarmer.middleware());
+
 // Routes
 app.use('/auth', authRoutes);
 app.use('/api/entries', entriesRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/insights', insightsRoutes);
+app.use('/api/projects', projectsRoutes);
+app.use('/api/health', healthRoutes);
+app.use('/api/performance', performanceRoutes);
+app.use('/api/quick-test', quickTestRoutes);
+app.use('/api/export', exportRoutes);
+app.use('/api/generate', generateRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -121,9 +139,12 @@ app.get('/', (req, res) => {
         analyze: 'POST /api/ai/analyze/:entryId',
         batchAnalyze: 'POST /api/ai/analyze-batch',
         jobStatus: '/api/ai/job/:jobId',
-        insights: '/api/ai/insights',
-        summary: '/api/ai/summary',
         health: '/api/ai/health'
+      },
+      insights: {
+        dashboard: '/api/insights/dashboard',
+        summary: '/api/insights/summary',
+        trends: '/api/insights/trends'
       }
     }
   });
@@ -148,8 +169,17 @@ app.use((req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`🚀 WorkLog AI Backend running on port ${PORT}`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🔗 Accepting requests from: ${corsOptions.origin}`);
+  
+  // Start connection warmup immediately after server start
+  console.log('🔥 Starting connection warmup on server startup...');
+  try {
+    await connectionWarmer.warmupConnections();
+    console.log('✅ Server startup warmup completed - ready for fast responses');
+  } catch (error) {
+    console.warn('⚠️ Server startup warmup failed:', error.message);
+  }
 });

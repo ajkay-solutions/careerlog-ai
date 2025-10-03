@@ -97,6 +97,105 @@ async function cacheGet(key) {
 }
 
 /**
+ * Cache database counts (user, entry, project counts)
+ * @param {string} type - Type of count (user, entry, project, skill, competency)
+ * @param {number} count - Count value
+ * @param {number} ttl - TTL in seconds (default: 5 minutes)
+ */
+async function cacheDatabaseCount(type, count, ttl = 300) {
+  const key = `${ENV_PREFIX}count:${type}`;
+  await redis.setex(key, ttl, count.toString());
+}
+
+/**
+ * Get cached database count
+ * @param {string} type - Type of count
+ * @returns {number|null} Cached count or null
+ */
+async function getCachedDatabaseCount(type) {
+  const key = `${ENV_PREFIX}count:${type}`;
+  const cached = await redis.get(key);
+  return cached ? parseInt(cached, 10) : null;
+}
+
+/**
+ * Cache user-specific data (entries, projects, etc.)
+ * @param {string} userId - User ID
+ * @param {string} dataType - Type of data (entries, projects, skills, etc.)
+ * @param {*} data - Data to cache
+ * @param {number} ttl - TTL in seconds (default: 10 minutes)
+ */
+async function cacheUserData(userId, dataType, data, ttl = 600) {
+  const key = `${ENV_PREFIX}user:${userId}:${dataType}`;
+  await redis.setex(key, ttl, JSON.stringify(data));
+}
+
+/**
+ * Get cached user data
+ * @param {string} userId - User ID
+ * @param {string} dataType - Type of data
+ * @returns {*} Cached data or null
+ */
+async function getCachedUserData(userId, dataType) {
+  const key = `${ENV_PREFIX}user:${userId}:${dataType}`;
+  const cached = await redis.get(key);
+  return cached ? JSON.parse(cached) : null;
+}
+
+/**
+ * Cache dashboard data for a user
+ * @param {string} userId - User ID
+ * @param {string} timeframe - Timeframe (all, week, month, etc.)
+ * @param {Object} dashboardData - Complete dashboard data
+ * @param {number} ttl - TTL in seconds (default: 10 minutes)
+ */
+async function cacheDashboardData(userId, timeframe, dashboardData, ttl = 600) {
+  const key = `${ENV_PREFIX}dashboard:${userId}:${timeframe}`;
+  await redis.setex(key, ttl, JSON.stringify(dashboardData));
+}
+
+/**
+ * Get cached dashboard data
+ * @param {string} userId - User ID
+ * @param {string} timeframe - Timeframe
+ * @returns {Object|null} Cached dashboard data or null
+ */
+async function getCachedDashboardData(userId, timeframe) {
+  const key = `${ENV_PREFIX}dashboard:${userId}:${timeframe}`;
+  const cached = await redis.get(key);
+  return cached ? JSON.parse(cached) : null;
+}
+
+/**
+ * Clear specific cache entries when data changes
+ * @param {string} userId - User ID
+ * @param {string[]} types - Types to clear (e.g., ['entries', 'dashboard'])
+ */
+async function invalidateUserCache(userId, types = []) {
+  const patterns = [];
+  
+  if (types.includes('entries') || types.length === 0) {
+    patterns.push(`${ENV_PREFIX}user:${userId}:entries*`);
+    patterns.push(`${ENV_PREFIX}dashboard:${userId}:*`);
+  }
+  
+  if (types.includes('projects') || types.length === 0) {
+    patterns.push(`${ENV_PREFIX}user:${userId}:projects*`);
+  }
+  
+  if (types.includes('counts') || types.length === 0) {
+    patterns.push(`${ENV_PREFIX}count:*`);
+  }
+  
+  for (const pattern of patterns) {
+    const keys = await redis.keys(pattern);
+    if (keys.length > 0) {
+      await redis.del(...keys);
+    }
+  }
+}
+
+/**
  * Get cache statistics (useful for monitoring)
  * @returns {Object} Cache stats
  */
@@ -121,5 +220,13 @@ module.exports = {
   clearUserCache,
   getCacheStats,
   cacheSet,
-  cacheGet
+  cacheGet,
+  // New performance-focused cache functions
+  cacheDatabaseCount,
+  getCachedDatabaseCount,
+  cacheUserData,
+  getCachedUserData,
+  cacheDashboardData,
+  getCachedDashboardData,
+  invalidateUserCache
 };
