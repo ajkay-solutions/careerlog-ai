@@ -1,8 +1,5 @@
 // JWT-based authentication service for WorkLog AI
-const isProduction = window.location.hostname === 'worklog.ajkaysolutions.com' || window.location.hostname.includes('render.com');
-const API_BASE = isProduction
-  ? '' // Use relative URLs in production (same origin)
-  : 'http://localhost:3004'; // WorkLog AI backend port
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3004';
 
 class AuthService {
   constructor() {
@@ -25,14 +22,14 @@ class AuthService {
       window.history.replaceState({}, document.title, window.location.pathname);
     } else {
       // Try to get token from localStorage
-      this.token = localStorage.getItem('worklog_auth_token');
+      this.token = localStorage.getItem('auth_token');
     }
   }
   
   // Set authentication token
   setToken(token) {
     this.token = token;
-    localStorage.setItem('worklog_auth_token', token);
+    localStorage.setItem('auth_token', token);
     
     // Parse user data from JWT payload (basic parsing)
     try {
@@ -57,7 +54,7 @@ class AuthService {
     this.token = null;
     this.user = null;
     this.isAuthenticated = false;
-    localStorage.removeItem('worklog_auth_token');
+    localStorage.removeItem('auth_token');
     this.notifyListeners();
   }
   
