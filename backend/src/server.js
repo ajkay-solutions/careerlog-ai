@@ -4,7 +4,10 @@ const helmet = require('helmet');
 const compression = require('compression');
 const session = require('express-session');
 const path = require('path');
-require('dotenv').config();
+// Load .env file only in development (Render provides env vars directly)
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 const { passport, initializePassport } = require('./config/passport');
 const connectionWarmer = require('./services/connectionWarmer');
