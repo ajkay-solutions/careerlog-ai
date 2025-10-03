@@ -57,7 +57,12 @@ router.get('/linkedin/callback',
         error_description: req.query.error_description,
         state: req.query.state
       });
-      return res.redirect('/?error=linkedin_auth_error');
+      // Detect production environment and redirect to frontend
+      const isProduction = process.env.NODE_ENV === 'production' || req.get('host').includes('worklog.ajkaysolutions.com');
+      const errorRedirectUrl = isProduction
+        ? `https://worklog.ajkaysolutions.com/?error=linkedin_auth_error`
+        : `http://localhost:5173/?error=linkedin_auth_error`;
+      return res.redirect(errorRedirectUrl);
     }
     
     // If there's an authorization code, log it
@@ -74,12 +79,22 @@ router.get('/linkedin/callback',
       
       if (err) {
         console.error('❌ LinkedIn authentication error:', err);
-        return res.redirect('/?error=linkedin_auth_error');
+        // Detect production environment and redirect to frontend
+      const isProduction = process.env.NODE_ENV === 'production' || req.get('host').includes('worklog.ajkaysolutions.com');
+      const errorRedirectUrl = isProduction
+        ? `https://worklog.ajkaysolutions.com/?error=linkedin_auth_error`
+        : `http://localhost:5173/?error=linkedin_auth_error`;
+      return res.redirect(errorRedirectUrl);
       }
       
       if (!user) {
         console.error('❌ LinkedIn authentication failed - no user returned:', info);
-        return res.redirect('/?error=linkedin_no_user');
+        // Detect production environment and redirect to frontend
+        const isProduction = process.env.NODE_ENV === 'production' || req.get('host').includes('worklog.ajkaysolutions.com');
+        const errorRedirectUrl = isProduction
+          ? `https://worklog.ajkaysolutions.com/?error=linkedin_no_user`
+          : `http://localhost:5173/?error=linkedin_no_user`;
+        return res.redirect(errorRedirectUrl);
       }
       
       // Generate JWT token instead of using sessions
@@ -128,12 +143,22 @@ router.get('/google/callback',
     passport.authenticate('google', (err, user, info) => {
       if (err) {
         console.error('❌ Google authentication error:', err);
-        return res.redirect('/?error=google_auth_error');
+        // Detect production environment and redirect to frontend
+        const isProduction = process.env.NODE_ENV === 'production' || req.get('host').includes('worklog.ajkaysolutions.com');
+        const errorRedirectUrl = isProduction
+          ? `https://worklog.ajkaysolutions.com/?error=google_auth_error`
+          : `http://localhost:5173/?error=google_auth_error`;
+        return res.redirect(errorRedirectUrl);
       }
       
       if (!user) {
         console.error('❌ Google authentication failed - no user returned:', info);
-        return res.redirect('/?error=google_no_user');
+        // Detect production environment and redirect to frontend
+        const isProduction = process.env.NODE_ENV === 'production' || req.get('host').includes('worklog.ajkaysolutions.com');
+        const errorRedirectUrl = isProduction
+          ? `https://worklog.ajkaysolutions.com/?error=google_no_user`
+          : `http://localhost:5173/?error=google_no_user`;
+        return res.redirect(errorRedirectUrl);
       }
       
       // Generate JWT token instead of using sessions
