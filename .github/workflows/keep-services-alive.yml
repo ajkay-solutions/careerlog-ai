@@ -1,0 +1,54 @@
+name: Keep Render Services Alive
+
+on:
+  schedule:
+    # Run every 10 minutes to prevent Render free tier from sleeping
+    # Render services sleep after 15 minutes of inactivity
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Ping WorkLog AI Backend
+      run: |
+        echo "🔥 Pinging WorkLog AI Backend to keep it alive..."
+        
+        # Ping backend health endpoint
+        backend_response=$(curl -s -o /dev/null -w "%{http_code}" https://worklog-ai-backend.onrender.com/health)
+        
+        if [ "$backend_response" -eq 200 ]; then
+          echo "✅ Backend is alive (HTTP $backend_response)"
+        else
+          echo "⚠️ Backend responded with HTTP $backend_response"
+        fi
+        
+        # Also ping a lightweight endpoint to ensure the service stays warm
+        quick_response=$(curl -s -o /dev/null -w "%{http_code}" https://worklog-ai-backend.onrender.com/api/health/quick)
+        
+        if [ "$quick_response" -eq 200 ]; then
+          echo "✅ Quick health check passed (HTTP $quick_response)"
+        else
+          echo "⚠️ Quick health check failed (HTTP $quick_response)"
+        fi
+
+    - name: Ping WorkLog AI Frontend
+      run: |
+        echo "🔥 Pinging WorkLog AI Frontend to keep it alive..."
+        
+        # Ping frontend
+        frontend_response=$(curl -s -o /dev/null -w "%{http_code}" https://worklog.ajkaysolutions.com)
+        
+        if [ "$frontend_response" -eq 200 ]; then
+          echo "✅ Frontend is alive (HTTP $frontend_response)"
+        else
+          echo "⚠️ Frontend responded with HTTP $frontend_response"
+        fi
+
+    - name: Summary
+      run: |
+        echo "🎯 Keep-alive ping completed at $(date)"
+        echo "📊 This prevents Render free tier services from sleeping"
+        echo "⏰ Next ping scheduled in 10 minutes"

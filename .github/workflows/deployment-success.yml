@@ -1,0 +1,119 @@
+name: Post-Deployment Verification
+
+on:
+  # Trigger after successful pushes to main (when Render deploys)
+  push:
+    branches: [ main ]
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  verify-deployment:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Wait for Deployment
+      run: |
+        echo "⏳ Waiting 60 seconds for Render deployment to complete..."
+        sleep 60
+
+    - name: Verify Backend Deployment
+      id: verify-backend
+      run: |
+        echo "🔍 Verifying backend deployment..."
+        
+        max_attempts=10
+        attempt=1
+        
+        while [ $attempt -le $max_attempts ]; do
+          echo "Attempt $attempt/$max_attempts: Checking backend health..."
+          
+          if health_response=$(curl -s https://worklog-ai-backend.onrender.com/health); then
+            echo "✅ Backend is responding"
+            echo "$health_response"
+            
+            # Check if response contains expected fields
+            if echo "$health_response" | grep -q '"status":"OK"' && echo "$health_response" | grep -q '"service":"WorkLog AI Backend"'; then
+              echo "✅ Backend deployment verified successfully"
+              echo "backend_status=success" >> $GITHUB_OUTPUT
+              break
+            else
+              echo "⚠️ Backend responding but health check format unexpected"
+            fi
+          else
+            echo "❌ Backend not responding (attempt $attempt/$max_attempts)"
+          fi
+          
+          if [ $attempt -eq $max_attempts ]; then
+            echo "❌ Backend deployment verification failed after $max_attempts attempts"
+            echo "backend_status=failed" >> $GITHUB_OUTPUT
+          else
+            echo "Waiting 30 seconds before next attempt..."
+            sleep 30
+          fi
+          
+          ((attempt++))
+        done
+
+    - name: Verify Frontend Deployment
+      id: verify-frontend
+      run: |
+        echo "🔍 Verifying frontend deployment..."
+        
+        frontend_code=$(curl -s -o /dev/null -w "%{http_code}" https://worklog.ajkaysolutions.com)
+        
+        if [ "$frontend_code" -eq 200 ]; then
+          echo "✅ Frontend deployment verified (HTTP $frontend_code)"
+          echo "frontend_status=success" >> $GITHUB_OUTPUT
+        else
+          echo "❌ Frontend deployment verification failed (HTTP $frontend_code)"
+          echo "frontend_status=failed" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Test Core Endpoints
+      run: |
+        echo "🧪 Testing core API endpoints..."
+        
+        # Test health endpoints
+        echo "Testing /health..."
+        curl -s https://worklog-ai-backend.onrender.com/health | head -3
+        
+        echo -e "\nTesting /api/health/quick..."
+        curl -s https://worklog-ai-backend.onrender.com/api/health/quick | head -3
+        
+        echo -e "\nTesting /api/health/database..."
+        curl -s https://worklog-ai-backend.onrender.com/api/health/database | head -3
+        
+        # Test OAuth endpoints (should return 302)
+        echo -e "\nTesting OAuth endpoints..."
+        google_code=$(curl -s -o /dev/null -w "%{http_code}" https://worklog-ai-backend.onrender.com/auth/google)
+        linkedin_code=$(curl -s -o /dev/null -w "%{http_code}" https://worklog-ai-backend.onrender.com/auth/linkedin)
+        
+        echo "Google OAuth: HTTP $google_code (expected: 302)"
+        echo "LinkedIn OAuth: HTTP $linkedin_code (expected: 302)"
+
+    - name: Warm Up Services
+      run: |
+        echo "🔥 Warming up services post-deployment..."
+        
+        # Hit multiple endpoints to warm up the service
+        curl -s https://worklog-ai-backend.onrender.com/health > /dev/null
+        curl -s https://worklog-ai-backend.onrender.com/api/health/quick > /dev/null
+        curl -s https://worklog.ajkaysolutions.com > /dev/null
+        
+        echo "✅ Services warmed up"
+
+    - name: Deployment Summary
+      run: |
+        echo "🎯 Deployment Verification Summary"
+        echo "=================================="
+        echo "Commit: ${{ github.sha }}"
+        echo "Backend: ${{ steps.verify-backend.outputs.backend_status }}"
+        echo "Frontend: ${{ steps.verify-frontend.outputs.frontend_status }}"
+        echo "Timestamp: $(date)"
+        echo "=================================="
+        
+        if [[ "${{ steps.verify-backend.outputs.backend_status }}" == "success" && "${{ steps.verify-frontend.outputs.frontend_status }}" == "success" ]]; then
+          echo "🎉 Deployment verification successful!"
+        else
+          echo "⚠️ Deployment verification had issues"
+        fi
