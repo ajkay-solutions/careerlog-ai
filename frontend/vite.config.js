@@ -19,4 +19,7 @@ export default defineConfig({
       },
     },
   },
+  publicDir: 'public',
+  // Copy _redirects file to build output for SPA routing
+  assetsInclude: ['**/_redirects']
 })
