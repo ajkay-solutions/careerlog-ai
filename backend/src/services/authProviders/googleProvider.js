@@ -13,7 +13,7 @@ class GoogleProvider {
     }
 
     const callbackURL = process.env.NODE_ENV === 'production' 
-      ? 'https://worklog.ajkaysolutions.com/auth/google/callback'
+      ? 'https://worklog-ai-backend.onrender.com/auth/google/callback'
       : 'http://localhost:3004/auth/google/callback';
     
     console.log('🔧 Google OAuth Configuration:', {

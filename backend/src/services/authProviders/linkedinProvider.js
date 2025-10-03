@@ -14,7 +14,7 @@ class LinkedInProvider {
 
     // Environment-aware callback URL for WorkLog AI
     const callbackURL = process.env.NODE_ENV === 'production' 
-      ? 'https://worklog.ajkaysolutions.com/auth/linkedin/callback'
+      ? 'https://worklog-ai-backend.onrender.com/auth/linkedin/callback'
       : 'http://localhost:3004/auth/linkedin/callback';
     
     console.log('🔧 LinkedIn OAuth Config (WorkLog AI):', {
