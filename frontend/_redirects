@@ -1,3 +1,0 @@
-# Netlify/Render SPA routing fallback
-# Serve index.html for all routes to enable React Router
-/*    /index.html   200

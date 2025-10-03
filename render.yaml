@@ -1,0 +1,51 @@
+# Render.com Deployment Configuration for WorkLog AI
+# This file defines how to deploy both frontend and backend services
+
+services:
+  # Backend API Service
+  - type: web
+    name: worklog-ai-backend
+    runtime: node
+    region: oregon # or your preferred region
+    plan: free # upgrade to starter ($7/month) for production
+    buildCommand: cd backend && npm ci && npx prisma generate
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      # Database will be set via Render dashboard (sensitive)
+      # - key: DATABASE_URL
+      # - key: DIRECT_URL
+      # - key: REDIS_URL
+      # - key: ANTHROPIC_API_KEY
+      # - key: GOOGLE_CLIENT_SECRET
+      # - key: LINKEDIN_CLIENT_SECRET
+      # - key: JWT_SECRET
+      # - key: SESSION_SECRET
+      # - key: MAILGUN_API_KEY
+    healthCheckPath: /api/health/status
+    
+  # Frontend Static Site
+  - type: web
+    name: worklog-ai-frontend
+    runtime: static
+    region: oregon # same region as backend
+    plan: free
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: frontend/dist
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://worklog-ai-backend.onrender.com # will be your backend URL
