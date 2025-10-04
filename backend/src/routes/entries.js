@@ -69,15 +69,35 @@ router.get('/:date', requireAuth, async (req, res) => {
   try {
     const userId = req.user.id;
     const targetDate = formatDate(req.params.date);
-
-    // Use optimized single entry query with caching
-    const singleEntry = await cachedDbService.getCachedUserEntries(userId, req.params.date, async () => {
-      const result = await optimizedQueries.getSingleEntryOptimized(userId, targetDate, true);
-      return result ? [result] : []; // Wrap in array for consistent caching
-    });
+    const bustCache = req.query._t; // Cache-busting timestamp parameter
     
-    // Extract single entry from cached array
-    const entry = Array.isArray(singleEntry) ? singleEntry[0] : singleEntry;
+    console.log('🔍 GET ENTRY REQUEST:', {
+      userId: userId,
+      date: req.params.date,
+      targetDate: targetDate.toISOString(),
+      bustCache: !!bustCache,
+      bustCacheValue: bustCache,
+      userAgent: req.headers['user-agent']
+    });
+
+    let entry;
+    
+    if (bustCache) {
+      console.log('🔍 Cache-busting requested, bypassing cache...');
+      // Bypass cache and get fresh data
+      const result = await optimizedQueries.getSingleEntryOptimized(userId, targetDate, true);
+      entry = result;
+    } else {
+      console.log('🔍 Using cached data if available...');
+      // Use optimized single entry query with caching
+      const singleEntry = await cachedDbService.getCachedUserEntries(userId, req.params.date, async () => {
+        const result = await optimizedQueries.getSingleEntryOptimized(userId, targetDate, true);
+        return result ? [result] : []; // Wrap in array for consistent caching
+      });
+      
+      // Extract single entry from cached array
+      entry = Array.isArray(singleEntry) ? singleEntry[0] : singleEntry;
+    }
 
     if (!entry) {
       return res.json({

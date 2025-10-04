@@ -36,12 +36,23 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
   const loadEntry = useCallback(async (forceFresh = false) => {
     if (!selectedDate) return;
 
-    console.log('🔍 Loading entry for date:', selectedDate, forceFresh ? '(force fresh)' : '');
+    // Check if this entry needs a fresh load from localStorage
+    const dateKey = selectedDate.toISOString().split('T')[0];
+    const needsRefreshTimestamp = localStorage.getItem(`entry_needs_refresh_${dateKey}`);
+    const shouldForceFresh = forceFresh || !!needsRefreshTimestamp;
+    
+    // Clear the flag once we're loading fresh
+    if (needsRefreshTimestamp) {
+      localStorage.removeItem(`entry_needs_refresh_${dateKey}`);
+      console.log('🔍 Found localStorage refresh flag, forcing fresh load');
+    }
+
+    console.log('🔍 Loading entry for date:', selectedDate, shouldForceFresh ? '(force fresh)' : '');
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await apiService.getEntryByDate(selectedDate, { bustCache: forceFresh });
+      const response = await apiService.getEntryByDate(selectedDate, { bustCache: shouldForceFresh });
       
       console.log('🔍 Entry load response:', {
         success: response.success,
@@ -179,16 +190,26 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
           
           // Mark that this entry needs a fresh load next time it's accessed
           needsFreshLoadRef.current = true;
-          console.log('🔍 Marked entry for fresh reload on next access');
           
-          // Verify the rawText matches what we saved
+          // Also store in localStorage to persist across navigation
+          const dateKey = selectedDate.toISOString().split('T')[0];
+          localStorage.setItem(`entry_needs_refresh_${dateKey}`, Date.now().toString());
+          console.log('🔍 Marked entry for fresh reload on next access (memory + localStorage)');
+          
+          // Verify the rawText matches what we saved and force reload if mismatch
           if (response.data.rawText !== text) {
-            console.warn('⚠️ Auto-save text mismatch:', {
+            console.warn('⚠️ Auto-save text mismatch, forcing immediate reload:', {
               expected: text.length,
               received: response.data.rawText?.length,
               expectedSnippet: text.substring(0, 50),
               receivedSnippet: response.data.rawText?.substring(0, 50)
             });
+            
+            // Force an immediate fresh reload to sync data
+            setTimeout(() => {
+              console.log('🔄 Force reloading entry due to mismatch');
+              loadEntry(true); // Force fresh load
+            }, 500); // Small delay to avoid race conditions
           }
           
           // Notify parent component of change

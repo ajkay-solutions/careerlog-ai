@@ -163,9 +163,27 @@ class ApiService {
     // Add cache-busting parameter if requested
     if (options.bustCache) {
       params._t = Date.now();
+      console.log('🔍 Adding cache-busting timestamp:', params._t);
     }
     
-    return this.get(`/api/entries/${formattedDate}`, params);
+    const queryString = new URLSearchParams(params).toString();
+    const url = queryString ? `/api/entries/${formattedDate}?${queryString}` : `/api/entries/${formattedDate}`;
+    
+    // Use custom request with cache-busting headers if requested
+    if (options.bustCache) {
+      return this.request(url, {
+        method: 'GET',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
+    } else {
+      return this.request(url, {
+        method: 'GET'
+      });
+    }
   }
 
   async createEntry(entryData) {
