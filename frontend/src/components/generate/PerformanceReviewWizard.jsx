@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Calendar, FileText, ArrowLeft, ArrowRight, CheckCircle, Settings } from 'lucide-react';
 import GeneratedContentEditor from './GeneratedContentEditor';
+import { apiService } from '../../services/api';
 
 function PerformanceReviewWizard({ onBack }) {
   const [currentStep, setCurrentStep] = useState(1);
@@ -72,27 +73,13 @@ function PerformanceReviewWizard({ onBack }) {
   useEffect(() => {
     const loadDashboardData = async () => {
       try {
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3004';
         console.log('Loading dashboard data for timeframe:', config.timeframe);
-        const response = await fetch(`${apiUrl}/api/insights/dashboard?timeframe=${config.timeframe}`, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('worklog_auth_token')}`
-          }
-        });
+        const response = await apiService.get(`/api/insights/dashboard?timeframe=${config.timeframe}`);
         
-        console.log('Dashboard response status:', response.status);
-        
-        if (response.ok) {
-          const result = await response.json();
-          console.log('Dashboard result received:', result);
-          const data = result.success ? result.data : result;
-          console.log('Dashboard summary:', data.summary);
-          setDashboardData(data);
-        } else {
-          console.error('Dashboard API failed:', response.status, response.statusText);
-          const errorText = await response.text();
-          console.error('Error response:', errorText);
-        }
+        console.log('Dashboard result received:', response);
+        const data = response.success ? response.data : response;
+        console.log('Dashboard summary:', data.summary);
+        setDashboardData(data);
       } catch (error) {
         console.error('Failed to load dashboard data:', error);
       }
@@ -121,32 +108,17 @@ function PerformanceReviewWizard({ onBack }) {
         .filter(([_, selected]) => selected)
         .map(([competency, _]) => competency);
 
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3004';
-      const response = await fetch(`${apiUrl}/api/generate/performance-review`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('worklog_auth_token')}`
-        },
-        body: JSON.stringify({
-          startDate: config.startDate,
-          endDate: config.endDate,
-          timeframe: config.timeframe,
-          competencies: selectedCompetencies,
-          format: config.format
-        })
+      const response = await apiService.post('/api/generate/performance-review', {
+        startDate: config.startDate,
+        endDate: config.endDate,
+        timeframe: config.timeframe,
+        competencies: selectedCompetencies,
+        format: config.format
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Performance review API failed:', response.status, errorText);
-        throw new Error('Failed to generate performance review');
-      }
-
-      const result = await response.json();
-      console.log('Performance review response:', result);
+      console.log('Performance review response:', response);
       
-      const reviewContent = result.success ? result.data?.review || result.review : result.review;
+      const reviewContent = response.success ? response.data?.review || response.review : response.review;
       console.log('Extracted review content:', reviewContent);
       
       setGeneratedContent(reviewContent || '');
