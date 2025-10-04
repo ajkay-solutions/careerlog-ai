@@ -15,6 +15,7 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
   const textareaRef = useRef(null);
   const entryRef = useRef(entry);
   const onEntryChangeRef = useRef(onEntryChange);
+  const needsFreshLoadRef = useRef(false);
 
   // Format date for display
   const formatDate = (date) => {
@@ -32,23 +33,39 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
   }, []);
 
   // Load entry for selected date
-  const loadEntry = useCallback(async () => {
+  const loadEntry = useCallback(async (forceFresh = false) => {
     if (!selectedDate) return;
 
+    console.log('🔍 Loading entry for date:', selectedDate, forceFresh ? '(force fresh)' : '');
     setIsLoading(true);
     setError(null);
 
-
     try {
-      const response = await apiService.getEntryByDate(selectedDate);
+      const response = await apiService.getEntryByDate(selectedDate, { bustCache: forceFresh });
+      
+      console.log('🔍 Entry load response:', {
+        success: response.success,
+        hasData: !!response.data,
+        entryId: response.data?.id,
+        textLength: response.data?.rawText?.length,
+        updatedAt: response.data?.updatedAt,
+        forceFresh: forceFresh
+      });
       
       if (response.success && response.data) {
         setEntry(response.data);
         setRawText(response.data.rawText || '');
         setWordCount(response.data.wordCount || 0);
         setLastSaved(new Date(response.data.updatedAt));
+        
+        console.log('🔍 Entry loaded and state updated:', {
+          entryId: response.data.id,
+          rawTextLength: response.data.rawText?.length,
+          setRawTextLength: response.data.rawText?.length
+        });
       } else {
         // No entry exists for this date
+        console.log('🔍 No entry found for date, resetting state');
         setEntry(null);
         setRawText('');
         setWordCount(0);
@@ -149,15 +166,38 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
         }
 
         if (response.success) {
-          console.log('✅ Auto-save successful:', response.data.id);
+          console.log('✅ Auto-save successful:', {
+            entryId: response.data.id,
+            newTextLength: response.data.rawText?.length,
+            oldTextLength: text.length,
+            updatedAt: response.data.updatedAt
+          });
+          
           setEntry(response.data);
           setLastSaved(new Date());
           setWordCount(response.data.wordCount);
           
+          // Mark that this entry needs a fresh load next time it's accessed
+          needsFreshLoadRef.current = true;
+          console.log('🔍 Marked entry for fresh reload on next access');
+          
+          // Verify the rawText matches what we saved
+          if (response.data.rawText !== text) {
+            console.warn('⚠️ Auto-save text mismatch:', {
+              expected: text.length,
+              received: response.data.rawText?.length,
+              expectedSnippet: text.substring(0, 50),
+              receivedSnippet: response.data.rawText?.substring(0, 50)
+            });
+          }
+          
           // Notify parent component of change
           const currentOnEntryChange = onEntryChangeRef.current;
           if (currentOnEntryChange) {
+            console.log('🔍 Notifying parent component of entry change');
             currentOnEntryChange(response.data);
+          } else {
+            console.log('🔍 No onEntryChange callback available');
           }
         } else {
           console.error('❌ Auto-save failed - server returned error:', response);
@@ -231,7 +271,11 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
 
   // Load entry when date changes
   useEffect(() => {
-    loadEntry();
+    const shouldForceFresh = needsFreshLoadRef.current;
+    needsFreshLoadRef.current = false; // Reset the flag
+    
+    console.log('🔍 useEffect triggered, loading entry with forceFresh:', shouldForceFresh);
+    loadEntry(shouldForceFresh);
   }, [loadEntry]);
 
   // Update word count when rawText changes

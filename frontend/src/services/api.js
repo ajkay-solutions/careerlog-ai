@@ -156,9 +156,16 @@ class ApiService {
     return `${year}-${month}-${day}`;
   }
 
-  async getEntryByDate(date) {
+  async getEntryByDate(date, options = {}) {
     const formattedDate = this.formatDateForAPI(date);
-    return this.get(`/api/entries/${formattedDate}`);
+    const params = {};
+    
+    // Add cache-busting parameter if requested
+    if (options.bustCache) {
+      params._t = Date.now();
+    }
+    
+    return this.get(`/api/entries/${formattedDate}`, params);
   }
 
   async createEntry(entryData) {

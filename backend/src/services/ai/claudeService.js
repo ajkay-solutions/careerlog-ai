@@ -7,13 +7,30 @@ class ClaudeService {
       throw new Error('ANTHROPIC_API_KEY environment variable is required');
     }
     
-    // Initialize Anthropic client with minimal configuration
+    // Clean the API key - remove any whitespace, newlines, or prefixes
+    const rawApiKey = process.env.ANTHROPIC_API_KEY;
+    let cleanApiKey = rawApiKey.trim();
+    
+    // Remove any potential prefix like "worklog-ai" or other text before the actual key
+    if (cleanApiKey.includes('sk-ant-')) {
+      const keyIndex = cleanApiKey.indexOf('sk-ant-');
+      cleanApiKey = cleanApiKey.substring(keyIndex).trim();
+    }
+    
+    console.log('🔍 API Key cleanup:', {
+      originalLength: rawApiKey?.length,
+      cleanedLength: cleanApiKey.length,
+      startsWithCorrectPrefix: cleanApiKey.startsWith('sk-ant-'),
+      hasNewlines: rawApiKey?.includes('\n'),
+      hasCarriageReturn: rawApiKey?.includes('\r')
+    });
+    
+    // Initialize Anthropic client with cleaned API key
     try {
       this.client = new Anthropic({
-        apiKey: process.env.ANTHROPIC_API_KEY
-        // Remove custom headers for now to avoid any conflicts
+        apiKey: cleanApiKey
       });
-      console.log('✅ Anthropic client initialized successfully');
+      console.log('✅ Anthropic client initialized successfully with cleaned API key');
     } catch (error) {
       console.error('❌ Failed to initialize Anthropic client:', error.message);
       throw error;
