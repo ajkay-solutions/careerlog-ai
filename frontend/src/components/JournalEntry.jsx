@@ -13,6 +13,8 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
   
   const autoSaveTimeoutRef = useRef(null);
   const textareaRef = useRef(null);
+  const entryRef = useRef(entry);
+  const onEntryChangeRef = useRef(onEntryChange);
 
   // Format date for display
   const formatDate = (date) => {
@@ -67,16 +69,16 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
     setIsSaving(true);
     setError(null);
 
-
     try {
+      const currentEntry = entryRef.current;
       const entryData = {
         date: selectedDate,
         rawText: textToSave,
-        isHighlight: entry?.isHighlight || false
+        isHighlight: currentEntry?.isHighlight || false
       };
 
       let response;
-      if (entry) {
+      if (currentEntry) {
         // Update existing entry
         response = await apiService.updateEntry(selectedDate, entryData);
       } else {
@@ -90,8 +92,9 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
         setWordCount(response.data.wordCount);
         
         // Notify parent component of change
-        if (onEntryChange) {
-          onEntryChange(response.data);
+        const currentOnEntryChange = onEntryChangeRef.current;
+        if (currentOnEntryChange) {
+          currentOnEntryChange(response.data);
         }
       }
     } catch (err) {
@@ -100,9 +103,9 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
     } finally {
       setIsSaving(false);
     }
-  }, [selectedDate, entry, onEntryChange]);
+  }, [selectedDate]); // Only depend on selectedDate for stability
 
-  // Auto-save with debouncing
+  // Auto-save with debouncing - use ref to avoid dependency issues
   const debouncedSave = useCallback((text) => {
     // Clear existing timeout
     if (autoSaveTimeoutRef.current) {
@@ -110,10 +113,49 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
     }
 
     // Set new timeout for auto-save
-    autoSaveTimeoutRef.current = setTimeout(() => {
-      saveEntry(text);
+    autoSaveTimeoutRef.current = setTimeout(async () => {
+      // Perform save logic directly here to avoid dependency on saveEntry
+      if (!selectedDate || !text.trim()) return;
+
+      setIsSaving(true);
+      setError(null);
+
+      try {
+        const currentEntry = entryRef.current;
+        const entryData = {
+          date: selectedDate,
+          rawText: text,
+          isHighlight: currentEntry?.isHighlight || false
+        };
+
+        let response;
+        if (currentEntry) {
+          // Update existing entry
+          response = await apiService.updateEntry(selectedDate, entryData);
+        } else {
+          // Create new entry
+          response = await apiService.createEntry(entryData);
+        }
+
+        if (response.success) {
+          setEntry(response.data);
+          setLastSaved(new Date());
+          setWordCount(response.data.wordCount);
+          
+          // Notify parent component of change
+          const currentOnEntryChange = onEntryChangeRef.current;
+          if (currentOnEntryChange) {
+            currentOnEntryChange(response.data);
+          }
+        }
+      } catch (err) {
+        console.error('Error auto-saving entry:', err);
+        setError('Failed to auto-save entry');
+      } finally {
+        setIsSaving(false);
+      }
     }, 2000); // Save after 2 seconds of inactivity
-  }, [saveEntry]);
+  }, [selectedDate]); // Only depend on selectedDate to keep function stable
 
   // Handle text change
   const handleTextChange = (e) => {
@@ -174,6 +216,15 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
   useEffect(() => {
     setWordCount(countWords(rawText));
   }, [rawText, countWords]);
+
+  // Keep refs updated with latest values
+  useEffect(() => {
+    entryRef.current = entry;
+  }, [entry]);
+
+  useEffect(() => {
+    onEntryChangeRef.current = onEntryChange;
+  }, [onEntryChange]);
 
   // Focus textarea when component mounts
   useEffect(() => {

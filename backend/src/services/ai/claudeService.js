@@ -9,6 +9,8 @@ class ClaudeService {
     
     this.client = new Anthropic({
       apiKey: process.env.ANTHROPIC_API_KEY,
+      // Ensure no custom headers that might cause issues
+      defaultHeaders: {}
     });
     
     // Default model configuration
@@ -68,9 +70,18 @@ class ClaudeService {
 
     } catch (error) {
       console.error('❌ AI analysis failed:', error.message);
+      
+      // Sanitize error message to prevent API key exposure
+      let sanitizedError = error.message;
+      if (sanitizedError && typeof sanitizedError === 'string') {
+        // Remove any potential API key or sensitive information
+        sanitizedError = sanitizedError.replace(/sk-ant-[a-zA-Z0-9\-_]+/g, '[API_KEY_REDACTED]');
+        sanitizedError = sanitizedError.replace(/worklog-ai\s+sk-ant-[a-zA-Z0-9\-_]+/g, '[INVALID_HEADER_REDACTED]');
+      }
+      
       return {
         success: false,
-        error: error.message,
+        error: sanitizedError || 'AI analysis failed',
         fallback: this.generateFallbackAnalysis(entryText)
       };
     }
@@ -115,9 +126,17 @@ class ClaudeService {
 
     } catch (error) {
       console.error('❌ Insights generation failed:', error.message);
+      
+      // Sanitize error message to prevent API key exposure
+      let sanitizedError = error.message;
+      if (sanitizedError && typeof sanitizedError === 'string') {
+        sanitizedError = sanitizedError.replace(/sk-ant-[a-zA-Z0-9\-_]+/g, '[API_KEY_REDACTED]');
+        sanitizedError = sanitizedError.replace(/worklog-ai\s+sk-ant-[a-zA-Z0-9\-_]+/g, '[INVALID_HEADER_REDACTED]');
+      }
+      
       return {
         success: false,
-        error: error.message
+        error: sanitizedError || 'Insights generation failed'
       };
     }
   }
@@ -157,9 +176,17 @@ class ClaudeService {
 
     } catch (error) {
       console.error('❌ Performance review generation failed:', error.message);
+      
+      // Sanitize error message to prevent API key exposure
+      let sanitizedError = error.message;
+      if (sanitizedError && typeof sanitizedError === 'string') {
+        sanitizedError = sanitizedError.replace(/sk-ant-[a-zA-Z0-9\-_]+/g, '[API_KEY_REDACTED]');
+        sanitizedError = sanitizedError.replace(/worklog-ai\s+sk-ant-[a-zA-Z0-9\-_]+/g, '[INVALID_HEADER_REDACTED]');
+      }
+      
       return {
         success: false,
-        error: error.message
+        error: sanitizedError || 'Performance review generation failed'
       };
     }
   }
@@ -199,9 +226,17 @@ class ClaudeService {
 
     } catch (error) {
       console.error('❌ Resume bullets generation failed:', error.message);
+      
+      // Sanitize error message to prevent API key exposure
+      let sanitizedError = error.message;
+      if (sanitizedError && typeof sanitizedError === 'string') {
+        sanitizedError = sanitizedError.replace(/sk-ant-[a-zA-Z0-9\-_]+/g, '[API_KEY_REDACTED]');
+        sanitizedError = sanitizedError.replace(/worklog-ai\s+sk-ant-[a-zA-Z0-9\-_]+/g, '[INVALID_HEADER_REDACTED]');
+      }
+      
       return {
         success: false,
-        error: error.message
+        error: sanitizedError || 'Resume bullets generation failed'
       };
     }
   }
@@ -282,9 +317,16 @@ class ClaudeService {
         responseReceived: !!response.content[0].text
       };
     } catch (error) {
+      // Sanitize error message to prevent API key exposure
+      let sanitizedError = error.message;
+      if (sanitizedError && typeof sanitizedError === 'string') {
+        sanitizedError = sanitizedError.replace(/sk-ant-[a-zA-Z0-9\-_]+/g, '[API_KEY_REDACTED]');
+        sanitizedError = sanitizedError.replace(/worklog-ai\s+sk-ant-[a-zA-Z0-9\-_]+/g, '[INVALID_HEADER_REDACTED]');
+      }
+      
       return {
         status: 'unhealthy',
-        error: error.message
+        error: sanitizedError || 'Health check failed'
       };
     }
   }
