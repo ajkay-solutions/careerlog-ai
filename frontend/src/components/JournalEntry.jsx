@@ -16,6 +16,7 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
   const entryRef = useRef(entry);
   const onEntryChangeRef = useRef(onEntryChange);
   const needsFreshLoadRef = useRef(false);
+  const lastAutoSaveRef = useRef(0);
 
   // Format date for display
   const formatDate = (date) => {
@@ -115,6 +116,9 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
       }
 
       if (response.success) {
+        // Update rate limiting timestamp for manual saves too
+        lastAutoSaveRef.current = Date.now();
+        
         setEntry(response.data);
         setLastSaved(new Date());
         setWordCount(response.data.wordCount);
@@ -142,6 +146,19 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
 
     // Set new timeout for auto-save
     autoSaveTimeoutRef.current = setTimeout(async () => {
+      // Rate limiting: Don't auto-save more than once every 2 seconds
+      const now = Date.now();
+      const timeSinceLastSave = now - lastAutoSaveRef.current;
+      
+      if (timeSinceLastSave < 2000) {
+        console.log('🔍 Auto-save skipped - rate limited (too soon)');
+        // Re-schedule after the rate limit period
+        autoSaveTimeoutRef.current = setTimeout(() => {
+          debouncedSave(text);
+        }, 2000 - timeSinceLastSave);
+        return;
+      }
+      
       // Perform save logic directly here to avoid dependency on saveEntry
       console.log('🔍 Auto-save executing...', {
         selectedDate: selectedDate,
@@ -183,6 +200,9 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
             oldTextLength: text.length,
             updatedAt: response.data.updatedAt
           });
+          
+          // Update rate limiting timestamp
+          lastAutoSaveRef.current = Date.now();
           
           setEntry(response.data);
           setLastSaved(new Date());
@@ -230,7 +250,7 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
       } finally {
         setIsSaving(false);
       }
-    }, 2000); // Save after 2 seconds of inactivity
+    }, 3000); // Save after 3 seconds of inactivity (increased to reduce frequency)
   }, [selectedDate]); // Only depend on selectedDate to keep function stable
 
   // Handle text change
