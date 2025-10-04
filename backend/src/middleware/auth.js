@@ -6,9 +6,19 @@ const JWT_SECRET = process.env.JWT_SECRET || process.env.SESSION_SECRET || 'fall
 // JWT-based authentication middleware
 const requireAuth = (req, res, next) => {
   const authHeader = req.get('Authorization');
-  const token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : null;
+  let token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : null;
+  
+  // Enhanced debugging for token issues
+  console.log('🔍 JWT Auth status check:', {
+    hasAuthHeader: !!authHeader,
+    hasToken: !!token,
+    authHeaderPrefix: authHeader?.substring(0, 20) + '...',
+    tokenLength: token?.length,
+    userAgent: req.headers['user-agent']?.substring(0, 50) + '...'
+  });
   
   if (!token) {
+    console.log('❌ JWT Auth failed: No token provided');
     return res.status(401).json({ 
       success: false, 
       message: 'Authentication required - no token provided',
@@ -16,13 +26,30 @@ const requireAuth = (req, res, next) => {
     });
   }
   
+  // Check for token format issues and clean if needed
+  if (token.includes('\n') || token.includes('\r')) {
+    console.error('❌ JWT token contains newlines - cleaning...', {
+      originalLength: token.length,
+      hasNewlines: token.includes('\n'),
+      hasCarriageReturns: token.includes('\r')
+    });
+    token = token.replace(/[\n\r]/g, '').trim();
+  }
+  
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded;
-    console.log('✅ JWT authenticated user:', decoded.displayName);
+    console.log('✅ JWT token verified for user:', decoded.displayName);
     next();
   } catch (error) {
-    console.error('❌ JWT verification failed:', error.message);
+    console.error('❌ JWT verification failed:', {
+      error: error.message,
+      tokenLength: token?.length,
+      tokenStart: token?.substring(0, 20) + '...',
+      tokenEnd: '...' + token?.substring(token.length - 20),
+      endpoint: req.path,
+      method: req.method
+    });
     return res.status(401).json({ 
       success: false, 
       message: 'Invalid or expired token',

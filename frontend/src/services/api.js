@@ -17,7 +17,32 @@ class ApiService {
 
   // Get auth token from localStorage
   getAuthToken() {
-    return localStorage.getItem('auth_token');
+    const token = localStorage.getItem('auth_token');
+    
+    // Debug token retrieval issues
+    if (token) {
+      console.log('🔍 Token retrieved from localStorage:', {
+        length: token.length,
+        startsCorrectly: token.startsWith('eyJ'),
+        hasNewlines: token.includes('\n'),
+        hasCarriageReturns: token.includes('\r'),
+        firstChars: token.substring(0, 20) + '...',
+        lastChars: '...' + token.substring(token.length - 20)
+      });
+      
+      // Clean token if it has newlines or extra whitespace
+      const cleanToken = token.replace(/[\n\r]/g, '').trim();
+      if (cleanToken !== token) {
+        console.warn('🧹 Token had formatting issues, cleaned and re-stored');
+        localStorage.setItem('auth_token', cleanToken);
+        return cleanToken;
+      }
+      
+      return token;
+    } else {
+      console.log('🔍 No auth token found in localStorage');
+      return null;
+    }
   }
 
   // Make authenticated API request with timeout
