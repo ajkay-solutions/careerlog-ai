@@ -9,10 +9,26 @@ const jobQueue = getJobQueue();
 
 // POST /api/ai/analyze/:entryId - Trigger AI analysis for a specific entry
 router.post('/analyze/:entryId', requireAuth, async (req, res) => {
+  console.log('🔍 AI ANALYZE REQUEST START:', {
+    entryId: req.params.entryId,
+    userId: req.user?.id,
+    sync: req.body.sync,
+    timestamp: new Date().toISOString(),
+    userAgent: req.headers['user-agent'],
+    origin: req.headers.origin
+  });
+
   try {
     const { entryId } = req.params;
     const { sync = false, priority = 'normal' } = req.body;
     const userId = req.user.id;
+
+    console.log('🔍 AI ANALYZE - Environment check:', {
+      nodeEnv: process.env.NODE_ENV,
+      anthropicApiKey: process.env.ANTHROPIC_API_KEY ? 'SET' : 'NOT_SET',
+      anthropicKeyLength: process.env.ANTHROPIC_API_KEY?.length,
+      anthropicKeyPrefix: process.env.ANTHROPIC_API_KEY?.substring(0, 15)
+    });
 
     // Verify entry belongs to user
     const { PrismaClient } = require('@prisma/client');
@@ -32,7 +48,16 @@ router.post('/analyze/:entryId', requireAuth, async (req, res) => {
 
     if (sync) {
       // Synchronous analysis - user waits for result
+      console.log('🔍 AI ANALYZE - Starting synchronous analysis for entry:', entryId);
       const result = await analysisService.analyzeEntry(entryId, { forceRefresh: true });
+      
+      console.log('🔍 AI ANALYZE - Analysis result:', {
+        success: result.success,
+        hasData: !!result.data,
+        error: result.error,
+        errorType: typeof result.error,
+        cached: result.cached
+      });
       
       res.json({
         success: result.success,

@@ -105,4 +105,82 @@ router.get('/quick', (req, res) => {
   });
 });
 
+// GET /api/health/debug - Comprehensive debug information for production troubleshooting
+router.get('/debug', async (req, res) => {
+  const debugInfo = {
+    timestamp: new Date().toISOString(),
+    environment: {
+      nodeEnv: process.env.NODE_ENV,
+      nodeVersion: process.version,
+      platform: process.platform,
+      arch: process.arch,
+      uptime: process.uptime(),
+      memory: process.memoryUsage(),
+      pid: process.pid
+    },
+    configuration: {
+      port: process.env.PORT,
+      databaseUrl: process.env.DATABASE_URL ? 'SET' : 'NOT_SET',
+      directUrl: process.env.DIRECT_URL ? 'SET' : 'NOT_SET',
+      redisUrl: process.env.REDIS_URL ? 'SET' : 'NOT_SET',
+      anthropicApiKey: process.env.ANTHROPIC_API_KEY ? 'SET' : 'NOT_SET',
+      anthropicKeyLength: process.env.ANTHROPIC_API_KEY?.length,
+      anthropicKeyPrefix: process.env.ANTHROPIC_API_KEY?.substring(0, 15),
+      jwtSecret: process.env.JWT_SECRET ? 'SET' : 'NOT_SET',
+      sessionSecret: process.env.SESSION_SECRET ? 'SET' : 'NOT_SET',
+      googleClientId: process.env.GOOGLE_CLIENT_ID ? 'SET' : 'NOT_SET',
+      googleClientSecret: process.env.GOOGLE_CLIENT_SECRET ? 'SET' : 'NOT_SET',
+      linkedinClientId: process.env.LINKEDIN_CLIENT_ID ? 'SET' : 'NOT_SET',
+      linkedinClientSecret: process.env.LINKEDIN_CLIENT_SECRET ? 'SET' : 'NOT_SET',
+      mailgunApiKey: process.env.MAILGUN_API_KEY ? 'SET' : 'NOT_SET',
+      mailgunDomain: process.env.MAILGUN_DOMAIN
+    },
+    anthropicSdk: {
+      version: require('@anthropic-ai/sdk/package.json').version,
+      available: true
+    }
+  };
+
+  // Test Anthropic client initialization
+  try {
+    const ClaudeService = require('../services/ai/claudeService');
+    const claudeService = new ClaudeService();
+    
+    debugInfo.anthropicClient = {
+      initialized: true,
+      clientType: typeof claudeService.client,
+      defaultModel: claudeService.defaultModel,
+      maxTokens: claudeService.maxTokens,
+      temperature: claudeService.temperature
+    };
+
+    // Test a simple health check call
+    const healthCheck = await claudeService.healthCheck();
+    debugInfo.anthropicHealth = healthCheck;
+    
+  } catch (anthropicError) {
+    debugInfo.anthropicClient = {
+      initialized: false,
+      error: anthropicError.message,
+      errorType: anthropicError.name
+    };
+  }
+
+  // Test database connection
+  try {
+    const dbHealth = await dbService.healthCheck();
+    debugInfo.database = dbHealth;
+  } catch (dbError) {
+    debugInfo.database = {
+      status: 'error',
+      error: dbError.message
+    };
+  }
+
+  res.json({
+    success: true,
+    debugInfo: debugInfo
+  });
+});
+
 module.exports = router;

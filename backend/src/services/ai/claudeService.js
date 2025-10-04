@@ -30,12 +30,28 @@ class ClaudeService {
     try {
       console.log('🤖 Starting AI analysis for entry...');
       console.log('🔍 API Key check for analysis:', process.env.ANTHROPIC_API_KEY ? `${process.env.ANTHROPIC_API_KEY.substring(0, 10)}...` : 'NOT_SET');
+      console.log('🔍 Anthropic Client Details:', {
+        clientExists: !!this.client,
+        clientType: typeof this.client,
+        defaultModel: this.defaultModel,
+        maxTokens: this.maxTokens,
+        temperature: this.temperature
+      });
       
       if (!entryText || entryText.trim().length < 10) {
         throw new Error('Entry text is too short for meaningful analysis');
       }
 
       const prompt = PromptTemplates.getAnalysisPrompt(entryText, userContext);
+      console.log('🔍 Analysis prompt length:', prompt.length);
+      
+      console.log('🔍 About to call Anthropic API with config:', {
+        model: this.defaultModel,
+        max_tokens: this.maxTokens,
+        temperature: this.temperature,
+        messageRole: 'user',
+        promptSnippet: prompt.substring(0, 100) + '...'
+      });
       
       const response = await this.client.messages.create({
         model: this.defaultModel,
@@ -76,7 +92,28 @@ class ClaudeService {
       };
 
     } catch (error) {
-      console.error('❌ AI analysis failed:', error.message);
+      console.error('❌ AI analysis failed - FULL ERROR DETAILS:', {
+        name: error.name,
+        message: error.message,
+        stack: error.stack?.substring(0, 500),
+        code: error.code,
+        status: error.status,
+        headers: error.headers,
+        response: error.response,
+        cause: error.cause,
+        constructor: error.constructor.name
+      });
+      
+      // Additional debugging for specific error types
+      if (error.message?.includes('Headers.append')) {
+        console.error('🔍 HEADERS.APPEND ERROR DETECTED:', {
+          fullMessage: error.message,
+          messageLength: error.message.length,
+          containsWorklogAi: error.message.includes('worklog-ai'),
+          containsApiKey: error.message.includes('sk-ant'),
+          errorOrigin: 'Likely from browser fetch API, not server'
+        });
+      }
       
       // Sanitize error message to prevent API key exposure
       let sanitizedError = error.message;
@@ -89,7 +126,12 @@ class ClaudeService {
       return {
         success: false,
         error: sanitizedError || 'AI analysis failed',
-        fallback: this.generateFallbackAnalysis(entryText)
+        fallback: this.generateFallbackAnalysis(entryText),
+        debugInfo: {
+          errorType: error.name,
+          errorCode: error.code,
+          hasHeaders: !!error.headers
+        }
       };
     }
   }

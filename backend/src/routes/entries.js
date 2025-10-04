@@ -102,11 +102,22 @@ router.get('/:date', requireAuth, async (req, res) => {
 
 // POST /api/entries - Create new entry
 router.post('/', requireAuth, async (req, res) => {
+  console.log('🔍 CREATE ENTRY REQUEST:', {
+    userId: req.user?.id,
+    date: req.body.date,
+    rawTextLength: req.body.rawText?.length,
+    isHighlight: req.body.isHighlight,
+    timestamp: new Date().toISOString(),
+    userAgent: req.headers['user-agent'],
+    contentType: req.headers['content-type']
+  });
+
   try {
     const userId = req.user.id;
     const { date, rawText, isHighlight = false } = req.body;
 
     if (!date || !rawText) {
+      console.log('❌ CREATE ENTRY - Missing required fields:', { date: !!date, rawText: !!rawText });
       return res.status(400).json({
         success: false,
         error: 'Date and rawText are required'
@@ -115,6 +126,12 @@ router.post('/', requireAuth, async (req, res) => {
 
     const entryDate = formatDate(date);
     const wordCount = countWords(rawText);
+
+    console.log('🔍 CREATE ENTRY - Processed data:', {
+      entryDate: entryDate.toISOString(),
+      wordCount,
+      rawTextSnippet: rawText.substring(0, 50) + '...'
+    });
 
     // Check if entry already exists for this date
     const existingEntry = await dbService.executeOperation(async (prismaClient) => {
@@ -128,13 +145,20 @@ router.post('/', requireAuth, async (req, res) => {
       });
     }, `check existing entry for user ${userId}`);
 
+    console.log('🔍 CREATE ENTRY - Existing entry check:', {
+      hasExistingEntry: !!existingEntry,
+      existingEntryId: existingEntry?.id
+    });
+
     if (existingEntry) {
+      console.log('❌ CREATE ENTRY - Entry already exists for date');
       return res.status(409).json({
         success: false,
         error: 'Entry already exists for this date. Use PUT to update.'
       });
     }
 
+    console.log('🔍 CREATE ENTRY - About to create new entry...');
     // Create entry and invalidate relevant caches
     const entry = await cachedDbService.createAndInvalidateCache('entry', {
       data: {
@@ -150,6 +174,14 @@ router.post('/', requireAuth, async (req, res) => {
       }
     }, ['entries', 'counts', 'dashboard']);
 
+    console.log('✅ CREATE ENTRY - Entry created successfully:', {
+      entryId: entry.id,
+      userId: entry.userId,
+      date: entry.date.toISOString(),
+      wordCount: entry.wordCount,
+      createdAt: entry.createdAt.toISOString()
+    });
+
     // Trigger AI analysis asynchronously (non-blocking)
     try {
       if (rawText.trim().length > 20) { // Only analyze substantial entries
@@ -161,6 +193,7 @@ router.post('/', requireAuth, async (req, res) => {
       // Don't fail the entry creation if AI queuing fails
     }
 
+    console.log('🔍 CREATE ENTRY - Sending success response');
     res.status(201).json({
       success: true,
       data: entry,
@@ -177,10 +210,29 @@ router.post('/', requireAuth, async (req, res) => {
 
 // PUT /api/entries/:date - Update existing entry
 router.put('/:date', requireAuth, async (req, res) => {
+  console.log('🔍 UPDATE ENTRY REQUEST:', {
+    userId: req.user?.id,
+    targetDate: req.params.date,
+    rawTextLength: req.body.rawText?.length,
+    isHighlight: req.body.isHighlight,
+    hasProjectIds: !!req.body.projectIds,
+    hasSkillIds: !!req.body.skillIds,
+    hasCompetencyIds: !!req.body.competencyIds,
+    timestamp: new Date().toISOString(),
+    userAgent: req.headers['user-agent'],
+    contentType: req.headers['content-type']
+  });
+
   try {
     const userId = req.user.id;
     const targetDate = formatDate(req.params.date);
     const { rawText, isHighlight, projectIds, skillIds, competencyIds } = req.body;
+
+    console.log('🔍 UPDATE ENTRY - Processed data:', {
+      targetDate: targetDate.toISOString(),
+      rawTextSnippet: rawText ? rawText.substring(0, 50) + '...' : 'unchanged',
+      isHighlight: isHighlight
+    });
 
     const updateData = {};
     
@@ -194,7 +246,14 @@ router.put('/:date', requireAuth, async (req, res) => {
     if (skillIds !== undefined) updateData.skillIds = skillIds;
     if (competencyIds !== undefined) updateData.competencyIds = competencyIds;
 
+    console.log('🔍 UPDATE ENTRY - Update data prepared:', {
+      hasRawText: !!updateData.rawText,
+      wordCount: updateData.wordCount,
+      isHighlight: updateData.isHighlight
+    });
+
     // Update entry and invalidate relevant caches
+    console.log('🔍 UPDATE ENTRY - About to update entry in database...');
     const entry = await cachedDbService.updateAndInvalidateCache('entry', {
       where: {
         userId_date: {
@@ -204,6 +263,15 @@ router.put('/:date', requireAuth, async (req, res) => {
       },
       data: updateData
     }, ['entries', 'dashboard']);
+
+    console.log('✅ UPDATE ENTRY - Entry updated successfully:', {
+      entryId: entry.id,
+      userId: entry.userId,
+      date: entry.date.toISOString(),
+      wordCount: entry.wordCount,
+      updatedAt: entry.updatedAt.toISOString(),
+      rawTextLength: entry.rawText?.length
+    });
 
     // Trigger AI analysis if rawText was updated
     try {
@@ -216,6 +284,7 @@ router.put('/:date', requireAuth, async (req, res) => {
       // Don't fail the entry update if AI queuing fails
     }
 
+    console.log('🔍 UPDATE ENTRY - Sending success response');
     res.json({
       success: true,
       data: entry,
