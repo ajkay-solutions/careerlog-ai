@@ -179,17 +179,76 @@ app.use((req, res) => {
   });
 });
 
-app.listen(PORT, async () => {
-  console.log(`🚀 WorkLog AI Backend running on port ${PORT}`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🔗 Accepting requests from: ${corsOptions.origin}`);
+// Validate critical environment variables before starting
+function validateEnvironment() {
+  const required = ['DATABASE_URL', 'JWT_SECRET'];
+  const missing = required.filter(key => !process.env[key]);
   
-  // Start connection warmup immediately after server start
-  console.log('🔥 Starting connection warmup on server startup...');
-  try {
-    await connectionWarmer.warmupConnections();
-    console.log('✅ Server startup warmup completed - ready for fast responses');
-  } catch (error) {
-    console.warn('⚠️ Server startup warmup failed:', error.message);
+  if (missing.length > 0) {
+    console.error('❌ Missing required environment variables:', missing);
+    throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
   }
+  
+  // Log key configuration (without sensitive values)
+  console.log('🔍 Environment Configuration:');
+  console.log(`  - NODE_ENV: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`  - PORT: ${PORT}`);
+  console.log(`  - DATABASE_URL: ${process.env.DATABASE_URL ? 'SET' : 'NOT_SET'}`);
+  console.log(`  - REDIS_URL: ${process.env.REDIS_URL ? 'SET' : 'NOT_SET'}`);
+  console.log(`  - ANTHROPIC_API_KEY: ${process.env.ANTHROPIC_API_KEY ? 'SET' : 'NOT_SET'}`);
+  console.log(`  - JWT_SECRET: ${process.env.JWT_SECRET ? 'SET' : 'NOT_SET'}`);
+}
+
+try {
+  validateEnvironment();
+  
+  const server = app.listen(PORT, async () => {
+    console.log(`🚀 WorkLog AI Backend running on port ${PORT}`);
+    console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`🔗 Accepting requests from: ${corsOptions.origin}`);
+    
+    // Start connection warmup immediately after server start
+    console.log('🔥 Starting connection warmup on server startup...');
+    try {
+      await connectionWarmer.warmupConnections();
+      console.log('✅ Server startup warmup completed - ready for fast responses');
+    } catch (error) {
+      console.warn('⚠️ Server startup warmup failed:', error.message);
+    }
+  });
+
+  // Handle server errors
+  server.on('error', (error) => {
+    console.error('❌ Server error:', error);
+    if (error.code === 'EADDRINUSE') {
+      console.error(`❌ Port ${PORT} is already in use`);
+    }
+  });
+
+} catch (error) {
+  console.error('❌ Server startup failed:', error.message);
+  process.exit(1);
+}
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ Unhandled Promise Rejection:', reason);
+  console.error('Promise:', promise);
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+  console.error('❌ Uncaught Exception:', error);
+  process.exit(1);
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('🛑 Received SIGTERM, shutting down gracefully');
+  process.exit(0);
+});
+
+process.on('SIGINT', () => {
+  console.log('🛑 Received SIGINT, shutting down gracefully');
+  process.exit(0);
 });

@@ -115,8 +115,19 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
     // Set new timeout for auto-save
     autoSaveTimeoutRef.current = setTimeout(async () => {
       // Perform save logic directly here to avoid dependency on saveEntry
-      if (!selectedDate || !text.trim()) return;
+      console.log('🔍 Auto-save executing...', {
+        selectedDate: selectedDate,
+        textLength: text.length,
+        textEmpty: !text.trim(),
+        hasCurrentEntry: !!entryRef.current
+      });
+      
+      if (!selectedDate || !text.trim()) {
+        console.log('🔍 Auto-save skipped - missing date or empty text');
+        return;
+      }
 
+      console.log('🔍 Auto-save proceeding...');
       setIsSaving(true);
       setError(null);
 
@@ -138,6 +149,7 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
         }
 
         if (response.success) {
+          console.log('✅ Auto-save successful:', response.data.id);
           setEntry(response.data);
           setLastSaved(new Date());
           setWordCount(response.data.wordCount);
@@ -147,9 +159,12 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
           if (currentOnEntryChange) {
             currentOnEntryChange(response.data);
           }
+        } else {
+          console.error('❌ Auto-save failed - server returned error:', response);
+          setError('Failed to auto-save entry');
         }
       } catch (err) {
-        console.error('Error auto-saving entry:', err);
+        console.error('❌ Auto-save failed with exception:', err);
         setError('Failed to auto-save entry');
       } finally {
         setIsSaving(false);
@@ -162,6 +177,13 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
     const newText = e.target.value;
     setRawText(newText);
     setWordCount(countWords(newText));
+    
+    // Debug logging for auto-save
+    console.log('🔍 Text changed, triggering auto-save...', {
+      textLength: newText.length,
+      hasEntry: !!entryRef.current,
+      selectedDate: selectedDate
+    });
     
     // Trigger auto-save
     debouncedSave(newText);

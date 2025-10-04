@@ -7,11 +7,17 @@ class ClaudeService {
       throw new Error('ANTHROPIC_API_KEY environment variable is required');
     }
     
-    this.client = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY,
-      // Ensure no custom headers that might cause issues
-      defaultHeaders: {}
-    });
+    // Initialize Anthropic client with minimal configuration
+    try {
+      this.client = new Anthropic({
+        apiKey: process.env.ANTHROPIC_API_KEY
+        // Remove custom headers for now to avoid any conflicts
+      });
+      console.log('✅ Anthropic client initialized successfully');
+    } catch (error) {
+      console.error('❌ Failed to initialize Anthropic client:', error.message);
+      throw error;
+    }
     
     // Default model configuration
     this.defaultModel = 'claude-3-haiku-20240307'; // Fast and cost-effective for analysis
@@ -23,6 +29,7 @@ class ClaudeService {
   async analyzeEntry(entryText, userContext = {}) {
     try {
       console.log('🤖 Starting AI analysis for entry...');
+      console.log('🔍 API Key check for analysis:', process.env.ANTHROPIC_API_KEY ? `${process.env.ANTHROPIC_API_KEY.substring(0, 10)}...` : 'NOT_SET');
       
       if (!entryText || entryText.trim().length < 10) {
         throw new Error('Entry text is too short for meaningful analysis');
@@ -300,6 +307,9 @@ class ClaudeService {
   // Health check for the service
   async healthCheck() {
     try {
+      console.log('🔍 Claude Health Check - Testing API key format...');
+      console.log('🔍 API Key format check:', process.env.ANTHROPIC_API_KEY ? `${process.env.ANTHROPIC_API_KEY.substring(0, 10)}...` : 'NOT_SET');
+      
       const response = await this.client.messages.create({
         model: this.defaultModel,
         max_tokens: 10,
@@ -317,6 +327,13 @@ class ClaudeService {
         responseReceived: !!response.content[0].text
       };
     } catch (error) {
+      console.error('🔍 Claude Health Check Error Details:', {
+        name: error.name,
+        message: error.message,
+        stack: error.stack?.substring(0, 200),
+        headers: error.headers
+      });
+      
       // Sanitize error message to prevent API key exposure
       let sanitizedError = error.message;
       if (sanitizedError && typeof sanitizedError === 'string') {
@@ -326,7 +343,11 @@ class ClaudeService {
       
       return {
         status: 'unhealthy',
-        error: sanitizedError || 'Health check failed'
+        error: sanitizedError || 'Health check failed',
+        debugInfo: {
+          errorType: error.name,
+          hasHeaders: !!error.headers
+        }
       };
     }
   }

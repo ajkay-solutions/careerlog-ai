@@ -81,7 +81,20 @@ class ApiService {
         throw new ApiError(`Request timeout (${timeout/1000}s) - ${endpoint}`, 408, { originalError: error });
       }
       
-      throw new ApiError('Network error', 0, { originalError: error });
+      // Handle connection errors
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        throw new ApiError(`Connection failed - Backend service may be unavailable. Please check if the backend is running at ${this.baseURL}`, 0, { originalError: error });
+      }
+      
+      // Log the original error for debugging
+      console.error('🔍 API Service Error Details:', {
+        name: error.name,
+        message: error.message,
+        endpoint: endpoint,
+        baseURL: this.baseURL
+      });
+      
+      throw new ApiError(`Network error: ${error.message}`, 0, { originalError: error });
     }
   }
 
