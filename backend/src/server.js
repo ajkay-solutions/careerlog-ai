@@ -119,7 +119,7 @@ app.get('/health', (req, res) => {
     status: 'OK', 
     timestamp: new Date().toISOString(),
     service: 'WorkLog AI Backend',
-    version: '1.0.0',
+    version: '1.0.1',
     environment: process.env.NODE_ENV || 'development'
   });
 });
@@ -128,7 +128,7 @@ app.get('/health', (req, res) => {
 app.get('/', (req, res) => {
   res.json({ 
     message: 'WorkLog AI Backend API',
-    version: '1.0.0',
+    version: '1.0.1',
     endpoints: {
       health: '/health',
       auth: {
