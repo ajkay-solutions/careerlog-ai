@@ -164,6 +164,74 @@ class ApiService {
     });
   }
 
+  // POST request for file downloads (returns blob)
+  async postFile(endpoint, data = {}) {
+    const url = `${this.baseURL}${endpoint}`;
+    const token = this.getAuthToken();
+    
+    // Set timeout for file operations (60 seconds)
+    const timeout = 60000;
+
+    const config = {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+
+    // Add auth token if available
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    try {
+      // Create abort controller for timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeout);
+      
+      config.signal = controller.signal;
+      
+      const response = await fetch(url, config);
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        // Try to get error message from response
+        try {
+          const errorData = await response.json();
+          throw new ApiError(
+            errorData.error || `HTTP ${response.status}`,
+            response.status,
+            errorData
+          );
+        } catch (jsonError) {
+          throw new ApiError(`HTTP ${response.status}`, response.status);
+        }
+      }
+
+      // Return blob for file download
+      return await response.blob();
+    } catch (error) {
+      if (error instanceof ApiError) {
+        throw error;
+      }
+      
+      // Handle timeout errors
+      if (error.name === 'AbortError') {
+        throw new ApiError(`Request timeout (${timeout/1000}s) - ${endpoint}`, 408, { originalError: error });
+      }
+      
+      // Handle connection errors
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        throw new ApiError(`Connection failed - Backend service may be unavailable. Please check if the backend is running at ${this.baseURL}`, 0, { originalError: error });
+      }
+      
+      throw new ApiError(`Network error: ${error.message}`, 0, { originalError: error });
+    }
+  }
+
   // Entry-specific methods
   async getEntries(params = {}) {
     return this.get('/api/entries', params);

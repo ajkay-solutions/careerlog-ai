@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { Copy, Download, Mail, RefreshCw, ArrowLeft, CheckCircle } from 'lucide-react';
+import { apiService } from '../../services/api';
 
 function GeneratedContentEditor({ 
   generatedContent, 
@@ -45,7 +46,7 @@ function GeneratedContentEditor({
     }
   };
 
-  // Export functionality (reuse existing API)
+  // Export functionality using API service
   const handleExport = async () => {
     setIsExporting(true);
     try {
@@ -54,28 +55,16 @@ function GeneratedContentEditor({
         ? 'performance-review' 
         : 'resume-bullets';
 
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3004';
-      const response = await fetch(`${apiUrl}/api/generate/export`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('worklog_auth_token')}`
-        },
-        body: JSON.stringify({
-          type: exportType,
-          format: exportFormat,
-          content: content,
-          metadata: metadata
-        })
+      // Use API service for consistent authentication handling
+      const response = await apiService.postFile('/api/generate/export', {
+        type: exportType,
+        format: exportFormat,
+        content: content,
+        metadata: metadata
       });
 
-      if (!response.ok) {
-        throw new Error('Export failed');
-      }
-
       // Handle file download
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
+      const url = window.URL.createObjectURL(response);
       const a = document.createElement('a');
       a.href = url;
       a.download = `${exportType}-${new Date().toISOString().split('T')[0]}.${exportFormat}`;
