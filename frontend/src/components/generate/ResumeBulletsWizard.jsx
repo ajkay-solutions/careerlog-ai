@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Target, FileText, ArrowLeft, ArrowRight, Zap, Settings } from 'lucide-react';
 import GeneratedContentEditor from './GeneratedContentEditor';
+import { apiService } from '../../services/api';
 
 function ResumeBulletsWizard({ onBack }) {
   const [currentStep, setCurrentStep] = useState(1);
@@ -75,18 +76,9 @@ function ResumeBulletsWizard({ onBack }) {
   useEffect(() => {
     const loadDashboardData = async () => {
       try {
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3004';
-        const response = await fetch(`${apiUrl}/api/insights/dashboard?timeframe=${config.timeframe}`, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('worklog_auth_token')}`
-          }
-        });
-        
-        if (response.ok) {
-          const result = await response.json();
-          const data = result.success ? result.data : result;
-          setDashboardData(data);
-        }
+        const result = await apiService.get(`/api/insights/dashboard?timeframe=${config.timeframe}`);
+        const data = result.success ? result.data : result;
+        setDashboardData(data);
       } catch (error) {
         console.error('Failed to load dashboard data:', error);
       }
@@ -114,32 +106,17 @@ function ResumeBulletsWizard({ onBack }) {
         .filter(([_, selected]) => selected)
         .map(([skill, _]) => skill);
 
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3004';
-      const response = await fetch(`${apiUrl}/api/generate/resume-bullets`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('worklog_auth_token')}`
-        },
-        body: JSON.stringify({
-          startDate: config.startDate,
-          endDate: config.endDate,
-          timeframe: config.timeframe,
-          targetRole: config.targetRole,
-          targetIndustry: config.targetIndustry,
-          skillsFocus: selectedSkills,
-          format: config.format,
-          count: config.bulletCount
-        })
+      const result = await apiService.post('/api/generate/resume-bullets', {
+        startDate: config.startDate,
+        endDate: config.endDate,
+        timeframe: config.timeframe,
+        targetRole: config.targetRole,
+        targetIndustry: config.targetIndustry,
+        skillsFocus: selectedSkills,
+        format: config.format,
+        count: config.bulletCount
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Resume bullets API failed:', response.status, errorText);
-        throw new Error('Failed to generate resume bullets');
-      }
-
-      const result = await response.json();
       console.log('Resume bullets response:', result);
       
       const bulletsContent = result.success ? result.data?.bullets || result.bullets : result.bullets;
