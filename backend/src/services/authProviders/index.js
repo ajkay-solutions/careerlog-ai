@@ -1,5 +1,5 @@
-const LinkedInProvider = require('./linkedinProvider');
-const GoogleProvider = require('./googleProvider');
+const LinkedInProvider = require('./linkedinProviderV2');
+const GoogleProvider = require('./googleProviderV2');
 
 class AuthProviderFactory {
   constructor() {
