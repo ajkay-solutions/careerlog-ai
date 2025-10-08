@@ -1,24 +1,114 @@
-XHROPTIONS
-https://worklog-ai-backend.onrender.com/api/entries
-[HTTP/3 200  304ms]
+XHRPOST
+https://lnkd.demdex.net/event?d_dil_ver=9.4&_ts=1759950706466
+
+GET
+https://platform.linkedin.com/litms/utag/checkpoint-frontend/utag.118.js?utv=ut4.51.202507291840
 
 XHRPOST
-https://worklog-ai-backend.onrender.com/api/entries
-[HTTP/3 201  405ms]
+https://www.linkedin.com/li/track
+NS_BINDING_ABORTED
+
+Loading failed for the <script> with source “https://platform.linkedin.com/litms/utag/checkpoint-frontend/utag.118.js?utv=ut4.51.202507291840”. login:1:1
+XMLHttpRequest { _sanitizedPath: "/li/track", readyState: 4, timeout: 0, withCredentials: true, upload: XMLHttpRequestUpload, responseURL: "https://www.linkedin.com/li/track", status: 0, statusText: "", responseType: "", response: "" }
+8aidj8cqawduo88wnxdz9a7h0:8:27017
+POST
+https://www.linkedin.com/checkpoint/lg/login-submit
+[HTTP/3 303  472ms]
+
+XHRPOST
+https://www.linkedin.com/li/track
+[HTTP/3 200  289ms]
+
+GET
+https://www.linkedin.com/oauth/v2/login-success?app_id=228232280&auth_type=AC&flow={"creationTime":1759950698064,"appId":228232280,"authorizationType":"OAUTH2_AUTHORIZATION_CODE","redirectUri":"https://worklog-ai-backend.onrender.com/auth/linkedin/callback","currentStage":"LOGIN_SUCCESS","currentSubStage":0,"authFlowName":"generic-permission-list","scope":"openid+profile+email"}
+[HTTP/3 303  444ms]
+
+GET
+https://worklog-ai-backend.onrender.com/auth/linkedin/callback?code=AQTOemZAoLZqU_uqStu5O5Reb2J2XyzQJMTzB5SCo7B3nnrHf9xa_i-wKrC0abvh9aDVJf5og1Fm9hGDr_478HcijcOSH-bJZ8-pmkNRRzjTNOmGpvFFw8xFxyG3hzX1ZOzSHXxwIFML_6JM7m8nn0EclC8uZ6-X8vShrocUuY-Cg-wgFLte2NnlBCi4Q58pVFbWkzqbbJfExSeTifQ
+[HTTP/3 302  1606ms]
+
+GET
+https://worklog.ajkaysolutions.com/journal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwOTQwMjAzMjU1NTM1NTI2NTk5NSIsInByb3ZpZGVyIjoibGlua2VkaW4iLCJkaXNwbGF5TmFtZSI6IkFyc2FsYW4gSmVoYW5naXIgS2hhbiIsIm5hbWUiOnsiZmlyc3QiOiJBcnNhbGFuIiwibGFzdCI6IkplaGFuZ2lyIEtoYW4ifSwiZW1haWwiOiJhcnNhbGFuLmplaGFuZ2lyQGdtYWlsLmNvbSIsImlhdCI6MTc1OTk1MDcwOCwiZXhwIjoxNzYwMDM3MTA4fQ.iENfindKvg6r_CeNqzxaID_23vWy0ABtVYjA3qJP3C0
+[HTTP/2 200  1443ms]
+
+POST
+https://play.google.com/log?hasfast=true&authuser=0&format=json
+NS_ERROR_DOM_CORP_FAILED
+
+POST
+https://play.google.com/log?hasfast=true&authuser=0&format=json
+NS_ERROR_DOM_CORP_FAILED
+
+POST
+https://collector-pxdojv695v.protechts.net/api/v2/msft/beacon
+[HTTP/3 200  296ms]
+
+GET
+https://worklog.ajkaysolutions.com/assets/index-6f8a4fff.js
+[HTTP/3 200  2041ms]
+
+GET
+https://worklog.ajkaysolutions.com/assets/index-ab14c828.css
+[HTTP/3 200  468ms]
+
+Error in parsing value for ‘-webkit-text-size-adjust’.  Declaration dropped. index-ab14c828.css:1:5313
+GET
+https://worklog.ajkaysolutions.com/vite.svg
+[HTTP/3 200  1179ms]
+
+XHROPTIONS
+https://worklog-ai-backend.onrender.com/api/user/profile
+[HTTP/2 200  412ms]
+
+XHRGET
+https://worklog-ai-backend.onrender.com/api/user/profile
+[HTTP/2 200  643ms]
+
+XHRGET
+https://worklog-ai-backend.onrender.com/api/user/profile
+[HTTP/2 304  648ms]
+
+GET
+https://media.licdn.com/dms/image/v2/D4D03AQERPyITfnqq3A/profile-displayphoto-shrink_100_100/B4DZc00foAGUAc-/0/1748937867203?e=1762992000&v=beta&t=tILjcJQZJoXHTKD2DZ5SYQ6xqPpmnskCVzLJyeE3ykk
+NS_BINDING_ABORTED
+
+GET
+https://media.licdn.com/dms/image/v2/D4D03AQERPyITfnqq3A/profile-displayphoto-shrink_100_100/B4DZc00foAGUAc-/0/1748937867203?e=1762992000&v=beta&t=tILjcJQZJoXHTKD2DZ5SYQ6xqPpmnskCVzLJyeE3ykk
+NS_BINDING_ABORTED
+
+GET
+https://media.licdn.com/dms/image/v2/D4D03AQERPyITfnqq3A/profile-displayphoto-shrink_100_100/B4DZc00foAGUAc-/0/1748937867203?e=1762992000&v=beta&t=tILjcJQZJoXHTKD2DZ5SYQ6xqPpmnskCVzLJyeE3ykk
+[HTTP/2 200  307ms]
 
 XHROPTIONS
 https://worklog-ai-backend.onrender.com/api/entries?limit=50
-[HTTP/3 200  270ms]
+[HTTP/2 200  274ms]
+
+XHROPTIONS
+https://worklog-ai-backend.onrender.com/api/entries/2025-10-09
+[HTTP/2 200  265ms]
 
 XHRGET
 https://worklog-ai-backend.onrender.com/api/entries?limit=50
-[HTTP/3 200  296ms]
+[HTTP/3 200  501ms]
+
+XHRGET
+https://worklog-ai-backend.onrender.com/api/entries/2025-10-09
+[HTTP/3 200  294ms]
 
 XHROPTIONS
 https://worklog-ai-backend.onrender.com/api/entries/2025-10-09
-[HTTP/3 200  291ms]
+[HTTP/3 200  281ms]
 
-XHRPUT
+XHRGET
 https://worklog-ai-backend.onrender.com/api/entries/2025-10-09
-[HTTP/3 500  284ms]
+[HTTP/3 304  273ms]
+
+XHROPTIONS
+https://worklog-ai-backend.onrender.com/api/entries
+[HTTP/3 200  267ms]
+
+XHRPOST
+https://worklog-ai-backend.onrender.com/api/entries
+[HTTP/3 409  534ms]
 

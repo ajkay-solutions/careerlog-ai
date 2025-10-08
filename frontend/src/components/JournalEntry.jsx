@@ -362,6 +362,38 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
           selectedDate: selectedDate,
           textLength: text.length
         });
+        
+        // Handle 409 conflict error for CREATE operations
+        const currentEntry = entryRef.current;
+        if (!currentEntry && err.status === 409) {
+          console.log('🔄 [ISSUE-6-DEBUG] CREATE failed with 409 exception, retrying with UPDATE...');
+          try {
+            const entryData = {
+              date: selectedDate,
+              rawText: text,
+              isHighlight: currentEntry?.isHighlight || false
+            };
+            
+            const updateResponse = await apiService.updateEntry(selectedDate, entryData);
+            if (updateResponse.success) {
+              console.log('✅ [ISSUE-6-DEBUG] Retry UPDATE succeeded after 409 exception');
+              lastAutoSaveRef.current = Date.now();
+              setEntry(updateResponse.data);
+              setLastSaved(new Date());
+              setWordCount(updateResponse.data.wordCount);
+              
+              const currentOnEntryChange = onEntryChangeRef.current;
+              if (currentOnEntryChange) {
+                currentOnEntryChange(updateResponse.data);
+              }
+              setIsSaving(false);
+              return; // Success, exit early
+            }
+          } catch (retryError) {
+            console.error('❌ [ISSUE-6-DEBUG] Retry UPDATE also failed after 409 exception:', retryError);
+          }
+        }
+        
         setError('Failed to auto-save entry');
       } finally {
         setIsSaving(false);
