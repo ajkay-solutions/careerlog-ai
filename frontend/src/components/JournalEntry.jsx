@@ -332,8 +332,21 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
           
           // If CREATE failed with 409 (conflict), try UPDATE instead
           if (!currentEntry && response.status === 409) {
-            console.log('🔄 [ISSUE-6-DEBUG] CREATE failed with 409, retrying with UPDATE...');
+            console.log('🔄 [ISSUE-6-DEBUG] CREATE failed with 409, retrying with UPDATE...', {
+              selectedDate: selectedDate,
+              selectedDateISO: selectedDate?.toISOString(),
+              selectedDateFormatted: selectedDate?.toISOString()?.split('T')[0],
+              currentEntryState: currentEntry,
+              responseStatus: response.status
+            });
             try {
+              console.log('🔄 [ISSUE-6-DEBUG] About to retry UPDATE (success path) with:', {
+                updateDate: selectedDate,
+                updateDateISO: selectedDate?.toISOString(),
+                updateDateFormatted: selectedDate?.toISOString()?.split('T')[0],
+                textLength: textToSave.length
+              });
+              
               const updateResponse = await apiService.updateEntry(selectedDate, entryData);
               if (updateResponse.success) {
                 console.log('✅ [ISSUE-6-DEBUG] Retry UPDATE succeeded after 409 error');
@@ -366,13 +379,26 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
         // Handle 409 conflict error for CREATE operations
         const currentEntry = entryRef.current;
         if (!currentEntry && err.status === 409) {
-          console.log('🔄 [ISSUE-6-DEBUG] CREATE failed with 409 exception, retrying with UPDATE...');
+          console.log('🔄 [ISSUE-6-DEBUG] CREATE failed with 409 exception, retrying with UPDATE...', {
+            selectedDate: selectedDate,
+            selectedDateISO: selectedDate?.toISOString(),
+            selectedDateFormatted: selectedDate?.toISOString()?.split('T')[0],
+            currentEntryState: currentEntry,
+            errorDetails: err.message
+          });
           try {
             const entryData = {
               date: selectedDate,
               rawText: text,
               isHighlight: currentEntry?.isHighlight || false
             };
+            
+            console.log('🔄 [ISSUE-6-DEBUG] About to retry UPDATE with:', {
+              updateDate: selectedDate,
+              updateDateISO: selectedDate?.toISOString(),
+              updateDateFormatted: selectedDate?.toISOString()?.split('T')[0],
+              textLength: text.length
+            });
             
             const updateResponse = await apiService.updateEntry(selectedDate, entryData);
             if (updateResponse.success) {
