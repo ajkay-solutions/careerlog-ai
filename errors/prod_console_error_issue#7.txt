@@ -1,58 +1,129 @@
+GET
+https://worklog-ai-backend.onrender.com/auth/linkedin
+[HTTP/2 302  455ms]
+
+GET
+https://www.linkedin.com/oauth/v2/authorization?response_type=code&redirect_uri=https://worklog.ajkaysolutions.com/auth/linkedin/callback&scope=openid profile email&client_id=7730ozpx4pzs6w
+[HTTP/2 200  617ms]
+
+GET
+https://static.licdn.com/sc/h/35397qx3weze575afrgy8jbkj
+[HTTP/2 200  306ms]
+
+GET
+https://static.licdn.com/scds/common/u/lib/fizzy/fz-1.3.8-min.js
+[HTTP/2 200  299ms]
+
+GET
+https://static.licdn.com/sc/h/109a9uuj40g1xqz597iv5oz4v
+[HTTP/2 200  287ms]
+
+GET
+https://static.licdn.com/sc/h/bd4wlgg9kzz4u85nas4duu0py
+[HTTP/2 200  235ms]
+
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:11907
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:12560
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:16394
+Unknown pseudo-class or pseudo-element ‘-ms-backdrop’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:16421
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:18757
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:19426
+Unknown pseudo-class or pseudo-element ‘-ms-track’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:19690
+Unknown pseudo-class or pseudo-element ‘-ms-thumb’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:19892
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:20246
+Unknown pseudo-class or pseudo-element ‘-ms-thumb’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:20301
+Unknown pseudo-class or pseudo-element ‘-ms-fill-lower’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:20371
+Unknown pseudo-class or pseudo-element ‘-ms-fill-upper’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:20465
+Unknown pseudo-class or pseudo-element ‘-ms-fill-lower’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:20588
+Unknown pseudo-class or pseudo-element ‘-ms-fill-upper’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:20680
+Unknown property ‘-moz-transform’.  Declaration dropped. 35397qx3weze575afrgy8jbkj:1:21959
+Unknown pseudo-class or pseudo-element ‘-ms-expand’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:23651
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:24440
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:24536
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:24721
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:34699
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:35622
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:49041
+Error in parsing value for ‘--artdeco-reset-typography-font-style-normal-important’.  Declaration dropped. 35397qx3weze575afrgy8jbkj:1:55095
+Expected media feature name but found ‘min-device-pixel-ratio’. 35397qx3weze575afrgy8jbkj:1:57498
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:89501
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:90702
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:95117
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:95818
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:95889
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:97158
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:97691
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:98287
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:98855
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:99486
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:100033
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:100643
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:101211
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 35397qx3weze575afrgy8jbkj:1:101842
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:108038
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:120179
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:120860
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:121060
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:122159
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:122327
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:122440
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:122796
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:123064
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:123266
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:123689
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:124184
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:124405
+Error in parsing value for ‘line-height’.  Declaration dropped. 35397qx3weze575afrgy8jbkj:1:125875
+Error in parsing value for ‘line-height’.  Declaration dropped. 35397qx3weze575afrgy8jbkj:1:126066
+Error in parsing value for ‘line-height’.  Declaration dropped. 35397qx3weze575afrgy8jbkj:1:126257
+Error in parsing value for ‘line-height’.  Declaration dropped. 35397qx3weze575afrgy8jbkj:1:126446
+Error in parsing value for ‘line-height’.  Declaration dropped. 35397qx3weze575afrgy8jbkj:1:126637
+Error in parsing value for ‘line-height’.  Declaration dropped. 35397qx3weze575afrgy8jbkj:1:126828
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:131480
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:131639
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:134665
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:136999
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:138891
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:141764
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:147654
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:149955
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:150966
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:160317
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:164943
+Expected media feature name but found ‘-ms-high-contrast’. 35397qx3weze575afrgy8jbkj:1:168674
+GET
+https://static.licdn.com/sc/h/6uvbu98hl3odicpkxfj7uwnuh
+[HTTP/3 200  24ms]
+
+GET
+https://static.licdn.com/sc/h/3m4lyvbs6efg8pyhv7kupo6dh
+[HTTP/3 200  30ms]
+
+POST
+https://www.linkedin.com/li/track
+[HTTP/3 200  281ms]
+
+POST
+https://www.linkedin.com/li/track
+[HTTP/3 200  277ms]
+
+XHRGET
+https://static.licdn.com/sc/p/com.linkedin.oauth-fe:oauth-fe-static-content+4.0.1658/f//oauth-frontend/artdeco/static/images/icons.svg
+[HTTP/3 404  24ms]
+
+Uncaught 
+XMLHttpRequest { addEventListener: ka(), readyState: 4, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, responseURL: "https://static.licdn.com/sc/p/com.linkedin.oauth-fe%3Aoauth-fe-static-content%2B4.0.1658/f/%2Foauth-frontend%2Fartdeco%2Fstatic%2Fimages%2Ficons.svg", status: 404, statusText: "", responseType: "document", response: null }
+bd4wlgg9kzz4u85nas4duu0py:192:273
 XHRPOST
 https://www.linkedin.com/li/track
+[HTTP/3 200  278ms]
 
-XHRPOST
-https://lnkd.demdex.net/event?d_dil_ver=9.4&_ts=1759946208020
-
-GET
-https://platform.linkedin.com/litms/utag/checkpoint-frontend/utag.118.js?utv=ut4.51.202507291840
-NS_BINDING_ABORTED
-
-XMLHttpRequest { _sanitizedPath: "/li/track", readyState: 4, timeout: 0, withCredentials: true, upload: XMLHttpRequestUpload, responseURL: "https://www.linkedin.com/li/track", status: 0, statusText: "", responseType: "", response: "" }
-8aidj8cqawduo88wnxdz9a7h0:8:27017
-XHRPOST
-https://www.linkedin.com/li/track
-NS_BINDING_ABORTED
-
-Loading failed for the <script> with source “https://platform.linkedin.com/litms/utag/checkpoint-frontend/utag.118.js?utv=ut4.51.202507291840”. login:1:1
-POST
-https://www.linkedin.com/checkpoint/lg/login-submit
-[HTTP/3 303  546ms]
-
-XHRPOST
-https://www.linkedin.com/li/track
-[HTTP/3 200  391ms]
-
-GET
-https://www.linkedin.com/oauth/v2/login-success?app_id=228232280&auth_type=AC&flow={"creationTime":1759946186651,"scope":"openid+profile+email","appId":228232280,"authorizationType":"OAUTH2_AUTHORIZATION_CODE","redirectUri":"https://worklog-ai-backend.onrender.com/auth/linkedin/callback","currentStage":"LOGIN_SUCCESS","currentSubStage":0,"authFlowName":"generic-permission-list"}
-[HTTP/3 303  529ms]
-
-GET
-https://worklog-ai-backend.onrender.com/auth/linkedin/callback?code=AQQx9a9W8_picRxA62uGFAs2x8wIa1nlpyPs3xtg6Oj-yl_r8brxUA4OKL9PtsHQVGsTaRmbFF6BHZbpHh2fx6VnhFllgcpUb5XZfqjYj9gJy42peTuZez7rUr6JPBZTrMopT0vFaLzNvP9umupS03_zWdRhZK8RFgyvFWU9srRc5te5DO0mlfEVRfuWtaFoibe06QZQA0mUtLSOQPQ
-[HTTP/3 302  1758ms]
-
-GET
-https://worklog.ajkaysolutions.com/?error=linkedin_auth_error
-[HTTP/3 200  1081ms]
-
-WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER. main.min.js:2:81865
-POST
-https://collector-pxdojv695v.protechts.net/api/v2/msft/beacon
-[HTTP/3 200  312ms]
-
-POST
-https://s.xlgmedia.com/2/2.182.0/724974/A8PrmQ0LDGtF6WFW/postback?dt=7249741698245123882000&pd=avt&di=linkedin.com&ci=724974&sid=A8PrmQ0LDGtF6WFW&oz_sc=0daeb73404d220f50e6e3be4&oz_df=1759946212186&oz_l=362&cv=3
-[HTTP/1.1 200 OK 92ms]
-
-GET
-https://worklog.ajkaysolutions.com/assets/index-6f8a4fff.js
-[HTTP/3 200  1650ms]
-
-GET
-https://worklog.ajkaysolutions.com/assets/index-ab14c828.css
-[HTTP/3 200  984ms]
-
-Error in parsing value for ‘-webkit-text-size-adjust’.  Declaration dropped. index-ab14c828.css:1:5313
-GET
-https://worklog.ajkaysolutions.com/vite.svg
-
+Uncaught TypeError: document.getElementById(...) is null
+    <anonymous> https://static.licdn.com/sc/h/109a9uuj40g1xqz597iv5oz4v:3
+    setTimeout handler* https://static.licdn.com/sc/h/109a9uuj40g1xqz597iv5oz4v:3
+    n https://static.licdn.com/sc/h/109a9uuj40g1xqz597iv5oz4v:1
+    <anonymous> https://static.licdn.com/sc/h/109a9uuj40g1xqz597iv5oz4v:3
+    n https://static.licdn.com/sc/h/109a9uuj40g1xqz597iv5oz4v:1
+    <anonymous> https://static.licdn.com/sc/h/109a9uuj40g1xqz597iv5oz4v:1
+    <anonymous> https://static.licdn.com/sc/h/109a9uuj40g1xqz597iv5oz4v:1
+109a9uuj40g1xqz597iv5oz4v:3:30924

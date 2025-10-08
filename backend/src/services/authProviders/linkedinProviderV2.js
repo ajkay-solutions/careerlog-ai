@@ -20,7 +20,7 @@ class LinkedInProvider {
                         process.env.DATABASE_URL?.includes('supabase.co');
     
     const callbackURL = isProduction
-      ? 'https://worklog.ajkaysolutions.com/auth/linkedin/callback'
+      ? 'https://worklog-ai-backend.onrender.com/auth/linkedin/callback'
       : 'http://localhost:3004/auth/linkedin/callback';
     
     console.log('🔧 [ISSUE-7-DEBUG] LinkedIn OAuth Config (WorkLog AI):', {

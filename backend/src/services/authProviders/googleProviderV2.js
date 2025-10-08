@@ -19,7 +19,7 @@ class GoogleProvider {
                         process.env.DATABASE_URL?.includes('supabase.co');
     
     const callbackURL = isProduction
-      ? 'https://worklog.ajkaysolutions.com/auth/google/callback'
+      ? 'https://worklog-ai-backend.onrender.com/auth/google/callback'
       : 'http://localhost:3004/auth/google/callback';
     
     console.log('🔧 [ISSUE-7-DEBUG] Google OAuth Configuration:', {
