@@ -12,14 +12,22 @@ class GoogleProvider {
       return null;
     }
 
-    const callbackURL = process.env.NODE_ENV === 'production' 
+    // More robust production detection
+    const isProduction = process.env.NODE_ENV === 'production' || 
+                        process.env.RENDER === '1' || 
+                        process.env.DATABASE_URL?.includes('supabase.co');
+    
+    const callbackURL = isProduction
       ? 'https://worklog.ajkaysolutions.com/auth/google/callback'
       : 'http://localhost:3004/auth/google/callback';
     
-    console.log('🔧 Google OAuth Configuration:', {
+    console.log('🔧 [ISSUE-7-DEBUG] Google OAuth Configuration:', {
+      NODE_ENV: process.env.NODE_ENV,
+      RENDER: process.env.RENDER,
+      isProduction: isProduction,
       clientID: process.env.GOOGLE_CLIENT_ID,
       callbackURL: callbackURL,
-      NODE_ENV: process.env.NODE_ENV,
+      hasSupabaseDB: process.env.DATABASE_URL?.includes('supabase.co')
     });
     
     this.strategy = new GoogleStrategy({

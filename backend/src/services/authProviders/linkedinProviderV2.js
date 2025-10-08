@@ -13,14 +13,22 @@ class LinkedInProvider {
     }
 
     // Environment-aware callback URL for WorkLog AI
-    const callbackURL = process.env.NODE_ENV === 'production' 
+    // More robust production detection
+    const isProduction = process.env.NODE_ENV === 'production' || 
+                        process.env.RENDER === '1' || 
+                        process.env.DATABASE_URL?.includes('supabase.co');
+    
+    const callbackURL = isProduction
       ? 'https://worklog.ajkaysolutions.com/auth/linkedin/callback'
       : 'http://localhost:3004/auth/linkedin/callback';
     
-    console.log('🔧 LinkedIn OAuth Config (WorkLog AI):', {
+    console.log('🔧 [ISSUE-7-DEBUG] LinkedIn OAuth Config (WorkLog AI):', {
       NODE_ENV: process.env.NODE_ENV,
+      RENDER: process.env.RENDER,
+      isProduction: isProduction,
       callbackURL: callbackURL,
       clientID: process.env.LINKEDIN_CLIENT_ID,
+      hasSupabaseDB: process.env.DATABASE_URL?.includes('supabase.co')
     });
 
     // Custom LinkedIn OpenID Connect strategy

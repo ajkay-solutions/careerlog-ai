@@ -141,14 +141,18 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
         setWordCount(response.data.wordCount || 0);
         setLastSaved(new Date(response.data.updatedAt));
         
-        console.log('🔍 Entry loaded and state updated:', {
+        console.log('🔍 [ISSUE-6-DEBUG] Entry loaded and state updated:', {
           entryId: response.data.id,
           rawTextLength: response.data.rawText?.length,
-          setRawTextLength: response.data.rawText?.length
+          setRawTextLength: response.data.rawText?.length,
+          entryExists: true
         });
       } else {
         // No entry exists for this date
-        console.log('🔍 No entry found for date, resetting state');
+        console.log('🔍 [ISSUE-6-DEBUG] No entry found for date, resetting state:', {
+          selectedDate: selectedDate,
+          entryExists: false
+        });
         setEntry(null);
         
         // Apply user's preferred template for new entries
@@ -262,9 +266,17 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
         let response;
         if (currentEntry) {
           // Update existing entry
+          console.log('🔍 [ISSUE-6-DEBUG] Auto-save: Updating existing entry:', {
+            currentEntryId: currentEntry.id,
+            selectedDate: selectedDate
+          });
           response = await apiService.updateEntry(selectedDate, entryData);
         } else {
           // Create new entry
+          console.log('🔍 [ISSUE-6-DEBUG] Auto-save: Creating new entry:', {
+            selectedDate: selectedDate,
+            noCurrentEntry: true
+          });
           response = await apiService.createEntry(entryData);
         }
 
@@ -317,6 +329,30 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
           }
         } else {
           console.error('❌ [ISSUE-6-DEBUG] Auto-save failed - server returned error:', response);
+          
+          // If CREATE failed with 409 (conflict), try UPDATE instead
+          if (!currentEntry && response.status === 409) {
+            console.log('🔄 [ISSUE-6-DEBUG] CREATE failed with 409, retrying with UPDATE...');
+            try {
+              const updateResponse = await apiService.updateEntry(selectedDate, entryData);
+              if (updateResponse.success) {
+                console.log('✅ [ISSUE-6-DEBUG] Retry UPDATE succeeded after 409 error');
+                lastAutoSaveRef.current = Date.now();
+                setEntry(updateResponse.data);
+                setLastSaved(new Date());
+                setWordCount(updateResponse.data.wordCount);
+                
+                const currentOnEntryChange = onEntryChangeRef.current;
+                if (currentOnEntryChange) {
+                  currentOnEntryChange(updateResponse.data);
+                }
+                return; // Success, exit early
+              }
+            } catch (retryError) {
+              console.error('❌ [ISSUE-6-DEBUG] Retry UPDATE also failed:', retryError);
+            }
+          }
+          
           setError('Failed to auto-save entry');
         }
       } catch (err) {

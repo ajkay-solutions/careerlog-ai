@@ -1,0 +1,506 @@
+On clicking "Connect with LinkedIn":
+
+GET
+https://worklog-ai-backend.onrender.com/auth/linkedin
+[HTTP/2 302  465ms]
+
+GET
+https://www.linkedin.com/oauth/v2/authorization?response_type=code&redirect_uri=https://worklog-ai-backend.onrender.com/auth/linkedin/callback&scope=openid profile email&client_id=7730ozpx4pzs6w
+[HTTP/2 303  628ms]
+
+GET
+https://www.linkedin.com/uas/login?session_redirect=/oauth/v2/login-success?app_id=228232280&auth_type=AC&flow=%7B%22creationTime%22%3A1759945008919%2C%22scope%22%3A%22openid+profile+email%22%2C%22authorizationType%22%3A%22OAUTH2_AUTHORIZATION_CODE%22%2C%22redirectUri%22%3A%22https%3A%2F%2Fworklog-ai-backend.onrender.com%2Fauth%2Flinkedin%2Fcallback%22%2C%22currentStage%22%3A%22LOGIN_SUCCESS%22%2C%22currentSubStage%22%3A0%2C%22authFlowName%22%3A%22generic-permission-list%22%2C%22appId%22%3A228232280%7D&fromSignIn=1&trk=oauth_3p_login&cancel_redirect=/oauth/v2/login-cancel?app_id=228232280&auth_type=AC&flow=%7B%22creationTime%22%3A1759945008919%2C%22scope%22%3A%22openid+profile+email%22%2C%22authorizationType%22%3A%22OAUTH2_AUTHORIZATION_CODE%22%2C%22redirectUri%22%3A%22https%3A%2F%2Fworklog-ai-backend.onrender.com%2Fauth%2Flinkedin%2Fcallback%22%2C%22currentStage%22%3A%22LOGIN_SUCCESS%22%2C%22currentSubStage%22%3A0%2C%22authFlowName%22%3A%22generic-permission-list%22%2C%22appId%22%3A228232280%7D
+[HTTP/2 200  412ms]
+
+Preload of https://static.licdn.com/sc/h/747beangl1o9s9ip7xf9o6pir was ignored due to unknown “as” or “type” values, or non-matching “media” attribute. login
+Preload of https://static.licdn.com/sc/h/8aidj8cqawduo88wnxdz9a7h0 was ignored due to unknown “as” or “type” values, or non-matching “media” attribute. login
+Preload of https://static.licdn.com/sc/h/9g3tctwatljrndj2jabyz43gj was ignored due to unknown “as” or “type” values, or non-matching “media” attribute. login
+Preload of https://static.licdn.com/sc/h/1jsnxp2vq8df2hjvbgi68kub0 was ignored due to unknown “as” or “type” values, or non-matching “media” attribute. login
+Preload of https://static.licdn.com/sc/h/8j0upl9qd5g2ezekhg6ggmzh1 was ignored due to unknown “as” or “type” values, or non-matching “media” attribute. login
+Preload of https://static.licdn.com/sc/h/97qei2oi6yuxufnx7rswp7aot was ignored due to unknown “as” or “type” values, or non-matching “media” attribute. login
+GET
+https://static.licdn.com/sc/h/3n385sj3bt7697lehsred0jmz
+[HTTP/2 200  233ms]
+
+GET
+https://static.licdn.com/sc/h/4h78g875l5a0vy6j0dasqiqvg
+[HTTP/2 200  237ms]
+
+GET
+https://static.licdn.com/sc/h/8j0upl9qd5g2ezekhg6ggmzh1
+[HTTP/2 200  277ms]
+
+GET
+https://static.licdn.com/sc/h/97qei2oi6yuxufnx7rswp7aot
+[HTTP/2 200  277ms]
+
+GET
+https://static.licdn.com/sc/h/747beangl1o9s9ip7xf9o6pir
+[HTTP/2 200  288ms]
+
+GET
+https://static.licdn.com/sc/h/8aidj8cqawduo88wnxdz9a7h0
+[HTTP/2 200  254ms]
+
+GET
+https://static.licdn.com/sc/h/9g3tctwatljrndj2jabyz43gj
+[HTTP/2 200  124ms]
+
+GET
+https://static.licdn.com/sc/h/1jsnxp2vq8df2hjvbgi68kub0
+[HTTP/2 200  119ms]
+
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:1953
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:2058
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:2336
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:2604
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:3019
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:3434
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:3656
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:15095
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:15391
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:20564
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:21182
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:24619
+Unknown pseudo-class or pseudo-element ‘-ms-backdrop’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:24646
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:26403
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:27045
+Unknown pseudo-class or pseudo-element ‘-ms-track’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:27309
+Unknown pseudo-class or pseudo-element ‘-ms-thumb’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:27511
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:27865
+Unknown pseudo-class or pseudo-element ‘-ms-thumb’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:27920
+Unknown pseudo-class or pseudo-element ‘-ms-fill-lower’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:27990
+Unknown pseudo-class or pseudo-element ‘-ms-fill-upper’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:28084
+Unknown pseudo-class or pseudo-element ‘-ms-fill-lower’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:28207
+Unknown pseudo-class or pseudo-element ‘-ms-fill-upper’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:28299
+Unknown property ‘-moz-transform’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:1:29443
+Unknown pseudo-class or pseudo-element ‘-ms-expand’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:30297
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:30769
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:30830
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:30961
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:39828
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:40751
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:53974
+Expected media feature name but found ‘min-device-pixel-ratio’. 3n385sj3bt7697lehsred0jmz:1:59120
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:89127
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:90275
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:94468
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:95169
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:95240
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:96509
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:97042
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:97638
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:98206
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:98837
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:99384
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:99994
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:100562
+Unknown pseudo-class or pseudo-element ‘-ms-fill’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:101193
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:107011
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:118928
+Error in parsing value for ‘min-height’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:1:119923
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:122410
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:125448
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:128985
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:130399
+Error in parsing value for ‘-webkit-box-align’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:1:132069
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:135661
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:140424
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:141787
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:143140
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:144491
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:145980
+Unknown pseudo-class or pseudo-element ‘-ms-reveal’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:148769
+Unknown pseudo-class or pseudo-element ‘-ms-reveal’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:150461
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:153689
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:156466
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:160494
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:162832
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:165396
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:169056
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:171529
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:195036
+Error in parsing value for ‘-webkit-text-size-adjust’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:1:207283
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:208915
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:216802
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:221399
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:226279
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:231232
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:231362
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:241916
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:244896
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:249081
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:253634
+Expected media feature name but found ‘min-device-pixel-ratio’. 3n385sj3bt7697lehsred0jmz:1:259109
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:262525
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:262725
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:263824
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:263992
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:264105
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:264461
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:264729
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:264931
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:265354
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:265849
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:266070
+Error in parsing value for ‘line-height’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:1:267498
+Error in parsing value for ‘line-height’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:1:267647
+Error in parsing value for ‘line-height’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:1:267796
+Error in parsing value for ‘line-height’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:1:267943
+Error in parsing value for ‘line-height’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:1:268092
+Error in parsing value for ‘line-height’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:1:268241
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:272891
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:273050
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:274371
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:274518
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:275066
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:275209
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:275906
+Unknown pseudo-class or pseudo-element ‘-ms-input-placeholder’.  Ruleset ignored due to bad selector. 3n385sj3bt7697lehsred0jmz:1:276049
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:280007
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:283715
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:290913
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:1:297744
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:2208:13
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:2237:13
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:2271:9
+Expected media feature name but found ‘-ms-high-contrast’. 3n385sj3bt7697lehsred0jmz:2503:13
+Error in parsing value for ‘letter-spacing’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:3391:21
+Unknown property ‘mso-table-rspace’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:3486:22
+Unknown property ‘mso-table-lspace’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:3487:22
+Error in parsing value for ‘-webkit-text-size-adjust’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:3488:31
+Expected color but found ‘-webkit-focus-ring-color’.  Error in parsing value for ‘outline-color’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:3730:22
+Error in parsing value for ‘height’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:4746:13
+Expected declaration but found ‘;’.  Skipped to next declaration. 3n385sj3bt7697lehsred0jmz:9317:9
+Unknown property ‘mso-hide’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:9355:12
+Unknown property ‘mso-hide’.  Declaration dropped. 3n385sj3bt7697lehsred0jmz:9359:12
+XHRPOST
+https://www.linkedin.com/checkpoint/pk/initiateLogin
+[HTTP/3 200  377ms]
+
+GET
+https://static.licdn.com/sc/h/55ggxxse8uyjdh2x78ht3j40q
+[HTTP/3 200  43ms]
+
+GET
+https://static.licdn.com/sc/h/9lb1g1kp916tat669q9r5g2kz
+[HTTP/3 200  38ms]
+
+WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER. 8j0upl9qd5g2ezekhg6ggmzh1:1:199149
+WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER. 8j0upl9qd5g2ezekhg6ggmzh1:1:198438
+Ignoring unsupported entryTypes: longtask. 8j0upl9qd5g2ezekhg6ggmzh1:1:251013
+XHRPOST
+https://www.linkedin.com/li/track
+[HTTP/3 200  352ms]
+
+WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER. 97qei2oi6yuxufnx7rswp7aot:10:141817
+WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER. 97qei2oi6yuxufnx7rswp7aot:10:141106
+WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER. 747beangl1o9s9ip7xf9o6pir:1:162649
+WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER. 747beangl1o9s9ip7xf9o6pir:1:161938
+WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER. 747beangl1o9s9ip7xf9o6pir:12:188044
+WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER. 747beangl1o9s9ip7xf9o6pir:12:187333
+GET
+https://static.licdn.com/sc/h/aofke6z5sqc44bjlvj6yr05c8
+[HTTP/3 200  112ms]
+
+GET
+https://static.licdn.com/sc/h/1gpe377m8n1eq73qveizv5onv
+[HTTP/3 200  108ms]
+
+WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER. 9g3tctwatljrndj2jabyz43gj:1:23384
+WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER. 9g3tctwatljrndj2jabyz43gj:1:22684
+Some cookies are misusing the recommended “SameSite“ attribute 14
+XHRHEAD
+https://static.licdn.com/sc/h/55ggxxse8uyjdh2x78ht3j40q
+[HTTP/3 200  32ms]
+
+XHRHEAD
+https://static.licdn.com/sc/h/9lb1g1kp916tat669q9r5g2kz
+[HTTP/3 200  35ms]
+
+GET
+https://www.google.com/recaptcha/enterprise.js?render=6LcIy_MqAAAAAMKiupFSbmzW3xjGSlIfRzNWYMjC
+[HTTP/2 200  779ms]
+
+XHRPOST
+https://www.linkedin.com/li/track
+[HTTP/3 200  351ms]
+
+GET
+https://li.protechts.net/index.html?ts=1759945011877&r_id=&app_id=PXdOjV695v&uc=scraping&d_id=db92097328851cb99fc498bdd1d858cfd9991a5a8aeb7d16ac96cf23562932b1
+[HTTP/2 200  242ms]
+
+XHRPOST
+https://www.linkedin.com/li/track
+[HTTP/3 200  344ms]
+
+XHRGET
+https://www.linkedin.com/litms/api/metadata/user
+[HTTP/3 200  409ms]
+
+GET
+https://platform.linkedin.com/litms/utag/checkpoint-frontend/utag.js?cb=1759944900000
+[HTTP/2 200  374ms]
+
+Feature Policy: Skipping unsupported feature name “identity-credentials-get”. aofke6z5sqc44bjlvj6yr05c8:269:361
+Feature Policy: Skipping unsupported feature name “identity-credentials-get”. aofke6z5sqc44bjlvj6yr05c8:270:342
+[GSI_LOGGER]: Your client application may not display the Google One Tap in its default position. When FedCM becomes mandatory, One Tap only displays in the default position. Refer to the migration guide to update your code accordingly and opt-in to FedCM to test your changes. Learn more: https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#layout aofke6z5sqc44bjlvj6yr05c8:169:167
+[GSI_LOGGER]: Your client application uses one of the Google One Tap prompt UI status methods that may stop functioning when FedCM becomes mandatory. Refer to the migration guide to update your code accordingly and opt-in to FedCM to test your changes. Learn more: https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#display_moment and https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#skipped_moment aofke6z5sqc44bjlvj6yr05c8:169:167
+XHRHEAD
+https://static.licdn.com/sc/h/aofke6z5sqc44bjlvj6yr05c8
+[HTTP/3 200  30ms]
+
+XHRHEAD
+https://static.licdn.com/sc/h/1gpe377m8n1eq73qveizv5onv
+[HTTP/3 200  32ms]
+
+GET
+https://accounts.google.com/gsi/button?logo_alignment=center&shape=pill&size=large&text=continue_with&theme=undefined&type=undefined&width=302&client_id=990339570472-k6nqn1tpmitg8pui82bfaun3jrpmiuhs.apps.googleusercontent.com&iframe_id=gsi_11978_314868&as=azB/iI/SJVK+KzRONgT34A&hl=en_US
+[HTTP/2 200  1233ms]
+
+XHRGET
+https://accounts.google.com/gsi/status?client_id=990339570472-k6nqn1tpmitg8pui82bfaun3jrpmiuhs.apps.googleusercontent.com&as=azB/iI/SJVK+KzRONgT34A&has_opted_out_fedcm=true
+[HTTP/2 200  814ms]
+
+XHRPOST
+https://www.linkedin.com/li/track
+[HTTP/3 200  346ms]
+
+XHRPOST
+https://www.linkedin.com/platform-telemetry/li/apfcDf
+[HTTP/3 200  367ms]
+
+XHRPOST
+https://www.linkedin.com/platform-telemetry/li/apfcDf
+[HTTP/3 200  381ms]
+
+XHRPOST
+https://www.linkedin.com/platform-telemetry/li/apfcDf
+[HTTP/3 200  395ms]
+
+WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER. 8j0upl9qd5g2ezekhg6ggmzh1:1:199149
+WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER. 8j0upl9qd5g2ezekhg6ggmzh1:1:198438
+XHRPOST
+https://www.linkedin.com/platform-telemetry/li/apfcDf
+[HTTP/3 200  404ms]
+
+XHRPOST
+https://www.linkedin.com/li/track
+[HTTP/3 200  383ms]
+
+XHRPOST
+https://www.linkedin.com/platform-telemetry/li/apfcDf
+[HTTP/3 200  401ms]
+
+XHRPOST
+https://www.linkedin.com/li/track
+[HTTP/3 400  356ms]
+
+XHRPOST
+https://www.linkedin.com/li/track
+[HTTP/3 200  348ms]
+
+Partitioned cookie or storage access was provided to “https://li.protechts.net/index.html?ts=1759945011877&r_id=&app_id=PXdOjV695v&uc=scraping&d_id=db92097328851cb99fc498bdd1d858cfd9991a5a8aeb7d16ac96cf23562932b1” because it is loaded in the third-party context and dynamic state partitioning is enabled.
+XHRGET
+https://dpm.demdex.net/id?d_visid_ver=5.1.1&d_fieldgroup=MC&d_rtbd=json&d_ver=2&d_orgid=14215E3D5995C57C0A495C55@AdobeOrg&d_nsid=0&ts=1759945012380
+[HTTP/2 200  349ms]
+
+GET
+https://www.gstatic.com/recaptcha/releases/Jv8jlA-BQE5JD6rA-h_iqNH2/recaptcha__en.js
+[HTTP/2 200  574ms]
+
+XHRPOST
+https://www.linkedin.com/li/track
+[HTTP/3 200  361ms]
+
+GET
+https://client.protechts.net/PXdOjV695v/main.min.js
+[HTTP/2 200  61ms]
+
+GET
+https://accounts.google.com/gsi/iframe/select?client_id=990339570472-k6nqn1tpmitg8pui82bfaun3jrpmiuhs.apps.googleusercontent.com&auto_select=true&ux_mode=popup&ui_mode=card&context=signin&as=azB/iI/SJVK+KzRONgT34A&is_itp=true&channel_id=2da05398a903f401a86dbd7f75169089d40c446ef90070cd38e83028dac8aa37&origin=https://www.linkedin.com
+[HTTP/2 200  202ms]
+
+XHRPOST
+https://www.linkedin.com/li/track
+[HTTP/3 200  338ms]
+
+XMLHttpRequest { _sanitizedPath: "/li/track", readyState: 4, timeout: 0, withCredentials: true, upload: XMLHttpRequestUpload, responseURL: "https://www.linkedin.com/li/track", status: 400, statusText: "", responseType: "", response: "Bad Request." }
+8j0upl9qd5g2ezekhg6ggmzh1:10:18312
+Content-Security-Policy warnings 5
+Request to access cookie or storage on “<URL>” was blocked because it came from a tracker and content blocking is enabled. 2
+GET
+https://lnkd.demdex.net/dest5.html?d_nsid=0#https://www.linkedin.com
+[HTTP/2 200  29ms]
+
+Partitioned cookie or storage access was provided to “https://accounts.google.com/gsi/button?logo_alignment=center&shape=pill&size=large&text=continue_with&theme=undefined&type=undefined&width=302&client_id=990339570472-k6nqn1tpmitg8pui82bfaun3jrpmiuhs.apps.googleusercontent.com&iframe_id=gsi_11978_314868&as=azB%2FiI%2FSJVK%2BKzRONgT34A&hl=en_US” because it is loaded in the third-party context and dynamic state partitioning is enabled.
+Unknown property ‘-moz-border-radius’.  Declaration dropped. button:1:530
+Expected color but found ‘-webkit-focus-ring-color’.  Error in parsing value for ‘outline-color’.  Declaration dropped. button:1:11171
+Unknown property ‘border-sizing’.  Declaration dropped. button:1:19607
+Expected media feature name but found ‘-ms-high-contrast’. button:1:25844
+Expected media feature name but found ‘-ms-high-contrast’. button:1:31981
+Expected media feature name but found ‘preferes-contrast’. button:1:32093
+XHRGET
+https://tzm.protechts.net/ns?c=60936bb0-a46d-11f0-9834-f970a57e0d1f
+[HTTP/1.1 200 OK 1417ms]
+
+XHRPOST
+https://lnkd.demdex.net/event?d_dil_ver=9.4&_ts=1759945012393
+[HTTP/2 200  29ms]
+
+XHRPOST
+https://collector-pxdojv695v.protechts.net/api/v2/msft
+[HTTP/2 200  420ms]
+
+Content-Security-Policy warnings 5
+Unknown property ‘-moz-border-radius’.  Declaration dropped. select:1:530
+Expected color but found ‘-webkit-focus-ring-color’.  Error in parsing value for ‘outline-color’.  Declaration dropped. select:1:11171
+Unknown property ‘border-sizing’.  Declaration dropped. select:1:19607
+Expected media feature name but found ‘-ms-high-contrast’. select:1:25844
+This page is in Almost Standards Mode. Page layout may be impacted. For Standards Mode use “<!DOCTYPE html>”. dest5.html
+Request to access cookie or storage on “<URL>” was blocked because it came from a tracker and content blocking is enabled. 2
+Partitioned cookie or storage access was provided to “https://accounts.google.com/gsi/iframe/select?client_id=990339570472-k6nqn1tpmitg8pui82bfaun3jrpmiuhs.apps.googleusercontent.com&auto_select=true&ux_mode=popup&ui_mode=card&context=signin&as=azB%2FiI%2FSJVK%2BKzRONgT34A&is_itp=true&channel_id=2da05398a903f401a86dbd7f75169089d40c446ef90070cd38e83028dac8aa37&origin=https%3A%2F%2Fwww.linkedin.com” because it is loaded in the third-party context and dynamic state partitioning is enabled.
+GET
+https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LcIy_MqAAAAAMKiupFSbmzW3xjGSlIfRzNWYMjC&co=aHR0cHM6Ly93d3cubGlua2VkaW4uY29tOjQ0Mw..&hl=en&v=Jv8jlA-BQE5JD6rA-h_iqNH2&size=invisible&anchor-ms=20000&execute-ms=15000&cb=bh1r2t4l5wh9
+[HTTP/3 200  160ms]
+
+Content-Security-Policy warnings 4
+GET
+https://fonts.gstatic.com/s/googlesans/v62/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2vgCI.woff2
+[HTTP/2 200  366ms]
+
+Partitioned cookie or storage access was provided to “https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LcIy_MqAAAAAMKiupFSbmzW3xjGSlIfRzNWYMjC&co=aHR0cHM6Ly93d3cubGlua2VkaW4uY29tOjQ0Mw..&hl=en&v=Jv8jlA-BQE5JD6rA-h_iqNH2&size=invisible&anchor-ms=20000&execute-ms=15000&cb=bh1r2t4l5wh9” because it is loaded in the third-party context and dynamic state partitioning is enabled.
+GET
+https://www.gstatic.com/recaptcha/releases/Jv8jlA-BQE5JD6rA-h_iqNH2/styles__ltr.css
+[HTTP/3 200  62ms]
+
+GET
+https://www.gstatic.com/recaptcha/releases/Jv8jlA-BQE5JD6rA-h_iqNH2/recaptcha__en.js
+[HTTP/3 200  144ms]
+
+Unknown property ‘-moz-box-shadow’.  Declaration dropped. styles__ltr.css:1:49169
+Expected ‘none’, URL, or filter function but found ‘progid’.  Error in parsing value for ‘filter’.  Declaration dropped. styles__ltr.css:1:51319
+Unknown property ‘-moz-backface-visibility’.  Declaration dropped. styles__ltr.css:1:74291
+Error in parsing value for ‘-webkit-box-align’.  Declaration dropped. styles__ltr.css:1:77009
+Error in parsing value for ‘-webkit-align-items’.  Declaration dropped. styles__ltr.css:1:77043
+Error in parsing value for ‘align-items’.  Declaration dropped. styles__ltr.css:1:77069
+GET
+https://fonts.gstatic.com/s/googlesans/v62/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2vgCI.woff2
+[HTTP/2 200  0ms]
+
+Ignoring unsupported entryTypes: longtask. recaptcha__en.js:461:325
+GET
+https://www.gstatic.com/recaptcha/api2/logo_48.png
+[HTTP/3 200  25ms]
+
+XHRPOST
+https://collector-pxdojv695v.protechts.net/api/v2/msft
+[HTTP/2 200  299ms]
+
+GET
+https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxK.woff2
+[HTTP/2 200  26ms]
+
+GET
+https://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmEU9fBBc4.woff2
+[HTTP/2 200  25ms]
+
+GET
+https://www.google.com/recaptcha/enterprise/webworker.js?hl=en&v=Jv8jlA-BQE5JD6rA-h_iqNH2
+[HTTP/3 200  102ms]
+
+GET
+https://www.gstatic.com/recaptcha/releases/Jv8jlA-BQE5JD6rA-h_iqNH2/recaptcha__en.js
+[HTTP/3 200  0ms]
+
+GET
+https://fonts.gstatic.com/s/googlesans/v62/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2vgCI.woff2
+[HTTP/2 200  0ms]
+
+GET
+https://fonts.gstatic.com/s/googlesans/v62/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2vgCI.woff2
+[HTTP/2 200  0ms]
+
+XHROPTIONS
+https://play.google.com/log?format=json&hasfast=true&authuser=0
+
+XHRPOST
+https://accounts.google.com/gsi/log?client_id=990339570472-k6nqn1tpmitg8pui82bfaun3jrpmiuhs.apps.googleusercontent.com&as=azB/iI/SJVK+KzRONgT34A&event=onetap.startCooldown.1
+[HTTP/3 200  242ms]
+
+XHRPOST
+https://play.google.com/log?format=json&hasfast=true&authuser=0
+NS_BINDING_ABORTED
+
+XHRPOST
+https://www.linkedin.com/li/track
+[HTTP/3 200  354ms]
+
+XHRPOST
+https://www.linkedin.com/li/track
+[HTTP/3 200  508ms]
+
+XHRPOST
+https://www.linkedin.com/li/track
+[HTTP/3 200  345ms]
+
+XHROPTIONS
+https://play.google.com/log?format=json&hasfast=true&authuser=0
+[HTTP/2 200  137ms]
+
+XHRPOST
+https://play.google.com/log?format=json&hasfast=true&authuser=0
+[HTTP/2 200  140ms]
+
+On entering LinkedIn credentials and pressing Continue:
+XHRPOST
+https://lnkd.demdex.net/event?d_dil_ver=9.4&_ts=1759945124428
+
+GET
+https://platform.linkedin.com/litms/utag/checkpoint-frontend/utag.118.js?utv=ut4.51.202507291840
+NS_BINDING_ABORTED
+
+XMLHttpRequest { _sanitizedPath: "/li/track", readyState: 4, timeout: 0, withCredentials: true, upload: XMLHttpRequestUpload, responseURL: "https://www.linkedin.com/li/track", status: 0, statusText: "", responseType: "", response: "" }
+8aidj8cqawduo88wnxdz9a7h0:8:27017
+XHRPOST
+https://www.linkedin.com/li/track
+NS_BINDING_ABORTED
+
+Loading failed for the <script> with source “https://platform.linkedin.com/litms/utag/checkpoint-frontend/utag.118.js?utv=ut4.51.202507291840”. login:1:1
+POST
+https://www.linkedin.com/checkpoint/lg/login-submit
+[HTTP/3 303  594ms]
+
+XHRPOST
+https://www.linkedin.com/li/track
+[HTTP/3 200  406ms]
+
+GET
+https://www.linkedin.com/oauth/v2/login-success?app_id=228232280&auth_type=AC&flow={"creationTime":1759945008919,"scope":"openid+profile+email","authorizationType":"OAUTH2_AUTHORIZATION_CODE","redirectUri":"https://worklog-ai-backend.onrender.com/auth/linkedin/callback","currentStage":"LOGIN_SUCCESS","currentSubStage":0,"authFlowName":"generic-permission-list","appId":228232280}
+[HTTP/3 303  730ms]
+
+GET
+https://worklog-ai-backend.onrender.com/auth/linkedin/callback?code=AQSeB0_lMQpXfiXTc57auangyb12uC8Jz8SIFdp7xzpwnbc8hvFoEaxveGlTcph--n_82CrvEa-uiyp7uaMfP-WiuXompxUMxYe62SOzcLkYjVXIVtpggxNsszx9cg9j1NH-vrBja3lgqdOwD4EYD6tQkXc4LycEo4v_FSo1KJz0jvqGFECKzoJd81YEUEEHVy_emzKvuUUt1-8itAg
+[HTTP/3 302  1684ms]
+
+GET
+https://worklog.ajkaysolutions.com/?error=linkedin_auth_error
+[HTTP/3 200  1096ms]
+
+POST
+https://collector-pxdojv695v.protechts.net/api/v2/msft/beacon
+[HTTP/3 200  317ms]
+
+GET
+https://worklog.ajkaysolutions.com/assets/index-6602c982.js
+[HTTP/3 200  154ms]
+
+GET
+https://worklog.ajkaysolutions.com/assets/index-ab14c828.css
+[HTTP/3 200  76ms]
+
+Error in parsing value for ‘-webkit-text-size-adjust’.  Declaration dropped. index-ab14c828.css:1:5313
+GET
+https://worklog.ajkaysolutions.com/vite.svg
+[HTTP/3 200  0ms]
+
