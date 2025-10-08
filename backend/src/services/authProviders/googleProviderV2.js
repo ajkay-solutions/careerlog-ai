@@ -1,4 +1,5 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const crypto = require('crypto');
 
 class GoogleProvider {
   constructor() {
@@ -118,9 +119,10 @@ class GoogleProvider {
             });
             console.log('✅ Updated Google provider for user:', user.id);
           } else {
-            // Create new provider record
+            // Create new provider record with generated ID
             await prisma.userProvider.create({
               data: {
+                id: crypto.randomUUID(),  // Generate unique ID
                 userId: user.id,
                 provider: 'google',
                 providerId: profile.id,

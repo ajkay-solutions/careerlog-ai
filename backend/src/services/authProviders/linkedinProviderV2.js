@@ -1,5 +1,6 @@
 const OAuth2Strategy = require('passport-oauth2');
 const axios = require('axios');
+const crypto = require('crypto');
 
 class LinkedInProvider {
   constructor() {
@@ -129,9 +130,10 @@ class LinkedInProvider {
             });
             console.log('✅ Updated LinkedIn provider for user:', user.id);
           } else {
-            // Create new provider record
+            // Create new provider record with generated ID
             await prisma.userProvider.create({
               data: {
+                id: crypto.randomUUID(),  // Generate unique ID
                 userId: user.id,
                 provider: 'linkedin',
                 providerId: linkedinProfile.sub,
