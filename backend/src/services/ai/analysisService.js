@@ -48,7 +48,7 @@ class AnalysisService {
         return await prismaClient.entry.findUnique({
           where: { id: entryId },
           include: {
-            user: {
+            User: {
               select: {
                 id: true,
                 displayName: true,

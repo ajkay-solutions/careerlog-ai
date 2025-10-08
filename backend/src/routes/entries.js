@@ -311,10 +311,12 @@ router.put('/:date', requireAuth, async (req, res) => {
     contentType: req.headers['content-type']
   });
 
+  // Declare variables outside try block so they're accessible in catch
+  const { rawText, isHighlight, projectIds, skillIds, competencyIds } = req.body;
+  
   try {
     const userId = req.user.id;
     const targetDate = formatDate(req.params.date);
-    const { rawText, isHighlight, projectIds, skillIds, competencyIds } = req.body;
 
     console.log('🔍 UPDATE ENTRY - Processed data:', {
       targetDate: targetDate.toISOString(),
