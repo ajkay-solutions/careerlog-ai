@@ -45,18 +45,12 @@ class AuthService {
         // Profile already set in fetchUserProfile
         // Profile loaded (sensitive data not logged for security)
       } else {
-        // Fallback: parse basic user data from JWT payload if API fails
-        console.warn('⚠️ Profile API failed, falling back to JWT parsing');
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        this.user = {
-          id: payload.id,
-          email: payload.email,
-          displayName: payload.displayName,
-          provider: payload.provider,
-          profilePhoto: payload.profilePhoto || ''
-        };
-        this.isAuthenticated = true;
-        this.notifyListeners();
+        // If profile API fails, this might indicate an incompatible JWT token
+        // (e.g., from before multi-provider migration)
+        console.warn('⚠️ Profile API failed - this may be an incompatible JWT token from before the multi-provider migration');
+        console.warn('Clearing token to force re-authentication...');
+        this.clearToken();
+        throw new Error('JWT token incompatible with current system - please log in again');
       }
     } catch (error) {
       console.error('Error loading user profile:', error);

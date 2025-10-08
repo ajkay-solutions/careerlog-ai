@@ -12,10 +12,21 @@ import GenerateView from './pages/GenerateView';
 function LandingPage({ onLogin }) {
   const [isLoading, setIsLoading] = useState(false);
   const [loadingProvider, setLoadingProvider] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  
+  // Check if user was redirected due to auth issues
+  const hasAuthError = searchParams.get('auth_required') === 'true';
+  const showMigrationMessage = localStorage.getItem('auth_token') && hasAuthError;
   
   const handleLogin = (provider) => {
     setIsLoading(true);
     setLoadingProvider(provider);
+    
+    // Clear any auth_required flag when user attempts login
+    if (hasAuthError) {
+      setSearchParams({});
+    }
+    
     onLogin(provider);
   };
   
@@ -25,6 +36,12 @@ function LandingPage({ onLogin }) {
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">WorkLog AI</h1>
           <p className="text-gray-600">Never miss a career win</p>
+          
+          {showMigrationMessage && (
+            <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-800">
+              🔄 We've upgraded our authentication system! Please log in again to continue.
+            </div>
+          )}
         </div>
 
         <div className="space-y-4">
@@ -247,10 +264,11 @@ function App() {
               navigate('/journal', { replace: true });
             }
           } else {
-            // Profile fetch failed, clear auth
+            // Profile fetch failed, clear auth and show helpful message
+            console.log('🔄 Authentication needs refresh - redirecting to login');
             authService.clearToken();
             if (location.pathname !== '/') {
-              navigate('/', { replace: true });
+              navigate('/?auth_required=true', { replace: true });
             }
           }
         } else {
