@@ -98,7 +98,21 @@ router.get('/linkedin/callback',
       });
       
       if (err) {
-        console.error('❌ LinkedIn authentication error:', err);
+        console.error('❌ [ISSUE-7-DEBUG] LinkedIn authentication error:', {
+          error: err.message,
+          stack: err.stack,
+          name: err.name,
+          code: err.code,
+          response: err.response?.data,
+          status: err.response?.status,
+          timestamp: new Date().toISOString(),
+          requestInfo: {
+            host: req.get('host'),
+            userAgent: req.get('user-agent'),
+            query: req.query,
+            url: req.url
+          }
+        });
         // Detect production environment and redirect to frontend
       const isProduction = process.env.NODE_ENV === 'production' || req.get('host').includes('worklog.ajkaysolutions.com');
       const errorRedirectUrl = isProduction

@@ -1,0 +1,58 @@
+XHRPOST
+https://www.linkedin.com/li/track
+
+XHRPOST
+https://lnkd.demdex.net/event?d_dil_ver=9.4&_ts=1759946208020
+
+GET
+https://platform.linkedin.com/litms/utag/checkpoint-frontend/utag.118.js?utv=ut4.51.202507291840
+NS_BINDING_ABORTED
+
+XMLHttpRequest { _sanitizedPath: "/li/track", readyState: 4, timeout: 0, withCredentials: true, upload: XMLHttpRequestUpload, responseURL: "https://www.linkedin.com/li/track", status: 0, statusText: "", responseType: "", response: "" }
+8aidj8cqawduo88wnxdz9a7h0:8:27017
+XHRPOST
+https://www.linkedin.com/li/track
+NS_BINDING_ABORTED
+
+Loading failed for the <script> with source “https://platform.linkedin.com/litms/utag/checkpoint-frontend/utag.118.js?utv=ut4.51.202507291840”. login:1:1
+POST
+https://www.linkedin.com/checkpoint/lg/login-submit
+[HTTP/3 303  546ms]
+
+XHRPOST
+https://www.linkedin.com/li/track
+[HTTP/3 200  391ms]
+
+GET
+https://www.linkedin.com/oauth/v2/login-success?app_id=228232280&auth_type=AC&flow={"creationTime":1759946186651,"scope":"openid+profile+email","appId":228232280,"authorizationType":"OAUTH2_AUTHORIZATION_CODE","redirectUri":"https://worklog-ai-backend.onrender.com/auth/linkedin/callback","currentStage":"LOGIN_SUCCESS","currentSubStage":0,"authFlowName":"generic-permission-list"}
+[HTTP/3 303  529ms]
+
+GET
+https://worklog-ai-backend.onrender.com/auth/linkedin/callback?code=AQQx9a9W8_picRxA62uGFAs2x8wIa1nlpyPs3xtg6Oj-yl_r8brxUA4OKL9PtsHQVGsTaRmbFF6BHZbpHh2fx6VnhFllgcpUb5XZfqjYj9gJy42peTuZez7rUr6JPBZTrMopT0vFaLzNvP9umupS03_zWdRhZK8RFgyvFWU9srRc5te5DO0mlfEVRfuWtaFoibe06QZQA0mUtLSOQPQ
+[HTTP/3 302  1758ms]
+
+GET
+https://worklog.ajkaysolutions.com/?error=linkedin_auth_error
+[HTTP/3 200  1081ms]
+
+WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER. main.min.js:2:81865
+POST
+https://collector-pxdojv695v.protechts.net/api/v2/msft/beacon
+[HTTP/3 200  312ms]
+
+POST
+https://s.xlgmedia.com/2/2.182.0/724974/A8PrmQ0LDGtF6WFW/postback?dt=7249741698245123882000&pd=avt&di=linkedin.com&ci=724974&sid=A8PrmQ0LDGtF6WFW&oz_sc=0daeb73404d220f50e6e3be4&oz_df=1759946212186&oz_l=362&cv=3
+[HTTP/1.1 200 OK 92ms]
+
+GET
+https://worklog.ajkaysolutions.com/assets/index-6f8a4fff.js
+[HTTP/3 200  1650ms]
+
+GET
+https://worklog.ajkaysolutions.com/assets/index-ab14c828.css
+[HTTP/3 200  984ms]
+
+Error in parsing value for ‘-webkit-text-size-adjust’.  Declaration dropped. index-ab14c828.css:1:5313
+GET
+https://worklog.ajkaysolutions.com/vite.svg
+

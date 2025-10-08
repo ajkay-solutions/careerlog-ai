@@ -1,7 +1,7 @@
 Some cookies are misusing the recommended “SameSite“ attribute 7
 GET
-https://accounts.google.com/signin/oauth/consent?authuser=0&part=AJi8hAOpCjfAfwSDeaHRfzTuYuaBqU-mjWbdFuCrV9I4PFAcA6eBSmkvWt8Alycm9vXBYrW4bAQ_NQvjTDkqNT--OgllPJzZINGxbAjiAFxVOBtQ4BtMYWHI4DcPzo2nnTH797qH7o0M9X8MNuS-j_iStm38fSu_Z17Lq8TwueZylPOnimpzQ6vR1w0ypWhSeoloIKh6VsFcera29pT-rtU8C4dsDE8GRt96sSkPIs2WUgE4dSBXkB4rQ7M-aIQH8Nfszvyzj7DprMpm0UBkVOAma4KPvEuam5tdnBFAs3FDEjS39gm0zFbOofSqWu0OMMmCKZma5hh0BvyfLwRVzpuqDw1UcDbX8YRSEong9KWzPR7fywROQqrThqCYKBF4VX9cpHXRrT4EAC7SFjnhGur_zVyvRa66sTNPud4GHYvncN1-oTfreQvfOwdpbHyCxCHgBWI7kNJH6vRGPvp-lgx_ZVvxcphwe1lZ3kMtSo0sc1Ba_B6NF2E&flowName=GeneralOAuthFlow&as=S606955159:1759945364454831&client_id=677875518045-8qa0q2msug0ngmgvkvokc5s3somaooh0.apps.googleusercontent.com&rapt=AEjHL4PJhHoAHdXkJBYTMunpLo6-p-XGRvRtwLGJGtzzN_fmV2r3AC7nJ3b6tngq7gGVswNVt-4vpO6Hb1VkNjEYMX__SoPTZacipkoeu9U_Gfjsg3_NNok#
-[HTTP/3 302  230ms]
+https://accounts.google.com/signin/oauth/consent?authuser=0&part=AJi8hANRjBDy6fx03eYWPQ3VzAicOvL1iPvRoewFWHMSUuHQ8tCCRpLwZ4ES4QvCt2DwWu9-IPaVURrS1pdtSlnCycauLhzXKFai-UG8smQrIj5LdisP59FhborE1Gk7ON3Ue8yZ0MvsLIqCWxMghDB64-3y1kId-DOeIuLxBNsRv8HDLH_7LISZCeK7k1tJz2tcRQ2KpEEc47YP_a15LF-eUnCnbowh0jQ0xDvntiH_p5l_a2yJ3IsoODPjQ2vhyRcdJp87H8e35u5ERW9q7EsILx-MTjY8VmJPDGoNdOISgdJi4Dy6GshTlbNbi69meGM2DJ44S4rUyKBwFd5UCvJDq8HuL17qwiM5yWnppySBphJ_uzHq2S4IujRsznqohRajMgIDnLTnR0ee2MtusnAPSfn-rzw1DhouGE1PIlcoskrkdoXStlbcv-N3Xbd4WfkD2BkYuGB6GdirAGRO9bVB1sgcMgxCO_a84GezjJU8PPSoyaJ9n_o&flowName=GeneralOAuthFlow&as=S1544304166:1759946389839506&client_id=677875518045-8qa0q2msug0ngmgvkvokc5s3somaooh0.apps.googleusercontent.com&rapt=AEjHL4Nj8HZIrSz2acmFtgW4b_-I4AaJrPTL9XQCvfeRGYwgw8W77sOPUJnAqkSddxoxR43pVXnZkr3H_DFWe7I4yajOHkmvCgab-3sgnJ_VO2CYPCoU7d0#
+[HTTP/3 302  240ms]
 
 GET
 https://accounts.google.co.in/favicon.ico
@@ -9,40 +9,39 @@ https://accounts.google.co.in/favicon.ico
 
 GET
 https://www.google.com/favicon.ico
-[HTTP/2 200  183ms]
+[HTTP/2 200  105ms]
 
 GET
-https://worklog-ai-backend.onrender.com/auth/google/callback?code=4/0AVGzR1DXzp3m61JGh7DwDHdN-gRv6AV_vibBVUqVtCIdLH1jxuA3DNSvmjjXkWIypD7wwg&scope=email+profile+openid+https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email&authuser=0&prompt=none
-[HTTP/3 302  1151ms]
+https://worklog-ai-backend.onrender.com/auth/google/callback?code=4/0AVGzR1D184sWQ3514G_tVDZuKatpw4HPmzfqX-r8Rm0U9t5jrOB7GDFEnwo1ec6uigu9QQ&scope=email+profile+https://www.googleapis.com/auth/userinfo.email+openid+https://www.googleapis.com/auth/userinfo.profile&authuser=0&prompt=none
+[HTTP/3 302  1373ms]
 
 GET
-https://worklog.ajkaysolutions.com/journal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwOTQwMjAzMjU1NTM1NTI2NTk5NSIsInByb3ZpZGVyIjoiZ29vZ2xlIiwiZGlzcGxheU5hbWUiOiJBcnNhbGFuIEplaGFuZ2lyIEtoYW4iLCJuYW1lIjp7ImZpcnN0IjoiQXJzYWxhbiIsImxhc3QiOiJKZWhhbmdpciBLaGFuIn0sImVtYWlsIjoiYXJzYWxhbi5qZWhhbmdpckBnbWFpbC5jb20iLCJpYXQiOjE3NTk5NDU0MDAsImV4cCI6MTc2MDAzMTgwMH0.B9BL4gkeIfLfUyFUfgRYUrfC0x8ixatrp8sJxkk769s
-[HTTP/3 200  1171ms]
+https://worklog.ajkaysolutions.com/journal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwOTQwMjAzMjU1NTM1NTI2NTk5NSIsInByb3ZpZGVyIjoiZ29vZ2xlIiwiZGlzcGxheU5hbWUiOiJBcnNhbGFuIEplaGFuZ2lyIEtoYW4iLCJuYW1lIjp7ImZpcnN0IjoiQXJzYWxhbiIsImxhc3QiOiJKZWhhbmdpciBLaGFuIn0sImVtYWlsIjoiYXJzYWxhbi5qZWhhbmdpckBnbWFpbC5jb20iLCJpYXQiOjE3NTk5NDY0MjcsImV4cCI6MTc2MDAzMjgyN30.E7wuZXuerc8zLYV7M2j98AynV3uH-EWlWbG8aISJk7w
+[HTTP/3 200  1152ms]
 
 GET
-https://worklog.ajkaysolutions.com/assets/index-6602c982.js
-[HTTP/3 304  36ms]
+https://worklog.ajkaysolutions.com/assets/index-6f8a4fff.js
+[HTTP/3 304  44ms]
 
 GET
 https://worklog.ajkaysolutions.com/assets/index-ab14c828.css
-[HTTP/3 304  976ms]
+[HTTP/3 304  50ms]
 
 Error in parsing value for ‘-webkit-text-size-adjust’.  Declaration dropped. index-ab14c828.css:1:5313
 XHROPTIONS
 https://worklog-ai-backend.onrender.com/api/user/profile
-[HTTP/2 200  524ms]
+[HTTP/2 200  844ms]
 
 GET
 https://worklog.ajkaysolutions.com/vite.svg
-[HTTP/3 200  0ms]
 
 XHRGET
 https://worklog-ai-backend.onrender.com/api/user/profile
-[HTTP/2 200  310ms]
+[HTTP/2 200  832ms]
 
 XHRGET
 https://worklog-ai-backend.onrender.com/api/user/profile
-[HTTP/2 304  259ms]
+[HTTP/2 304  292ms]
 
 GET
 https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c
@@ -54,37 +53,29 @@ NS_BINDING_ABORTED
 
 GET
 https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c
-[HTTP/2 200  331ms]
+[HTTP/2 200  196ms]
 
 XHROPTIONS
 https://worklog-ai-backend.onrender.com/api/entries?limit=50
-[HTTP/2 200  465ms]
+[HTTP/2 200  271ms]
 
 XHROPTIONS
 https://worklog-ai-backend.onrender.com/api/entries/2025-10-08
-[HTTP/2 200  640ms]
+[HTTP/2 200  273ms]
 
 XHRGET
 https://worklog-ai-backend.onrender.com/api/entries?limit=50
-[HTTP/3 200  338ms]
+[HTTP/3 200  854ms]
 
 XHRGET
 https://worklog-ai-backend.onrender.com/api/entries/2025-10-08
-[HTTP/3 200  280ms]
-
-XHROPTIONS
-https://worklog-ai-backend.onrender.com/api/entries/2025-10-08
-[HTTP/3 200  265ms]
-
-XHRGET
-https://worklog-ai-backend.onrender.com/api/entries/2025-10-08
-[HTTP/3 304  701ms]
+[HTTP/3 200  868ms]
 
 XHROPTIONS
 https://worklog-ai-backend.onrender.com/api/entries
-[HTTP/3 200  289ms]
+[HTTP/3 200  388ms]
 
 XHRPOST
 https://worklog-ai-backend.onrender.com/api/entries
-[HTTP/3 409  770ms]
+[HTTP/3 500  813ms]
 

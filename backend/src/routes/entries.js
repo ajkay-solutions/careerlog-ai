@@ -264,9 +264,23 @@ router.post('/', requireAuth, async (req, res) => {
     console.error('❌ [ISSUE-6-DEBUG] Create entry error:', {
       error: error.message,
       stack: error.stack,
+      code: error.code,
+      name: error.name,
       userId: req.user?.id,
       userProvider: req.user?.provider,
-      date: req.body?.date
+      date: req.body?.date,
+      userAgent: req.headers['user-agent'],
+      requestHeaders: {
+        'content-type': req.headers['content-type'],
+        'authorization': req.headers['authorization'] ? 'Bearer [PRESENT]' : 'MISSING'
+      },
+      requestBody: {
+        hasDate: !!req.body?.date,
+        hasRawText: !!req.body?.rawText,
+        rawTextLength: req.body?.rawText?.length,
+        bodyKeys: Object.keys(req.body || {})
+      },
+      databaseStatus: 'Unknown - crashed during creation'
     });
     res.status(500).json({
       success: false,
@@ -370,9 +384,27 @@ router.put('/:date', requireAuth, async (req, res) => {
     console.error('❌ [ISSUE-6-DEBUG] Update entry error (Auto-save failed):', {
       error: error.message,
       stack: error.stack,
+      code: error.code,
+      name: error.name,
       userId: req.user?.id,
       userProvider: req.user?.provider,
-      targetDate: req.params?.date
+      targetDate: req.params?.date,
+      userAgent: req.headers['user-agent'],
+      requestHeaders: {
+        'content-type': req.headers['content-type'],
+        'authorization': req.headers['authorization'] ? 'Bearer [PRESENT]' : 'MISSING'
+      },
+      requestBody: {
+        hasRawText: !!req.body?.rawText,
+        rawTextLength: req.body?.rawText?.length,
+        hasIsHighlight: req.body?.hasOwnProperty('isHighlight'),
+        bodyKeys: Object.keys(req.body || {})
+      },
+      updateDataPrepared: {
+        hadRawText: rawText !== undefined,
+        hadIsHighlight: isHighlight !== undefined
+      },
+      databaseStatus: 'Unknown - crashed during update'
     });
     res.status(500).json({
       success: false,

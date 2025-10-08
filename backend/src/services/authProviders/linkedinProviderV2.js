@@ -174,7 +174,21 @@ class LinkedInProvider {
           return done(null, userForJWT);
 
         } catch (dbError) {
-          console.error('❌ Database error:', dbError);
+          console.error('❌ [ISSUE-7-DEBUG] LinkedIn Database error:', {
+            error: dbError.message,
+            stack: dbError.stack,
+            code: dbError.code,
+            name: dbError.name,
+            meta: dbError.meta,
+            timestamp: new Date().toISOString(),
+            linkedinProfile: linkedinProfile ? {
+              sub: linkedinProfile.sub,
+              email: linkedinProfile.email,
+              name: linkedinProfile.name
+            } : 'No profile data',
+            userEmail: linkedinProfile?.email || 'Unknown',
+            databaseOperation: 'User and UserProvider creation/update'
+          });
           await prisma.$disconnect();
           return done(dbError, null);
         }
@@ -183,7 +197,19 @@ class LinkedInProvider {
           message: error.message,
           response: error.response?.data,
           status: error.response?.status,
-          stack: error.stack
+          stack: error.stack,
+          name: error.name,
+          code: error.code,
+          config: error.config ? {
+            url: error.config.url,
+            method: error.config.method,
+            headers: error.config.headers
+          } : 'No config',
+          request: error.request ? 'Request made but no response' : 'No request',
+          accessToken: accessToken ? 'PRESENT' : 'MISSING',
+          refreshToken: refreshToken ? 'PRESENT' : 'MISSING',
+          profileReceived: profile ? 'YES' : 'NO',
+          errorTimestamp: new Date().toISOString()
         });
         return done(error, null);
       }
