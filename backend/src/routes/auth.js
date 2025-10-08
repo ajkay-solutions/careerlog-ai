@@ -8,7 +8,8 @@ const JWT_SECRET = process.env.JWT_SECRET || process.env.SESSION_SECRET || 'fall
 
 // Generate JWT token for user
 function generateToken(user) {
-  console.log('🔑 Generating JWT for user:', {
+  // Production debugging for Issue #7 (LinkedIn OAuth)
+  console.log('🔑 [ISSUE-7-DEBUG] Generating JWT for user:', {
     id: user.id,
     provider: user.provider,
     displayName: user.displayName,

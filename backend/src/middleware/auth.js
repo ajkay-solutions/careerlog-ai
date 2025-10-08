@@ -39,16 +39,23 @@ const requireAuth = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded;
-    console.log('✅ JWT token verified for user:', decoded.displayName);
+    // Production debugging for Issue #6 (auto-save) and #7 (OAuth)
+    console.log('✅ [ISSUE-6-7-DEBUG] JWT token verified for user:', {
+      id: decoded.id,
+      displayName: decoded.displayName,
+      provider: decoded.provider,
+      email: decoded.email
+    });
     next();
   } catch (error) {
-    console.error('❌ JWT verification failed:', {
+    console.error('❌ [ISSUE-6-7-DEBUG] JWT verification failed:', {
       error: error.message,
       tokenLength: token?.length,
       tokenStart: token?.substring(0, 20) + '...',
       tokenEnd: '...' + token?.substring(token.length - 20),
       endpoint: req.path,
-      method: req.method
+      method: req.method,
+      userAgent: req.headers['user-agent']?.substring(0, 50)
     });
     return res.status(401).json({ 
       success: false, 

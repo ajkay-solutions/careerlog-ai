@@ -45,7 +45,7 @@ class LinkedInProvider {
         });
         
         const linkedinProfile = profileResponse.data;
-        console.log('✅ LinkedIn Profile fetched:', {
+        console.log('✅ [ISSUE-7-DEBUG] LinkedIn Profile fetched:', {
           sub: linkedinProfile.sub,
           name: linkedinProfile.name,
           email: linkedinProfile.email,
@@ -171,7 +171,12 @@ class LinkedInProvider {
           return done(dbError, null);
         }
       } catch (error) {
-        console.error('❌ LinkedIn OAuth Error:', error.response?.data || error.message);
+        console.error('❌ [ISSUE-7-DEBUG] LinkedIn OAuth Error:', {
+          message: error.message,
+          response: error.response?.data,
+          status: error.response?.status,
+          stack: error.stack
+        });
         return done(error, null);
       }
     });

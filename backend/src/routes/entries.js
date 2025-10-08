@@ -1,3 +1,15 @@
+/*
+ * PRODUCTION DEBUGGING: Issues #6 & #7
+ * 
+ * This file contains targeted debugging logs prefixed with [ISSUE-6-DEBUG] and [ISSUE-7-DEBUG]
+ * to help diagnose auto-save failures and OAuth authentication issues.
+ * 
+ * Issue #6: Auto-save error and left sidebar not refreshing
+ * Issue #7: LinkedIn OAuth login failure
+ * 
+ * These logs can be removed after issues are resolved.
+ */
+
 const express = require('express');
 const { requireAuth } = require('../middleware/auth');
 const { getJobQueue } = require('../services/ai/jobQueue');
@@ -149,13 +161,15 @@ router.get('/:date', requireAuth, async (req, res) => {
 
 // POST /api/entries - Create new entry
 router.post('/', requireAuth, async (req, res) => {
-  console.log('🔍 CREATE ENTRY REQUEST:', {
+  console.log('🔍 [ISSUE-6-DEBUG] CREATE ENTRY REQUEST:', {
     userId: req.user?.id,
+    userProvider: req.user?.provider,
+    userEmail: req.user?.email,
     date: req.body.date,
     rawTextLength: req.body.rawText?.length,
     isHighlight: req.body.isHighlight,
     timestamp: new Date().toISOString(),
-    userAgent: req.headers['user-agent'],
+    userAgent: req.headers['user-agent']?.substring(0, 50),
     contentType: req.headers['content-type']
   });
 
@@ -221,7 +235,7 @@ router.post('/', requireAuth, async (req, res) => {
       }
     }, ['entries', 'counts', 'dashboard']);
 
-    console.log('✅ CREATE ENTRY - Entry created successfully:', {
+    console.log('✅ [ISSUE-6-DEBUG] CREATE ENTRY - Entry created successfully:', {
       entryId: entry.id,
       userId: entry.userId,
       date: entry.date.toISOString(),
@@ -247,7 +261,13 @@ router.post('/', requireAuth, async (req, res) => {
       message: 'Entry created successfully'
     });
   } catch (error) {
-    console.error('Create entry error:', error);
+    console.error('❌ [ISSUE-6-DEBUG] Create entry error:', {
+      error: error.message,
+      stack: error.stack,
+      userId: req.user?.id,
+      userProvider: req.user?.provider,
+      date: req.body?.date
+    });
     res.status(500).json({
       success: false,
       error: 'Failed to create entry'
@@ -257,8 +277,10 @@ router.post('/', requireAuth, async (req, res) => {
 
 // PUT /api/entries/:date - Update existing entry
 router.put('/:date', requireAuth, async (req, res) => {
-  console.log('🔍 UPDATE ENTRY REQUEST:', {
+  console.log('🔍 [ISSUE-6-DEBUG] UPDATE ENTRY REQUEST (Auto-save):', {
     userId: req.user?.id,
+    userProvider: req.user?.provider,
+    userEmail: req.user?.email,
     targetDate: req.params.date,
     rawTextLength: req.body.rawText?.length,
     isHighlight: req.body.isHighlight,
@@ -266,7 +288,7 @@ router.put('/:date', requireAuth, async (req, res) => {
     hasSkillIds: !!req.body.skillIds,
     hasCompetencyIds: !!req.body.competencyIds,
     timestamp: new Date().toISOString(),
-    userAgent: req.headers['user-agent'],
+    userAgent: req.headers['user-agent']?.substring(0, 50),
     contentType: req.headers['content-type']
   });
 
@@ -311,7 +333,7 @@ router.put('/:date', requireAuth, async (req, res) => {
       data: updateData
     }, ['entries', 'dashboard']);
 
-    console.log('✅ UPDATE ENTRY - Entry updated successfully:', {
+    console.log('✅ [ISSUE-6-DEBUG] UPDATE ENTRY - Auto-save successful:', {
       entryId: entry.id,
       userId: entry.userId,
       date: entry.date.toISOString(),
@@ -345,7 +367,13 @@ router.put('/:date', requireAuth, async (req, res) => {
       });
     }
     
-    console.error('Update entry error:', error);
+    console.error('❌ [ISSUE-6-DEBUG] Update entry error (Auto-save failed):', {
+      error: error.message,
+      stack: error.stack,
+      userId: req.user?.id,
+      userProvider: req.user?.provider,
+      targetDate: req.params?.date
+    });
     res.status(500).json({
       success: false,
       error: 'Failed to update entry'

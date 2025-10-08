@@ -235,7 +235,7 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
       }
       
       // Perform save logic directly here to avoid dependency on saveEntry
-      console.log('🔍 Auto-save executing...', {
+      console.log('🔍 [ISSUE-6-DEBUG] Auto-save executing...', {
         selectedDate: selectedDate,
         textLength: text.length,
         textEmpty: !text.trim(),
@@ -269,7 +269,7 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
         }
 
         if (response.success) {
-          console.log('✅ Auto-save successful:', {
+          console.log('✅ [ISSUE-6-DEBUG] Auto-save successful:', {
             entryId: response.data.id,
             newTextLength: response.data.rawText?.length,
             oldTextLength: text.length,
@@ -307,20 +307,25 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
             }, 500); // Small delay to avoid race conditions
           }
           
-          // Notify parent component of change
+          // Notify parent component of change (for sidebar refresh)
           const currentOnEntryChange = onEntryChangeRef.current;
           if (currentOnEntryChange) {
-            console.log('🔍 Notifying parent component of entry change');
+            console.log('🔍 [ISSUE-6-DEBUG] Notifying parent component of entry change (should refresh sidebar)');
             currentOnEntryChange(response.data);
           } else {
-            console.log('🔍 No onEntryChange callback available');
+            console.log('🔍 [ISSUE-6-DEBUG] No onEntryChange callback available - sidebar may not refresh');
           }
         } else {
-          console.error('❌ Auto-save failed - server returned error:', response);
+          console.error('❌ [ISSUE-6-DEBUG] Auto-save failed - server returned error:', response);
           setError('Failed to auto-save entry');
         }
       } catch (err) {
-        console.error('❌ Auto-save failed with exception:', err);
+        console.error('❌ [ISSUE-6-DEBUG] Auto-save failed with exception:', {
+          error: err.message,
+          status: err.status,
+          selectedDate: selectedDate,
+          textLength: text.length
+        });
         setError('Failed to auto-save entry');
       } finally {
         setIsSaving(false);
