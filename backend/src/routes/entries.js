@@ -11,6 +11,7 @@
  */
 
 const express = require('express');
+const crypto = require('crypto');
 const { requireAuth } = require('../middleware/auth');
 const { getJobQueue } = require('../services/ai/jobQueue');
 const dbService = require('../services/database');
@@ -220,9 +221,13 @@ router.post('/', requireAuth, async (req, res) => {
     }
 
     console.log('🔍 CREATE ENTRY - About to create new entry...');
+    // Generate a unique ID for the entry
+    const entryId = crypto.randomUUID();
+    
     // Create entry and invalidate relevant caches
     const entry = await cachedDbService.createAndInvalidateCache('entry', {
       data: {
+        id: entryId,  // Provide the ID explicitly
         userId,
         date: entryDate,
         rawText,
