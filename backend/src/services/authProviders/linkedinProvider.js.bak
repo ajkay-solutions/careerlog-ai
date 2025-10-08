@@ -1,0 +1,257 @@
+const OAuth2Strategy = require('passport-oauth2');
+const axios = require('axios');
+
+class LinkedInProvider {
+  constructor() {
+    this.name = 'linkedin';
+    this.strategy = null;
+  }
+
+  initialize() {
+    if (!process.env.LINKEDIN_CLIENT_ID || !process.env.LINKEDIN_CLIENT_SECRET) {
+      throw new Error('LinkedIn OAuth credentials not found in environment variables');
+    }
+
+    // Environment-aware callback URL for WorkLog AI
+    const callbackURL = process.env.NODE_ENV === 'production' 
+      ? 'https://worklog-ai-backend.onrender.com/auth/linkedin/callback'
+      : 'http://localhost:3004/auth/linkedin/callback';
+    
+    console.log('🔧 LinkedIn OAuth Config (WorkLog AI):', {
+      NODE_ENV: process.env.NODE_ENV,
+      NODE_ENV_TYPE: typeof process.env.NODE_ENV,
+      NODE_ENV_STRICT: process.env.NODE_ENV === 'production',
+      callbackURL: callbackURL,
+      clientID: process.env.LINKEDIN_CLIENT_ID,
+      clientSecretLength: process.env.LINKEDIN_CLIENT_SECRET?.length || 0
+    });
+
+    // Custom LinkedIn OpenID Connect strategy
+    this.strategy = new OAuth2Strategy({
+      authorizationURL: 'https://www.linkedin.com/oauth/v2/authorization',
+      tokenURL: 'https://www.linkedin.com/oauth/v2/accessToken',
+      clientID: process.env.LINKEDIN_CLIENT_ID,
+      clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
+      callbackURL: callbackURL,
+      scope: ['openid', 'profile', 'email', 'r_basicprofile'],
+      state: false
+    }, async (accessToken, refreshToken, profile, done) => {
+      try {
+        console.log('🔍 Fetching LinkedIn profile with access token...');
+        
+        // Fetch user profile using LinkedIn v2 API
+        const profileResponse = await axios.get('https://api.linkedin.com/v2/userinfo', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Accept': 'application/json'
+          }
+        });
+        
+        const linkedinProfile = profileResponse.data;
+        console.log('✅ LinkedIn Profile fetched:', {
+          sub: linkedinProfile.sub,
+          name: linkedinProfile.name,
+          email: linkedinProfile.email,
+          hasPicture: !!linkedinProfile.picture
+        });
+
+        // Fetch profile photo separately if not included
+        let profilePhotoUrl = linkedinProfile.picture;
+        if (!profilePhotoUrl) {
+          try {
+            console.log('🔍 Fetching LinkedIn profile photo...');
+            const photoResponse = await axios.get('https://api.linkedin.com/v2/people/(id:' + linkedinProfile.sub + ')', {
+              headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Accept': 'application/json'
+              },
+              params: {
+                'projection': '(id,profilePicture(displayImage~:playableStreams))'
+              }
+            });
+            
+            const photoData = photoResponse.data;
+            if (photoData.profilePicture && photoData.profilePicture['displayImage~'] && 
+                photoData.profilePicture['displayImage~'].elements && 
+                photoData.profilePicture['displayImage~'].elements.length > 0) {
+              // Get the largest available image
+              const images = photoData.profilePicture['displayImage~'].elements;
+              const largestImage = images[images.length - 1];
+              if (largestImage.identifiers && largestImage.identifiers.length > 0) {
+                profilePhotoUrl = largestImage.identifiers[0].identifier;
+                console.log('✅ LinkedIn profile photo fetched');
+              }
+            }
+          } catch (photoError) {
+            console.log('⚠️ Could not fetch LinkedIn profile photo:', photoError.message);
+          }
+        }
+
+        // Create or update user in database with safe operation
+        const { PrismaClient } = require('@prisma/client');
+        
+        // Create a safe database operation wrapper
+        const safeDbOperation = async (operation) => {
+          const prismaClient = new PrismaClient();
+          try {
+            const result = await operation(prismaClient);
+            return result;
+          } catch (error) {
+            console.error('❌ Database operation failed:', error.message);
+            
+            // For prepared statement errors, wait a moment and retry once
+            if (error.message?.includes('prepared statement') || error.code === 'P1001') {
+              console.log('🔄 Retrying after prepared statement error...');
+              
+              // Wait 500ms before retry
+              await new Promise(resolve => setTimeout(resolve, 500));
+              
+              try {
+                const result = await operation(prismaClient);
+                return result;
+              } catch (retryError) {
+                console.error('❌ Retry failed:', retryError.message);
+                throw retryError;
+              }
+            }
+            
+            throw error;
+          } finally {
+            await prismaClient.$disconnect();
+          }
+        };
+
+        try {
+          // Handle user creation/update with email uniqueness and multi-provider support
+          const dbUser = await safeDbOperation(async (prismaClient) => {
+            // First, try to find existing user by email
+            const existingUser = await prismaClient.user.findUnique({
+              where: { email: linkedinProfile.email }
+            });
+            
+            if (existingUser) {
+              // User exists with this email - add LinkedIn as additional provider
+              console.log('🔄 Adding LinkedIn provider to existing user:', existingUser.id);
+              
+              // Parse existing provider data
+              const currentProviders = existingUser.name || {};
+              const providers = currentProviders.providers || {};
+              
+              // Add/update LinkedIn provider data
+              providers.linkedin = {
+                providerId: linkedinProfile.sub,
+                displayName: linkedinProfile.name,
+                email: linkedinProfile.email,
+                profilePhoto: profilePhotoUrl,
+                lastUsed: new Date().toISOString(),
+                profileData: {
+                  sub: linkedinProfile.sub,
+                  name: linkedinProfile.name,
+                  email: linkedinProfile.email,
+                  picture: profilePhotoUrl
+                }
+              };
+              
+              // Determine best display name (prefer LinkedIn if it's longer/better)
+              const bestDisplayName = linkedinProfile.name && linkedinProfile.name.length > (existingUser.displayName || '').length
+                ? linkedinProfile.name 
+                : existingUser.displayName || linkedinProfile.name;
+                
+              // Determine best profile photo (prefer LinkedIn if available)
+              const bestProfilePhoto = profilePhotoUrl || existingUser.profilePhoto;
+              
+              return await prismaClient.user.update({
+                where: { id: existingUser.id },
+                data: {
+                  provider: 'linkedin', // Update to last used provider
+                  providerId: linkedinProfile.sub, // Update to last used provider ID
+                  displayName: bestDisplayName,
+                  profilePhoto: bestProfilePhoto,
+                  name: {
+                    ...currentProviders,
+                    providers,
+                    lastUsedProvider: 'linkedin',
+                    updatedAt: new Date().toISOString()
+                  },
+                  lastLoginAt: new Date()
+                }
+              });
+            } else {
+              // No existing user, create new LinkedIn user
+              console.log('✅ Creating new LinkedIn user:', linkedinProfile.sub);
+              return await prismaClient.user.create({
+                data: {
+                  id: linkedinProfile.sub,
+                  provider: 'linkedin',
+                  providerId: linkedinProfile.sub,
+                  displayName: linkedinProfile.name,
+                  email: linkedinProfile.email || '',
+                  profilePhoto: profilePhotoUrl || '',
+                  name: {
+                    providers: {
+                      linkedin: {
+                        providerId: linkedinProfile.sub,
+                        displayName: linkedinProfile.name,
+                        email: linkedinProfile.email,
+                        profilePhoto: profilePhotoUrl,
+                        lastUsed: new Date().toISOString(),
+                        profileData: {
+                          sub: linkedinProfile.sub,
+                          name: linkedinProfile.name,
+                          email: linkedinProfile.email,
+                          picture: profilePhotoUrl
+                        }
+                      }
+                    },
+                    lastUsedProvider: 'linkedin',
+                    createdAt: new Date().toISOString()
+                  },
+                  createdAt: new Date(),
+                  lastLoginAt: new Date()
+                }
+              });
+            }
+          });
+
+          console.log('✅ User saved to database:', dbUser.id);
+
+          const user = {
+            id: dbUser.id,
+            provider: 'linkedin',
+            displayName: dbUser.displayName,
+            name: {
+              first: linkedinProfile.given_name || '',
+              last: linkedinProfile.family_name || ''
+            },
+            email: dbUser.email,
+            profilePhoto: dbUser.profilePhoto
+          };
+
+          return done(null, user);
+        } catch (dbError) {
+          console.error('❌ Database error saving user:', dbError);
+          return done(dbError, null);
+        }
+      } catch (error) {
+        console.error('❌ LinkedIn OAuth Error:', error.response?.data || error.message);
+        return done(error, null);
+      }
+    });
+
+    return this.strategy;
+  }
+
+  getAuthUrl() {
+    return '/auth/linkedin';
+  }
+
+  getCallbackUrl() {
+    return '/auth/linkedin/callback';
+  }
+
+  getScopes() {
+    return ['openid', 'profile', 'email', 'r_basicprofile'];
+  }
+}
+
+module.exports = LinkedInProvider;

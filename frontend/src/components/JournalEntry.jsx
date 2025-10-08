@@ -1,6 +1,16 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { apiService } from '../services/api';
 import AIInsights from './AIInsights';
+import TemplateSelector, { TEMPLATES } from './TemplateSelector';
+import TipsModal from './TipsModal';
+import TemplateConfirmationModal from './TemplateConfirmationModal';
+import { 
+  getTemplatePreference, 
+  setTemplatePreference, 
+  isOnlyTemplateContent,
+  extractUserContent,
+  mergeContentWithTemplate 
+} from '../utils/templatePreferences';
 
 const JournalEntry = ({ selectedDate, onEntryChange }) => {
   const [entry, setEntry] = useState(null);
@@ -10,6 +20,12 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
   const [lastSaved, setLastSaved] = useState(null);
   const [error, setError] = useState(null);
   const [wordCount, setWordCount] = useState(0);
+  
+  // Template-related state
+  const [currentTemplate, setCurrentTemplate] = useState(getTemplatePreference());
+  const [showTipsModal, setShowTipsModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [pendingTemplate, setPendingTemplate] = useState(null);
   
   const autoSaveTimeoutRef = useRef(null);
   const textareaRef = useRef(null);
@@ -31,6 +47,61 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
   // Count words in text
   const countWords = useCallback((text) => {
     return text.trim().split(/\s+/).filter(word => word.length > 0).length;
+  }, []);
+
+  // Apply template to current content
+  const applyTemplate = useCallback((templateId) => {
+    const template = TEMPLATES[templateId];
+    if (!template) return;
+
+    const currentContent = rawText;
+    const templateContent = template.content;
+    
+    // If no content or only template content, replace completely
+    if (!currentContent || isOnlyTemplateContent(currentContent, templateContent)) {
+      setRawText(templateContent);
+    } else {
+      // Extract user content and merge with new template
+      const userContent = extractUserContent(currentContent, TEMPLATES[currentTemplate]?.content || '');
+      const mergedContent = mergeContentWithTemplate(userContent, templateContent);
+      setRawText(mergedContent);
+    }
+    
+    setCurrentTemplate(templateId);
+    setTemplatePreference(templateId);
+  }, [rawText, currentTemplate]);
+
+  // Handle template change with confirmation if needed
+  const handleTemplateChange = useCallback((newTemplateId) => {
+    if (newTemplateId === currentTemplate) return;
+
+    const currentContent = rawText;
+    const currentTemplateContent = TEMPLATES[currentTemplate]?.content || '';
+    
+    // Check if we have real user content that needs confirmation
+    if (currentContent && !isOnlyTemplateContent(currentContent, currentTemplateContent)) {
+      // Show confirmation modal
+      setPendingTemplate(newTemplateId);
+      setShowConfirmationModal(true);
+    } else {
+      // No real content, switch immediately
+      applyTemplate(newTemplateId);
+    }
+  }, [rawText, currentTemplate, applyTemplate]);
+
+  // Confirm template switch
+  const confirmTemplateSwitch = useCallback(() => {
+    if (pendingTemplate) {
+      applyTemplate(pendingTemplate);
+      setPendingTemplate(null);
+    }
+    setShowConfirmationModal(false);
+  }, [pendingTemplate, applyTemplate]);
+
+  // Cancel template switch
+  const cancelTemplateSwitch = useCallback(() => {
+    setPendingTemplate(null);
+    setShowConfirmationModal(false);
   }, []);
 
   // Load entry for selected date
@@ -79,7 +150,11 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
         // No entry exists for this date
         console.log('🔍 No entry found for date, resetting state');
         setEntry(null);
-        setRawText('');
+        
+        // Apply user's preferred template for new entries
+        const template = TEMPLATES[currentTemplate];
+        const templateContent = template ? template.content : '';
+        setRawText(templateContent);
         setWordCount(0);
         setLastSaved(null);
       }
@@ -288,11 +363,76 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
     }
   };
 
-  // Manual save (Ctrl+S)
+  // Handle keyboard shortcuts and bullet point formatting
   const handleKeyDown = (e) => {
+    // Manual save (Ctrl+S)
     if ((e.ctrlKey || e.metaKey) && e.key === 's') {
       e.preventDefault();
       saveEntry(rawText);
+      return;
+    }
+
+    // Handle Enter key for bullet points - works regardless of template if content has bullets
+    if (e.key === 'Enter') {
+      const textarea = e.target;
+      const { selectionStart, selectionEnd } = textarea;
+      const text = textarea.value;
+      
+      // Get the current line
+      const lines = text.substring(0, selectionStart).split('\n');
+      const currentLine = lines[lines.length - 1];
+      
+      // Check if the current line starts with a bullet point
+      const bulletMatch = currentLine.match(/^(•|\*|-|\d+\.)\s*/);
+      
+      if (bulletMatch) {
+        e.preventDefault();
+        
+        // Check if current line only has the bullet (empty bullet point)
+        const lineContent = currentLine.substring(bulletMatch[0].length).trim();
+        
+        if (lineContent === '') {
+          // Empty bullet, remove it and add a blank line
+          const beforeCursor = text.substring(0, selectionStart - currentLine.length);
+          const afterCursor = text.substring(selectionEnd);
+          const newText = beforeCursor + '\n' + afterCursor;
+          
+          setRawText(newText);
+          
+          // Set cursor position after the new line
+          setTimeout(() => {
+            textarea.selectionStart = textarea.selectionEnd = beforeCursor.length + 1;
+          }, 0);
+          
+          // Trigger auto-save for empty bullet case
+          debouncedSave(newText);
+        } else {
+          // Non-empty bullet, add a new bullet on the next line
+          const bullet = bulletMatch[1];
+          let nextBullet = bullet;
+          
+          // Handle numbered lists
+          if (/^\d+\.$/.test(bullet)) {
+            const num = parseInt(bullet);
+            nextBullet = `${num + 1}.`;
+          }
+          
+          const beforeCursor = text.substring(0, selectionEnd);
+          const afterCursor = text.substring(selectionEnd);
+          const newText = beforeCursor + '\n' + nextBullet + ' ' + afterCursor;
+          
+          setRawText(newText);
+          
+          // Set cursor position after the new bullet
+          setTimeout(() => {
+            const newPos = selectionEnd + nextBullet.length + 2;
+            textarea.selectionStart = textarea.selectionEnd = newPos;
+          }, 0);
+          
+          // Trigger auto-save for new bullet case
+          debouncedSave(newText);
+        }
+      }
     }
   };
 
@@ -397,6 +537,23 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
             )}
           </div>
         </div>
+
+        {/* Template Controls */}
+        <div className="flex items-center justify-between mt-4">
+          <div className="flex items-center gap-4">
+            <TemplateSelector 
+              currentTemplate={currentTemplate}
+              onTemplateChange={handleTemplateChange}
+            />
+            
+            <button
+              onClick={() => setShowTipsModal(true)}
+              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+            >
+              💡 <span>Tips</span>
+            </button>
+          </div>
+        </div>
         
         {error && (
           <div className="mt-3 p-3 bg-red-100 border border-red-300 rounded-lg text-red-700 text-sm">
@@ -440,6 +597,19 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
           </div>
         )}
       </div>
+
+      {/* Modals */}
+      <TipsModal 
+        isOpen={showTipsModal}
+        onClose={() => setShowTipsModal(false)}
+      />
+      
+      <TemplateConfirmationModal 
+        isOpen={showConfirmationModal}
+        onCancel={cancelTemplateSwitch}
+        onConfirm={confirmTemplateSwitch}
+        newTemplateName={pendingTemplate ? TEMPLATES[pendingTemplate]?.name : ''}
+      />
     </div>
   );
 };

@@ -1,26 +1,325 @@
-XHROPTIONS
-http://localhost:3004/api/insights/dashboard?timeframe=quarter
-[HTTP/1.1 200 OK 3ms]
+Some cookies are misusing the recommended “SameSite“ attribute 7
+GET
+https://accounts.google.com/signin/oauth/consent?as=S355993477:1759931354404754&authuser=0&client_id=677875518045-8qa0q2msug0ngmgvkvokc5s3somaooh0.apps.googleusercontent.com&flowName=GeneralOAuthFlow&part=AJi8hAP_mbNprC8yCQaIu6zwwSd5oqRN4eRp1Zojwn6hHLNydkqnYkkaLb1OxA6dx_VtnePPu4_z4UQ828Zt_BUPp6CThTA9cF6QdUxmtsh72OI-Euiqk9IhJmwnRXyn0UYSeo93oD77hXkXS0j2QGTIxwOXWhHpQno0Fw3P4Nv66H0Sw_jJWyUdyRDGObZGlxd8Ck30kBnFzfnSQdLUxitVMXxXnehtnjvUNypKkNClRAQIWg2WmQo1eQcreay3LaVoAv2g06Z3_o5EO9oKQCnO3qrYNMCcg2G__BUJuNj3Gyk_SusCZSk12AfQ_ZT3DjI585JomfpqNZvidP7Fsi_mRmxp9KpZlITfGJYk_0COloekm2JX_BP-gNKUZQ1I-MDwwiLCisDe81ogKzF6Mryf3f2XSnDmiVQW8ySB7wEFQEDlJCof7860iOABKCcEibbJC-uEC5HX7KtghIob5pLRmmPelGG506xwsuO_N4sTLo_VX3TBpd-kcopbEao1qin79M25ZPsWnobGJbf6SpqZQp0qkYFV2W2tFKi1yA6qyZQIGssTXXEQ8YkUATwxAYhkH0m4Ycx5mHv6VmkG0UipgPX51JabSn8CAOkAMMGnDsqwd7GjIwLZaqLgU8gULcNGpYjjq1_szN50aXd9BLPTIRLXh_v0xrFB95096Ybl5M6mPD47SELljk-Is_RkbRZzR8E8XoZjHEP9pCkbpD1lI1x0v3tMgdt2TgtY8VlfCsdqC1rX0o1B7uAH2LzjCPQkaNt3Ffy5qs1HmU8QmE2ObEfQLli5HW0mNINkxhu-c1V368xATAPV_w-K26F6c9kNrTy0ZMNBuq9zVDvWAC9Yc0va9hm4yC6NiJVRAGVMOXcj0gcy9bHcOypBq0SOoQGmec-FnMJ622plMkfjcMSixHkCLBesuSNqXGDBNsq1382JolVTVqoeOGvmArjqnX6YTfCijVw0wdAcwi9w5Zb9OrTTx0CVkCWO8ziDKF1u2OGKReQOh0I&rapt=AEjHL4N9rnrQ3fYEj1LJK-nS6v3CFjHAjcvJP8YBZ411e1lKi3pWrkHRzgcYIcGiXdGl5d4WthHbGek4ApHffO2j8QjPKrmNzrcKWL1Ib2WArB4VRI1X8sE&xsrf=AHrjzuIqXpOQWs5pfla6Gv0WWx_m:1759931388766
+[HTTP/3 302  217ms]
 
-XHRGET
-http://localhost:3004/api/insights/dashboard?timeframe=quarter
-[HTTP/1.1 304 Not Modified 232ms]
-
-XHRGET
-http://localhost:3004/api/insights/dashboard?timeframe=quarter
-[HTTP/1.1 304 Not Modified 306ms]
-
-XHROPTIONS
-http://localhost:3004/api/generate/resume-bullets
-[HTTP/1.1 200 OK 4ms]
+GET
+http://localhost:3004/auth/google/callback?code=4/0AVGzR1BYHKwNHQ0Dmkn0HM_Ue4FagkIJt1wXLgdJ1DJp0RsBLQHCKtfr7OzL5BwOIKyleQ&scope=email+profile+https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email+openid&authuser=0&prompt=consent
+[HTTP/1.1 302 Found 2717ms]
 
 XHRPOST
-http://localhost:3004/api/generate/resume-bullets
-[HTTP/1.1 200 OK 9739ms]
+https://accounts.google.com/_/OAuthUi/browserinfo?f.sid=1776126016198161158&bl=boq_identity-oauth-http_20251005.06_p0&hl=en-GB&authuser=0&soc-app=1&soc-platform=1&soc-device=1&_reqid=269594&rt=j
+[HTTP/3 200  320ms]
 
-GeneratedContentEditor props: 
-Object { generatedContentLength: 0, title: "Resume Bullet Points", loading: false }
-GeneratedContentEditor.jsx:18:10
-GeneratedContentEditor props: 
-Object { generatedContentLength: 0, title: "Resume Bullet Points", loading: false }
-GeneratedContentEditor.jsx:18:10
+XHRPOST
+https://play.google.com/log?format=json&hasfast=true&authuser=0
+[HTTP/3 200  157ms]
+
+GET
+http://localhost:5173/journal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIxVGNRWWFHck8iLCJwcm92aWRlciI6Imdvb2dsZSIsImRpc3BsYXlOYW1lIjoiQXJzYWxhbiBKZWhhbmdpciBLaGFuIiwibmFtZSI6eyJmaXJzdCI6IkFyc2FsYW4iLCJsYXN0IjoiSmVoYW5naXIgS2hhbiJ9LCJlbWFpbCI6ImFyc2FsYW4uamVoYW5naXJAZ21haWwuY29tIiwiaWF0IjoxNzU5OTMxNDAwLCJleHAiOjE3NjAwMTc4MDB9.TR3ipGm0Gt0iUIVEL5NXDYJxt-wDv3kK1kNpRuk1UOY&auth=success
+[HTTP/1.1 200 OK 7ms]
+
+GET
+http://localhost:5173/@vite/client
+[HTTP/1.1 304 Not Modified 2ms]
+
+GET
+http://localhost:5173/src/main.jsx
+[HTTP/1.1 304 Not Modified 3ms]
+
+GET
+http://localhost:5173/@react-refresh
+[HTTP/1.1 304 Not Modified 4ms]
+
+GET
+http://localhost:5173/node_modules/vite/dist/client/env.mjs
+[HTTP/1.1 200 OK 1ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=0e6789b2
+
+[vite] connecting... client.ts:19:8
+GET
+http://localhost:5173/node_modules/.vite/deps/react.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/src/App.jsx?t=1759931164493
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/index.css
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/chunk-K5YNGTCN.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/chunk-ZC22LKFR.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/chunk-LAV6FB6A.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+ws://localhost:5173/?token=27tX93mLQ-vM
+[HTTP/1.1 101 Switching Protocols 1ms]
+
+GET
+http://localhost:5173/src/services/auth.js
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/src/components/Navigation.jsx?t=1759930871733
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/components/DateNavigation.jsx
+[HTTP/1.1 304 Not Modified 0ms]
+
+GET
+http://localhost:5173/src/components/EntryList.jsx
+[HTTP/1.1 304 Not Modified 2ms]
+
+GET
+http://localhost:5173/src/components/JournalEntry.jsx
+[HTTP/1.1 304 Not Modified 4ms]
+
+GET
+http://localhost:5173/src/components/InsightsDashboard.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/pages/GenerateView.jsx
+[HTTP/1.1 304 Not Modified 0ms]
+
+[vite] connected. client.ts:155:14
+GET
+http://localhost:5173/node_modules/.vite/deps/lucide-react.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/src/services/api.js
+[HTTP/1.1 200 OK 2ms]
+
+GET
+http://localhost:5173/src/components/ProjectsModal.jsx
+[HTTP/1.1 200 OK 4ms]
+
+GET
+http://localhost:5173/src/components/generate/PerformanceReviewWizard.jsx
+[HTTP/1.1 304 Not Modified 4ms]
+
+GET
+http://localhost:5173/src/components/generate/ResumeBulletsWizard.jsx
+[HTTP/1.1 304 Not Modified 4ms]
+
+GET
+http://localhost:5173/src/components/SkillsModal.jsx
+[HTTP/1.1 304 Not Modified 4ms]
+
+GET
+http://localhost:5173/src/components/CompetenciesModal.jsx
+[HTTP/1.1 304 Not Modified 3ms]
+
+GET
+http://localhost:5173/src/components/ExportModal.jsx
+[HTTP/1.1 304 Not Modified 5ms]
+
+GET
+http://localhost:5173/src/components/insights/CompetencyChart.jsx
+[HTTP/1.1 304 Not Modified 2ms]
+
+GET
+http://localhost:5173/src/components/insights/TrendChart.jsx
+[HTTP/1.1 304 Not Modified 2ms]
+
+GET
+http://localhost:5173/src/components/insights/ProjectTimeline.jsx
+[HTTP/1.1 304 Not Modified 2ms]
+
+GET
+http://localhost:5173/src/components/insights/SkillsCloud.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/components/AIInsights.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/components/TemplateSelector.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/components/TipsModal.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/components/TemplateConfirmationModal.jsx
+[HTTP/1.1 304 Not Modified 2ms]
+
+GET
+http://localhost:5173/src/utils/templatePreferences.js
+[HTTP/1.1 304 Not Modified 2ms]
+
+GET
+http://localhost:5173/src/components/generate/GeneratedContentEditor.jsx
+[HTTP/1.1 200 OK 6ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/recharts.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/date-fns.js?v=0e6789b2
+
+Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools react-dom.development.js:29895:16
+XHROPTIONS
+http://localhost:3004/api/user/profile
+[HTTP/1.1 200 OK 5ms]
+
+XHRGET
+http://localhost:3004/api/user/profile
+[HTTP/1.1 200 OK 532ms]
+
+Error in parsing value for ‘-webkit-text-size-adjust’.  Declaration dropped. journal:122:31
+🔧 Environment check: 
+Object { VITE_API_URL: "http://localhost:3004", NODE_ENV: undefined, MODE: "development" }
+App.jsx:168:14
+🔍 URL params check: 
+Object { token: "eyJhbGciOiJIUzI1NiIs...", authSuccess: "success", pathname: "/journal", search: "?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIxVGNRWWFHck8iLCJwcm92aWRlciI6Imdvb2dsZSIsImRpc3BsYXlOYW1lIjoiQXJzYWxhbiBKZWhhbmdpciBLaGFuIiwibmFtZSI6eyJmaXJzdCI6IkFyc2FsYW4iLCJsYXN0IjoiSmVoYW5naXIgS2hhbiJ9LCJlbWFpbCI6ImFyc2FsYW4uamVoYW5naXJAZ21haWwuY29tIiwiaWF0IjoxNzU5OTMxNDAwLCJleHAiOjE3NjAwMTc4MDB9.TR3ipGm0Gt0iUIVEL5NXDYJxt-wDv3kK1kNpRuk1UOY&auth=success" }
+App.jsx:182:12
+🔑 OAuth token found in URL, processing... App.jsx:190:14
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition. deprecations.ts:9:12
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. deprecations.ts:9:12
+🔍 URL params check: 
+Object { token: "eyJhbGciOiJIUzI1NiIs...", authSuccess: "success", pathname: "/journal", search: "?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIxVGNRWWFHck8iLCJwcm92aWRlciI6Imdvb2dsZSIsImRpc3BsYXlOYW1lIjoiQXJzYWxhbiBKZWhhbmdpciBLaGFuIiwibmFtZSI6eyJmaXJzdCI6IkFyc2FsYW4iLCJsYXN0IjoiSmVoYW5naXIgS2hhbiJ9LCJlbWFpbCI6ImFyc2FsYW4uamVoYW5naXJAZ21haWwuY29tIiwiaWF0IjoxNzU5OTMxNDAwLCJleHAiOjE3NjAwMTc4MDB9.TR3ipGm0Gt0iUIVEL5NXDYJxt-wDv3kK1kNpRuk1UOY&auth=success" }
+App.jsx:182:12
+🔑 OAuth token found in URL, processing... App.jsx:190:14
+GET
+http://localhost:5173/vite.svg
+[HTTP/1.1 200 OK 0ms]
+
+✅ User profile loaded with complete provider data auth.js:46:17
+XHRGET
+http://localhost:3004/api/user/profile
+[HTTP/1.1 304 Not Modified 457ms]
+
+XHRGET
+http://localhost:3004/api/user/profile
+[HTTP/1.1 304 Not Modified 450ms]
+
+✅ User profile loaded with complete provider data 2 auth.js:46:17
+✅ OAuth login - Full user object: 
+Object { id: "21TcQYaGrO", email: "arsalan.jehangir@gmail.com", displayName: "Arsalan Jehangir Khan", profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c", createdAt: "2025-10-01T17:18:25.621Z", lastLoginAt: "2025-10-08T13:49:59.341Z", providers: (2) […], stats: {…} }
+App.jsx:200:16
+✅ OAuth login successful: Arsalan Jehangir Khan App.jsx:203:18
+🖼️ Profile photo URL: https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c App.jsx:204:18
+📧 Email: arsalan.jehangir@gmail.com App.jsx:205:18
+Navigation user prop: 
+Object { id: "21TcQYaGrO", email: "arsalan.jehangir@gmail.com", displayName: "Arsalan Jehangir Khan", profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c", createdAt: "2025-10-01T17:18:25.621Z", lastLoginAt: "2025-10-08T13:49:59.341Z", providers: (2) […], stats: {…} }
+Navigation.jsx:5:10
+Has profilePhoto? true Navigation.jsx:6:10
+Profile photo URL: https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c Navigation.jsx:7:10
+Navigation user prop: 
+Object { id: "21TcQYaGrO", email: "arsalan.jehangir@gmail.com", displayName: "Arsalan Jehangir Khan", profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c", createdAt: "2025-10-01T17:18:25.621Z", lastLoginAt: "2025-10-08T13:49:59.341Z", providers: (2) […], stats: {…} }
+Navigation.jsx:5:10
+Has profilePhoto? true Navigation.jsx:6:10
+Profile photo URL: https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c Navigation.jsx:7:10
+GET
+https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c
+NS_BINDING_ABORTED
+
+GET
+https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c
+NS_BINDING_ABORTED
+
+GET
+https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c
+[HTTP/2 429  287ms]
+
+🔍 Token retrieved from localStorage: 
+Object { length: 345, startsCorrectly: true, hasNewlines: false, hasCarriageReturns: false, firstChars: "eyJhbGciOiJIUzI1NiIs...", lastChars: "...xt-wDv3kK1kNpRuk1UOY" }
+api.js:24:15
+🔍 useEffect triggered, loading entry with forceFresh: false JournalEntry.jsx:458:12
+🔍 Loading entry for date: 
+Date Wed Oct 08 2025 19:20:03 GMT+0530 (India Standard Time)
+ <empty string> JournalEntry.jsx:122:12
+🔍 Token retrieved from localStorage: 
+Object { length: 345, startsCorrectly: true, hasNewlines: false, hasCarriageReturns: false, firstChars: "eyJhbGciOiJIUzI1NiIs...", lastChars: "...xt-wDv3kK1kNpRuk1UOY" }
+api.js:24:15
+XHROPTIONS
+http://localhost:3004/api/entries?limit=50
+[HTTP/1.1 200 OK 1ms]
+
+🔍 URL params check: 
+Object { token: null, authSuccess: null, pathname: "/journal", search: "" }
+App.jsx:182:12
+XHRGET
+http://localhost:3004/api/entries?limit=50
+[HTTP/1.1 304 Not Modified 1322ms]
+
+🔍 Token retrieved from localStorage: 
+Object { length: 345, startsCorrectly: true, hasNewlines: false, hasCarriageReturns: false, firstChars: "eyJhbGciOiJIUzI1NiIs...", lastChars: "...xt-wDv3kK1kNpRuk1UOY" }
+api.js:24:15
+🔍 useEffect triggered, loading entry with forceFresh: false JournalEntry.jsx:458:12
+🔍 Loading entry for date: 
+Date Wed Oct 08 2025 19:20:03 GMT+0530 (India Standard Time)
+ <empty string> JournalEntry.jsx:122:12
+🔍 Token retrieved from localStorage: 
+Object { length: 345, startsCorrectly: true, hasNewlines: false, hasCarriageReturns: false, firstChars: "eyJhbGciOiJIUzI1NiIs...", lastChars: "...xt-wDv3kK1kNpRuk1UOY" }
+api.js:24:15
+XHROPTIONS
+http://localhost:3004/api/entries/2025-10-08
+[HTTP/1.1 200 OK 2ms]
+
+XHRGET
+http://localhost:3004/api/entries/2025-10-08
+[HTTP/1.1 304 Not Modified 1342ms]
+
+Profile photo failed to load: https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c Navigation.jsx:68:28
+✅ OAuth login - Full user object: 
+Object { id: "21TcQYaGrO", email: "arsalan.jehangir@gmail.com", displayName: "Arsalan Jehangir Khan", profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c", createdAt: "2025-10-01T17:18:25.621Z", lastLoginAt: "2025-10-08T13:49:59.341Z", providers: (2) […], stats: {…} }
+App.jsx:200:16
+✅ OAuth login successful: Arsalan Jehangir Khan App.jsx:203:18
+🖼️ Profile photo URL: https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c App.jsx:204:18
+📧 Email: arsalan.jehangir@gmail.com App.jsx:205:18
+Navigation user prop: 
+Object { id: "21TcQYaGrO", email: "arsalan.jehangir@gmail.com", displayName: "Arsalan Jehangir Khan", profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c", createdAt: "2025-10-01T17:18:25.621Z", lastLoginAt: "2025-10-08T13:49:59.341Z", providers: (2) […], stats: {…} }
+Navigation.jsx:5:10
+Has profilePhoto? true Navigation.jsx:6:10
+Profile photo URL: https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c Navigation.jsx:7:10
+Navigation user prop: 
+Object { id: "21TcQYaGrO", email: "arsalan.jehangir@gmail.com", displayName: "Arsalan Jehangir Khan", profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c", createdAt: "2025-10-01T17:18:25.621Z", lastLoginAt: "2025-10-08T13:49:59.341Z", providers: (2) […], stats: {…} }
+Navigation.jsx:5:10
+Has profilePhoto? true Navigation.jsx:6:10
+Profile photo URL: https://lh3.googleusercontent.com/a/ACg8ocKTKc9Ok3RStdSPc8IBkPfJfeL8nSpcPRuzyEO93H2xIrs8dSqgpA=s96-c Navigation.jsx:7:10
+🔍 URL params check: 
+Object { token: null, authSuccess: null, pathname: "/journal", search: "" }
+App.jsx:182:12
+XHRGET
+http://localhost:3004/api/entries?limit=50
+[HTTP/1.1 304 Not Modified 1523ms]
+
+XHRGET
+http://localhost:3004/api/entries/2025-10-08
+[HTTP/1.1 304 Not Modified 227ms]
+
+🔍 Entry load response: 
+Object { success: true, hasData: false, entryId: undefined, textLength: undefined, updatedAt: undefined, forceFresh: false }
+JournalEntry.jsx:129:14
+🔍 No entry found for date, resetting state JournalEntry.jsx:151:16
+🔍 Entry load response: 
+Object { success: true, hasData: false, entryId: undefined, textLength: undefined, updatedAt: undefined, forceFresh: false }
+JournalEntry.jsx:129:14
+🔍 No entry found for date, resetting state JournalEntry.jsx:151:16

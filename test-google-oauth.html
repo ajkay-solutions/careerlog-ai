@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google OAuth Test</title>
+</head>
+<body>
+    <h1>Google OAuth Client Test</h1>
+    <p>Testing Client ID: 677875518045-8qa0q2msug0ngmgvkokc5s3somaooh0.apps.googleusercontent.com</p>
+    
+    <h2>Direct Google OAuth URL Test:</h2>
+    <a href="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&redirect_uri=http://localhost:3004/auth/google/callback&scope=profile%20email&client_id=677875518045-8qa0q2msug0ngmgvkokc5s3somaooh0.apps.googleusercontent.com" target="_blank">
+        Test Google OAuth Login
+    </a>
+    
+    <h2>Error Message Decoded:</h2>
+    <p><strong>invalid_client: The OAuth client was not found</strong></p>
+    
+    <h2>Solution:</h2>
+    <p>You need to either:</p>
+    <ol>
+        <li>Create a new OAuth 2.0 Client ID in Google Cloud Console</li>
+        <li>Or find the correct client ID that exists in your Google Cloud project</li>
+    </ol>
+    
+    <h2>Steps to Create New OAuth Client:</h2>
+    <ol>
+        <li>Go to <a href="https://console.cloud.google.com/apis/credentials" target="_blank">Google Cloud Console - Credentials</a></li>
+        <li>Click "Create Credentials" > "OAuth client ID"</li>
+        <li>Choose "Web application"</li>
+        <li>Add authorized redirect URIs:
+            <ul>
+                <li>http://localhost:3004/auth/google/callback</li>
+                <li>https://worklog-ai-backend.onrender.com/auth/google/callback</li>
+                <li>https://worklog.ajkaysolutions.com/auth/google/callback</li>
+            </ul>
+        </li>
+        <li>Copy the new Client ID and Client Secret</li>
+        <li>Update the .env file with the new credentials</li>
+    </ol>
+</body>
+</html>

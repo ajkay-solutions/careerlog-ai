@@ -21,14 +21,7 @@ class ApiService {
     
     // Debug token retrieval issues
     if (token) {
-      console.log('🔍 Token retrieved from localStorage:', {
-        length: token.length,
-        startsCorrectly: token.startsWith('eyJ'),
-        hasNewlines: token.includes('\n'),
-        hasCarriageReturns: token.includes('\r'),
-        firstChars: token.substring(0, 20) + '...',
-        lastChars: '...' + token.substring(token.length - 20)
-      });
+      // Token retrieved (details not logged for security)
       
       // Clean token if it has newlines or extra whitespace
       const cleanToken = token.replace(/[\n\r]/g, '').trim();
@@ -56,8 +49,10 @@ class ApiService {
       timeout = 30000; // 30 seconds for insights
     } else if (endpoint.includes('/export') || endpoint.includes('/generate')) {
       timeout = 60000; // 60 seconds for export and generation
+    } else if (endpoint.includes('/entries')) {
+      timeout = 35000; // 35 seconds for entries (slightly higher than backend 30s timeout)
     } else {
-      timeout = 10000; // 10 seconds for others
+      timeout = 20000; // 20 seconds for others
     }
 
     const config = {

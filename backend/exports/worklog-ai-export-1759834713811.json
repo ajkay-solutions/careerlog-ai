@@ -1,0 +1,928 @@
+{
+  "metadata": {
+    "exportedAt": "2025-10-07T10:58:33.811Z",
+    "version": "1.0",
+    "source": "worklog-ai-us-east"
+  },
+  "users": [
+    {
+      "id": "105762475513523675785",
+      "email": "ajkay.solutions@gmail.com",
+      "displayName": "AJKAY SOLUTIONS",
+      "profilePhoto": "https://lh3.googleusercontent.com/a/ACg8ocKtppOsYYp525EZbrf7J2bZBxMsMJ6z35lCNUyQQpUeo8oGQh0=s96-c",
+      "createdAt": "2025-10-07T08:01:30.387Z",
+      "updatedAt": "2025-10-07T08:01:30.388Z",
+      "lastLoginAt": "2025-10-07T08:01:30.387Z"
+    },
+    {
+      "id": "21TcQYaGrO",
+      "email": "arsalan.jehangir@gmail.com",
+      "displayName": "Arsalan Jehangir Khan",
+      "profilePhoto": "https://lh3.googleusercontent.com/a/ACg8ocLKp12NA2zc-RDv8NQTqvL7y_Js4vX5UYxZkRRXSlB_T8RU9g=s96-c",
+      "createdAt": "2025-10-01T17:18:25.621Z",
+      "updatedAt": "2025-10-07T10:13:51.660Z",
+      "lastLoginAt": "2025-10-07T10:13:51.659Z"
+    }
+  ],
+  "entries": [
+    {
+      "id": "cmg893i600001yqsvelvl8xq1",
+      "userId": "21TcQYaGrO",
+      "date": "2025-09-30T18:30:00.000Z",
+      "rawText": "Today I completed the OAuth integration for WorkLog AI using LinkedIn authentication. I successfully implemented the Passport.js strategy andconfigured the callback URLs. I also solved critical CSS compilation issues by upgrading from Tailwind v3 to v4 syntax. Additionally, I implemented background job processing for AI analysis and set up the Claude API integration for extracting insights from journal entries.",
+      "wordCount": 59,
+      "extractedData": {
+        "people": [],
+        "skills": [
+          {
+            "name": "OAuth",
+            "context": "Implemented the Passport.js strategy and configured the callback URLs.",
+            "category": "technical",
+            "confidence": 0.9
+          },
+          {
+            "name": "CSS",
+            "context": "Solved critical CSS compilation issues by upgrading from Tailwind v3 to v4 syntax.",
+            "category": "technical",
+            "confidence": 0.85
+          },
+          {
+            "name": "Background job processing",
+            "context": "Implemented background job processing for AI analysis.",
+            "category": "technical",
+            "confidence": 0.8
+          },
+          {
+            "name": "API integration",
+            "context": "Set up the Claude API integration for extracting insights from journal entries.",
+            "category": "technical",
+            "confidence": 0.9
+          }
+        ],
+        "themes": [
+          "Technical implementation",
+          "Problem solving"
+        ],
+        "keywords": [
+          "OAuth",
+          "Passport.js",
+          "CSS",
+          "Tailwind",
+          "Background job processing",
+          "API integration",
+          "Claude"
+        ],
+        "projects": [
+          {
+            "name": "WorkLog AI",
+            "context": "Completed the OAuth integration using LinkedIn authentication.",
+            "confidence": 0.95
+          }
+        ],
+        "sentiment": "positive",
+        "timeSpent": null,
+        "nextActions": [],
+        "achievements": [
+          {
+            "impact": "technical",
+            "metrics": "1",
+            "description": "Completed the OAuth integration for WorkLog AI using LinkedIn authentication.",
+            "quantifiable": true
+          },
+          {
+            "impact": "technical",
+            "metrics": "1",
+            "description": "Solved critical CSS compilation issues by upgrading from Tailwind v3 to v4 syntax.",
+            "quantifiable": true
+          },
+          {
+            "impact": "technical",
+            "metrics": "1",
+            "description": "Implemented background job processing for AI analysis.",
+            "quantifiable": true
+          },
+          {
+            "impact": "technical",
+            "metrics": "1",
+            "description": "Set up the Claude API integration for extracting insights from journal entries.",
+            "quantifiable": true
+          }
+        ],
+        "competencies": [
+          {
+            "name": "Problem Solving",
+            "evidence": "Solved critical CSS compilation issues by upgrading from Tailwind v3 to v4 syntax.",
+            "framework": "problem_solving",
+            "confidence": 0.9
+          },
+          {
+            "name": "Perseverance",
+            "evidence": "Completed the OAuth integration for WorkLog AI using LinkedIn authentication.",
+            "framework": "problem_solving",
+            "confidence": 0.85
+          }
+        ],
+        "workLocation": "remote"
+      },
+      "projectIds": [],
+      "skillIds": [],
+      "competencyIds": [],
+      "isHighlight": true,
+      "sentiment": "positive",
+      "createdAt": "2025-10-01T17:18:56.952Z",
+      "updatedAt": "2025-10-02T07:48:53.265Z"
+    },
+    {
+      "id": "cmg9035bu0001yqgxoee99s3y",
+      "userId": "21TcQYaGrO",
+      "date": "2025-10-01T18:30:00.000Z",
+      "rawText": "I documented the test results against each of the basic test cases. Fresh issues of CORS identified and fixed. AI service functions for set cache and get cache were not defined and was interfering in auto-save feature. This issue was also fixed. Also created the GitHub repository for Worklog-AI so that we backup the development work and maintain a log of changes. We'll later use this repository for deploying on Render. Today, I spent time streamlining the Prisma interfaces for connecting with the Supabase Postgres Database. Implemented the Upstash redis caching to speed up query time for journal entries and Insights Dashboard. The speed of queries in the Insights dashboard reduced from 10 seconds to under 300 ms.",
+      "wordCount": 118,
+      "extractedData": {
+        "people": [],
+        "skills": [
+          {
+            "name": "CORS",
+            "context": "Fresh issues of CORS identified and fixed.",
+            "category": "technical",
+            "confidence": 1
+          },
+          {
+            "name": "API integration",
+            "context": "AI service functions for set cache and get cache were not defined and was interfering in auto-save feature.",
+            "category": "technical",
+            "confidence": 1
+          },
+          {
+            "name": "AI service cache set and get",
+            "context": "AI service functions for set cache and get cache were not defined and was interfering in auto-save feature.",
+            "category": "technical",
+            "confidence": 1
+          },
+          {
+            "name": "Testing",
+            "context": "I documented the test results against each of the basic test cases.",
+            "category": "technical",
+            "confidence": 1
+          },
+          {
+            "name": "GitHub",
+            "context": "Created the GitHub repository for Worklog-AI so that we backup the development work and maintain a log of changes.",
+            "category": "technical",
+            "confidence": 1
+          },
+          {
+            "name": "Prisma",
+            "context": "Spent time streamlining the Prisma interfaces for connecting with the Supabase Postgres Database.",
+            "category": "technical",
+            "confidence": 1
+          },
+          {
+            "name": "Upstash redis caching",
+            "context": "Implemented the Upstash redis caching to speed up query time for journal entries and Insights Dashboard.",
+            "category": "technical",
+            "confidence": 1
+          }
+        ],
+        "themes": [
+          "Troubleshooting and bug fixing",
+          "Performance optimization",
+          "Infrastructure setup"
+        ],
+        "keywords": [
+          "CORS",
+          "AI service cache",
+          "Prisma",
+          "Upstash redis caching",
+          "Insights Dashboard"
+        ],
+        "projects": [
+          {
+            "name": "CORS Testing",
+            "context": "Fresh issues of CORS identified and fixed.",
+            "confidence": 1
+          },
+          {
+            "name": "Worklog-AI",
+            "context": "Created the GitHub repository for Worklog-AI so that we backup the development work and maintain a log of changes.",
+            "confidence": 1
+          }
+        ],
+        "sentiment": "positive",
+        "timeSpent": null,
+        "nextActions": [
+          "Deploy Worklog-AI on Render"
+        ],
+        "achievements": [
+          {
+            "impact": "technical",
+            "metrics": "Reduced from 10 seconds to under 300 ms",
+            "description": "Reduced query time for Insights Dashboard from 10 seconds to under 300 ms",
+            "quantifiable": true
+          }
+        ],
+        "competencies": [
+          {
+            "name": "Problem Solving",
+            "evidence": "Fresh issues of CORS identified and fixed. AI service functions for set cache and get cache were not defined and was interfering in auto-save feature. This issue was also fixed.",
+            "framework": "problem_solving",
+            "confidence": 1
+          },
+          {
+            "name": "Perseverance",
+            "evidence": "Fresh issues of CORS identified and fixed. AI service functions for set cache and get cache were not defined and was interfering in auto-save feature. This issue was also fixed.",
+            "framework": "problem_solving",
+            "confidence": 1
+          }
+        ],
+        "workLocation": "remote"
+      },
+      "projectIds": [],
+      "skillIds": [],
+      "competencyIds": [],
+      "isHighlight": false,
+      "sentiment": "positive",
+      "createdAt": "2025-10-02T05:54:29.946Z",
+      "updatedAt": "2025-10-02T14:24:45.651Z"
+    },
+    {
+      "id": "cmg9317zm0003yqg5ikum1xhc",
+      "userId": "21TcQYaGrO",
+      "date": "2025-09-29T18:30:00.000Z",
+      "rawText": "Today was my birthday. Turned 41 years. Still working on the startup idea. It's frustrating most of the times but I have strong faith in the product and for what is stored ahead for me. I worked on preparing all the documentation for Worklog AI which is a journal for working professionals to document their daily actions so that AI can derive insights from the entry and bucket them in to Projects, Skills, Competencies etc. This helps to generate content for professional meaningful resumes, career pathways, appraisal summaries for discussions with seniors etc, skill matrix and which are areas for development and self-growth. I prepared the Project Charter, Technical Specification document and UI/UX document for the product. In this complete process, I took support of Claude AI for the documentation and Claude Code as my developer agent in the complete development/testing and deployment process. ",
+      "wordCount": 144,
+      "extractedData": {
+        "people": [
+          {
+            "name": "Claude AI",
+            "role": "colleague",
+            "interaction": "Used for documentation"
+          },
+          {
+            "name": "Claude Code",
+            "role": "colleague",
+            "interaction": "Used as a developer agent"
+          }
+        ],
+        "skills": [
+          {
+            "name": "CORS",
+            "context": "Used CORS in the development process",
+            "category": "technical",
+            "confidence": 0.9
+          },
+          {
+            "name": "AI service cache set and get",
+            "context": "Used Claude AI for the documentation and Claude Code as a developer agent",
+            "category": "technical",
+            "confidence": 0.8
+          },
+          {
+            "name": "Testing",
+            "context": "Involved in the complete development/testing and deployment process",
+            "category": "technical",
+            "confidence": 0.9
+          },
+          {
+            "name": "Problem Solving",
+            "context": "Worked through the frustrations of the startup idea",
+            "category": "soft",
+            "confidence": 0.9
+          },
+          {
+            "name": "Documentation",
+            "context": "Prepared the Project Charter, Technical Specification document and UI/UX document",
+            "category": "technical",
+            "confidence": 0.9
+          }
+        ],
+        "themes": [
+          "Professional Development",
+          "Entrepreneurship"
+        ],
+        "keywords": [
+          "CORS",
+          "AI service cache",
+          "Testing",
+          "Problem Solving",
+          "Documentation",
+          "Worklog AI",
+          "Startup Idea"
+        ],
+        "projects": [
+          {
+            "name": "Startup Idea",
+            "context": "Still working on the startup idea",
+            "confidence": 0.9
+          },
+          {
+            "name": "Worklog-AI",
+            "context": "Worked on preparing all the documentation for Worklog AI",
+            "confidence": 0.9
+          }
+        ],
+        "sentiment": "positive",
+        "timeSpent": null,
+        "nextActions": [
+          "Continue working on the startup idea",
+          "Further develop Worklog AI"
+        ],
+        "achievements": [
+          {
+            "impact": "technical",
+            "metrics": null,
+            "description": "Prepared documentation for Worklog AI",
+            "quantifiable": false
+          }
+        ],
+        "competencies": [
+          {
+            "name": "Problem Solving",
+            "evidence": "Worked through the frustrations of the startup idea",
+            "framework": "problem_solving",
+            "confidence": 0.9
+          },
+          {
+            "name": "Perseverance",
+            "evidence": "Still working on the startup idea despite frustrations",
+            "framework": "problem_solving",
+            "confidence": 0.8
+          }
+        ],
+        "workLocation": "remote"
+      },
+      "projectIds": [],
+      "skillIds": [],
+      "competencyIds": [],
+      "isHighlight": true,
+      "sentiment": "positive",
+      "createdAt": "2025-10-02T07:16:58.930Z",
+      "updatedAt": "2025-10-02T07:22:03.126Z"
+    },
+    {
+      "id": "cmgahquzk0001yq6m5g2u62cb",
+      "userId": "21TcQYaGrO",
+      "date": "2025-10-02T18:30:00.000Z",
+      "rawText": "Today, I went along with Claude Code agent to review the development progress so far and updated all the documentation to keep it up to date with the features developed in the Worklog-ai product. So far we have completed up to week 4 features and Claude code has just completed Week 5 features of the product. So I will test the export feature to export the journal entries in to a pdf, docx or json format. Then I will test some interactive charts on the skills, competencies etc.",
+      "wordCount": 88,
+      "extractedData": {
+        "people": [
+          {
+            "name": "Claude Code",
+            "role": "colleague",
+            "interaction": "Reviewed development progress"
+          }
+        ],
+        "skills": [
+          {
+            "name": "Documentation",
+            "context": "Updating documentation for Worklog-AI",
+            "category": "technical",
+            "confidence": 0.9
+          },
+          {
+            "name": "Testing",
+            "context": "Testing export feature for Worklog-AI",
+            "category": "technical",
+            "confidence": 0.85
+          },
+          {
+            "name": "Data Visualization",
+            "context": "Testing interactive charts for skills and competencies",
+            "category": "technical",
+            "confidence": 0.8
+          }
+        ],
+        "themes": [
+          "product development",
+          "feature implementation"
+        ],
+        "keywords": [
+          "Worklog-AI",
+          "Claude Code",
+          "documentation",
+          "testing",
+          "data visualization"
+        ],
+        "projects": [
+          {
+            "name": "Worklog-AI",
+            "context": "Ongoing product development",
+            "confidence": 0.95
+          },
+          {
+            "name": "Claude Code",
+            "context": "Reviewing development progress",
+            "confidence": 0.9
+          }
+        ],
+        "sentiment": "positive",
+        "timeSpent": null,
+        "nextActions": [
+          "Test export feature",
+          "Test interactive charts"
+        ],
+        "achievements": [
+          {
+            "impact": "technical",
+            "metrics": "Up to week 4 features",
+            "description": "Completed up to week 4 features for Worklog-AI",
+            "quantifiable": true
+          },
+          {
+            "impact": "technical",
+            "metrics": "Week 5 features",
+            "description": "Claude Code completed week 5 features for Worklog-AI",
+            "quantifiable": true
+          }
+        ],
+        "competencies": [
+          {
+            "name": "Perseverance",
+            "evidence": "Continuing development work on Worklog-AI",
+            "framework": "problem_solving",
+            "confidence": 0.9
+          },
+          {
+            "name": "Problem Solving",
+            "evidence": "Identifying and testing new features for Worklog-AI",
+            "framework": "problem_solving",
+            "confidence": 0.85
+          }
+        ],
+        "workLocation": "office"
+      },
+      "projectIds": [],
+      "skillIds": [],
+      "competencyIds": [],
+      "isHighlight": false,
+      "sentiment": "positive",
+      "createdAt": "2025-10-03T06:56:35.936Z",
+      "updatedAt": "2025-10-03T07:34:49.174Z"
+    },
+    {
+      "id": "cmgert1jp0001yqsmvkpu6mf7",
+      "userId": "21TcQYaGrO",
+      "date": "2025-10-05T18:30:00.000Z",
+      "rawText": "📝 What I worked on today:\r\n\r\nToday I plan to retest the system.\r\n\r\n\r\n",
+      "wordCount": 13,
+      "extractedData": {
+        "people": [],
+        "skills": [
+          {
+            "name": "Testing",
+            "context": "Today I plan to retest the system.",
+            "category": "technical",
+            "confidence": 0.9
+          }
+        ],
+        "themes": [
+          "testing"
+        ],
+        "keywords": [
+          "retest",
+          "system"
+        ],
+        "projects": [
+          {
+            "name": "Retest the system",
+            "context": "Today I plan to retest the system.",
+            "confidence": 0.9
+          }
+        ],
+        "sentiment": "neutral",
+        "timeSpent": "unknown",
+        "nextActions": [
+          "retest the system"
+        ],
+        "achievements": [],
+        "competencies": [
+          {
+            "name": "Perseverance",
+            "evidence": "Today I plan to retest the system.",
+            "framework": "problem_solving",
+            "confidence": 0.9
+          }
+        ],
+        "workLocation": "unknown"
+      },
+      "projectIds": [],
+      "skillIds": [],
+      "competencyIds": [],
+      "isHighlight": false,
+      "sentiment": "neutral",
+      "createdAt": "2025-10-06T06:49:18.614Z",
+      "updatedAt": "2025-10-06T06:53:43.058Z"
+    },
+    {
+      "id": "cmgg9wa4p0001yq4avk9xwey8",
+      "userId": "21TcQYaGrO",
+      "date": "2025-10-06T18:30:00.000Z",
+      "rawText": "📋 Today's highlights:\n• Migrated dev database to Singapore from US so that it is closer to dev environment (India)\n•  \n\n🛠️ Skills I used:\n• \n• \n\n👥 People I worked with:\n• \n• \n\n\n• Testing the journal templates.\n• Migrated the dev database closer to the dev environment (Singapore)\nNo bullet here (should have been a bullet)\n• Google cloud console for OAuth API\n• Claude Code",
+      "wordCount": 68,
+      "extractedData": {
+        "people": [],
+        "skills": [
+          {
+            "name": "Database migration",
+            "context": "Migrated the dev database closer to the dev environment (Singapore)",
+            "category": "technical",
+            "confidence": 0.9
+          },
+          {
+            "name": "Google cloud console",
+            "context": "Google cloud console for OAuth API",
+            "category": "technical",
+            "confidence": 0.8
+          },
+          {
+            "name": "Testing",
+            "context": "Testing the journal templates",
+            "category": "technical",
+            "confidence": 0.8
+          }
+        ],
+        "themes": [
+          "infrastructure",
+          "testing"
+        ],
+        "keywords": [
+          "database",
+          "migration",
+          "journal",
+          "templates",
+          "google cloud",
+          "oauth"
+        ],
+        "projects": [
+          {
+            "name": "Migrated dev database",
+            "context": "Migrated the dev database closer to the dev environment (Singapore)",
+            "confidence": 0.9
+          },
+          {
+            "name": "Journal Templates",
+            "context": "Testing the journal templates",
+            "confidence": 0.8
+          }
+        ],
+        "sentiment": "positive",
+        "timeSpent": null,
+        "nextActions": [],
+        "achievements": [
+          {
+            "impact": "technical",
+            "metrics": "Migrated dev database",
+            "description": "Migrated dev database to Singapore from US",
+            "quantifiable": true
+          },
+          {
+            "impact": "personal",
+            "description": "Tested journal templates",
+            "quantifiable": false
+          }
+        ],
+        "competencies": [
+          {
+            "name": "Problem Solving",
+            "evidence": "Migrated the dev database closer to the dev environment (Singapore)",
+            "framework": "problem_solving",
+            "confidence": 0.8
+          }
+        ],
+        "workLocation": "remote"
+      },
+      "projectIds": [],
+      "skillIds": [],
+      "competencyIds": [],
+      "isHighlight": false,
+      "sentiment": "positive",
+      "createdAt": "2025-10-07T08:03:28.970Z",
+      "updatedAt": "2025-10-07T10:02:27.610Z"
+    }
+  ],
+  "projects": [
+    {
+      "id": "cmg91b1zx0001yqz7o5bozgok",
+      "userId": "21TcQYaGrO",
+      "name": "CORS Testing",
+      "description": "Testing and documenting results against basic test cases",
+      "status": "completed",
+      "startDate": null,
+      "endDate": null,
+      "entryCount": 19,
+      "createdAt": "2025-10-02T06:28:38.493Z",
+      "updatedAt": "2025-10-06T06:53:25.668Z"
+    },
+    {
+      "id": "cmg92qev80001yqg5vietyajq",
+      "userId": "21TcQYaGrO",
+      "name": "Worklog-AI",
+      "description": "New GitHub repository created for Worklog-AI",
+      "status": "active",
+      "startDate": null,
+      "endDate": null,
+      "entryCount": 31,
+      "createdAt": "2025-10-02T07:08:34.628Z",
+      "updatedAt": "2025-10-05T17:19:58.955Z"
+    },
+    {
+      "id": "cmg931gec0005yqg5d3p2o72e",
+      "userId": "21TcQYaGrO",
+      "name": "Startup Idea",
+      "description": "Still working on the startup idea",
+      "status": "active",
+      "startDate": null,
+      "endDate": null,
+      "entryCount": 19,
+      "createdAt": "2025-10-02T07:17:09.828Z",
+      "updatedAt": "2025-10-05T17:19:46.979Z"
+    },
+    {
+      "id": "cmg9469yf0001yql7ryyvr84m",
+      "userId": "21TcQYaGrO",
+      "name": "WorkLog-AI",
+      "description": "Completed the OAuth integration using LinkedIn authentication.",
+      "status": "completed",
+      "startDate": null,
+      "endDate": null,
+      "entryCount": 4,
+      "createdAt": "2025-10-02T07:48:54.375Z",
+      "updatedAt": "2025-10-05T17:19:54.956Z"
+    },
+    {
+      "id": "cmgahrnp70003yq6m2vtsvp1w",
+      "userId": "21TcQYaGrO",
+      "name": "Claude Code",
+      "description": "The journal entry mentions going along with the Claude Code agent to review development progress.",
+      "status": "active",
+      "startDate": null,
+      "endDate": null,
+      "entryCount": 8,
+      "createdAt": "2025-10-03T06:57:13.147Z",
+      "updatedAt": "2025-10-07T08:04:10.747Z"
+    },
+    {
+      "id": "cmgertfg10003yqsmz40qm04y",
+      "userId": "21TcQYaGrO",
+      "name": "Today",
+      "description": "The journal entry does not provide any details about specific projects worked on today.",
+      "status": "active",
+      "startDate": null,
+      "endDate": null,
+      "entryCount": 1,
+      "createdAt": "2025-10-06T06:49:36.625Z",
+      "updatedAt": "2025-10-06T06:49:36.625Z"
+    },
+    {
+      "id": "cmgeryrsy0005yqsmn9fb58mo",
+      "userId": "21TcQYaGrO",
+      "name": "Retest the system",
+      "description": "Today I plan to retest the system.",
+      "status": "active",
+      "startDate": null,
+      "endDate": null,
+      "entryCount": 1,
+      "createdAt": "2025-10-06T06:53:45.922Z",
+      "updatedAt": "2025-10-06T06:53:45.922Z"
+    },
+    {
+      "id": "cmgg9wpau0003yq4ayixdy5j5",
+      "userId": "21TcQYaGrO",
+      "name": "Journal Templates",
+      "description": "Testing the journal templates",
+      "status": "active",
+      "startDate": null,
+      "endDate": null,
+      "entryCount": 12,
+      "createdAt": "2025-10-07T08:03:48.631Z",
+      "updatedAt": "2025-10-07T10:02:29.360Z"
+    },
+    {
+      "id": "cmgge4o9w0001yqzl8d6boes2",
+      "userId": "21TcQYaGrO",
+      "name": "Migrated dev database",
+      "description": "Migrated the dev database closer to the dev environment (Singapore)",
+      "status": "active",
+      "startDate": null,
+      "endDate": null,
+      "entryCount": 3,
+      "createdAt": "2025-10-07T10:01:59.013Z",
+      "updatedAt": "2025-10-07T10:02:28.441Z"
+    }
+  ],
+  "skills": [
+    {
+      "id": "cmg91b2vc0003yqz71enkvfpe",
+      "userId": "21TcQYaGrO",
+      "name": "CORS",
+      "category": "technical",
+      "firstUsed": "2025-10-02T06:28:39.623Z",
+      "lastUsed": "2025-10-06T06:53:28.640Z",
+      "usageCount": 19,
+      "createdAt": "2025-10-02T06:28:39.624Z",
+      "updatedAt": "2025-10-06T06:53:28.640Z"
+    },
+    {
+      "id": "cmg91bgkj0005yqz7ghal8zda",
+      "userId": "21TcQYaGrO",
+      "name": "AI service cache set and get",
+      "category": "technical",
+      "firstUsed": "2025-10-02T06:28:57.377Z",
+      "lastUsed": "2025-10-05T17:20:54.038Z",
+      "usageCount": 18,
+      "createdAt": "2025-10-02T06:28:57.379Z",
+      "updatedAt": "2025-10-05T17:20:54.038Z"
+    },
+    {
+      "id": "cmg91cfix0007yqz7c0zwcfv7",
+      "userId": "21TcQYaGrO",
+      "name": "Testing",
+      "category": "technical",
+      "firstUsed": "2025-10-02T06:29:42.680Z",
+      "lastUsed": "2025-10-07T10:02:31.860Z",
+      "usageCount": 22,
+      "createdAt": "2025-10-02T06:29:42.681Z",
+      "updatedAt": "2025-10-07T10:02:31.860Z"
+    },
+    {
+      "id": "cmg931h8l0007yqg5rjkk8bht",
+      "userId": "21TcQYaGrO",
+      "name": "Problem Solving",
+      "category": "soft",
+      "firstUsed": "2025-10-02T07:17:10.916Z",
+      "lastUsed": "2025-10-05T17:20:31.373Z",
+      "usageCount": 19,
+      "createdAt": "2025-10-02T07:17:10.917Z",
+      "updatedAt": "2025-10-05T17:20:31.373Z"
+    },
+    {
+      "id": "cmg93322o000byqg5wn403heg",
+      "userId": "21TcQYaGrO",
+      "name": "Documentation",
+      "category": "technical",
+      "firstUsed": "2025-10-02T07:18:24.576Z",
+      "lastUsed": "2025-10-05T17:20:09.925Z",
+      "usageCount": 23,
+      "createdAt": "2025-10-02T07:18:24.577Z",
+      "updatedAt": "2025-10-05T17:20:09.925Z"
+    },
+    {
+      "id": "cmg946auj0003yql7tny2ptst",
+      "userId": "21TcQYaGrO",
+      "name": "OAuth",
+      "category": "technical",
+      "firstUsed": "2025-10-02T07:48:55.530Z",
+      "lastUsed": "2025-10-07T08:04:17.198Z",
+      "usageCount": 4,
+      "createdAt": "2025-10-02T07:48:55.531Z",
+      "updatedAt": "2025-10-07T08:04:17.198Z"
+    },
+    {
+      "id": "cmg946bhb0005yql711ayn5aj",
+      "userId": "21TcQYaGrO",
+      "name": "CSS",
+      "category": "technical",
+      "firstUsed": "2025-10-02T07:48:56.350Z",
+      "lastUsed": "2025-10-05T17:20:39.295Z",
+      "usageCount": 3,
+      "createdAt": "2025-10-02T07:48:56.351Z",
+      "updatedAt": "2025-10-05T17:20:39.295Z"
+    },
+    {
+      "id": "cmg946bw80007yql751z2p3zb",
+      "userId": "21TcQYaGrO",
+      "name": "Background job processing",
+      "category": "technical",
+      "firstUsed": "2025-10-02T07:48:56.887Z",
+      "lastUsed": "2025-10-05T17:20:42.673Z",
+      "usageCount": 3,
+      "createdAt": "2025-10-02T07:48:56.888Z",
+      "updatedAt": "2025-10-05T17:20:42.673Z"
+    },
+    {
+      "id": "cmg946cda0009yql7idfs3tj7",
+      "userId": "21TcQYaGrO",
+      "name": "API integration",
+      "category": "technical",
+      "firstUsed": "2025-10-02T07:48:57.501Z",
+      "lastUsed": "2025-10-05T17:20:50.148Z",
+      "usageCount": 5,
+      "createdAt": "2025-10-02T07:48:57.502Z",
+      "updatedAt": "2025-10-05T17:20:50.148Z"
+    },
+    {
+      "id": "cmg9i7ov80001yql0ny8cxfe3",
+      "userId": "21TcQYaGrO",
+      "name": "GitHub",
+      "category": "technical",
+      "firstUsed": "2025-10-02T14:21:54.980Z",
+      "lastUsed": "2025-10-05T17:20:21.071Z",
+      "usageCount": 6,
+      "createdAt": "2025-10-02T14:21:54.981Z",
+      "updatedAt": "2025-10-05T17:20:21.071Z"
+    },
+    {
+      "id": "cmg9i7rs70003yql0lstcq5yb",
+      "userId": "21TcQYaGrO",
+      "name": "Prisma",
+      "category": "technical",
+      "firstUsed": "2025-10-02T14:21:58.758Z",
+      "lastUsed": "2025-10-05T17:20:24.121Z",
+      "usageCount": 6,
+      "createdAt": "2025-10-02T14:21:58.759Z",
+      "updatedAt": "2025-10-05T17:20:24.121Z"
+    },
+    {
+      "id": "cmg9i92830005yql0tljsexz6",
+      "userId": "21TcQYaGrO",
+      "name": "Upstash redis caching",
+      "category": "technical",
+      "firstUsed": "2025-10-02T14:22:58.537Z",
+      "lastUsed": "2025-10-05T17:20:27.708Z",
+      "usageCount": 5,
+      "createdAt": "2025-10-02T14:22:58.538Z",
+      "updatedAt": "2025-10-05T17:20:27.708Z"
+    },
+    {
+      "id": "cmgahrpuc0005yq6mttw24wes",
+      "userId": "21TcQYaGrO",
+      "name": "Development",
+      "category": "technical",
+      "firstUsed": "2025-10-03T06:57:15.923Z",
+      "lastUsed": "2025-10-05T17:20:06.429Z",
+      "usageCount": 3,
+      "createdAt": "2025-10-03T06:57:15.925Z",
+      "updatedAt": "2025-10-05T17:20:06.429Z"
+    },
+    {
+      "id": "cmgaj3ok70007yq6miuipm93d",
+      "userId": "21TcQYaGrO",
+      "name": "Data Visualization",
+      "category": "technical",
+      "firstUsed": "2025-10-03T07:34:33.750Z",
+      "lastUsed": "2025-10-05T17:20:17.385Z",
+      "usageCount": 3,
+      "createdAt": "2025-10-03T07:34:33.751Z",
+      "updatedAt": "2025-10-05T17:20:17.385Z"
+    },
+    {
+      "id": "cmgg9x8z20005yq4aa10k1qd0",
+      "userId": "21TcQYaGrO",
+      "name": "Google cloud console",
+      "category": "technical",
+      "firstUsed": "2025-10-07T08:04:13.819Z",
+      "lastUsed": "2025-10-07T10:02:31.027Z",
+      "usageCount": 11,
+      "createdAt": "2025-10-07T08:04:13.820Z",
+      "updatedAt": "2025-10-07T10:02:31.027Z"
+    },
+    {
+      "id": "cmgg9xv990007yq4ad3rbjg5d",
+      "userId": "21TcQYaGrO",
+      "name": "Claude Code",
+      "category": "technical",
+      "firstUsed": "2025-10-07T08:04:43.004Z",
+      "lastUsed": "2025-10-07T10:02:01.488Z",
+      "usageCount": 8,
+      "createdAt": "2025-10-07T08:04:43.005Z",
+      "updatedAt": "2025-10-07T10:02:01.488Z"
+    },
+    {
+      "id": "cmgge521q0003yqzltfvg4auq",
+      "userId": "21TcQYaGrO",
+      "name": "Database migration",
+      "category": "technical",
+      "firstUsed": "2025-10-07T10:02:16.862Z",
+      "lastUsed": "2025-10-07T10:02:30.192Z",
+      "usageCount": 2,
+      "createdAt": "2025-10-07T10:02:16.863Z",
+      "updatedAt": "2025-10-07T10:02:30.192Z"
+    }
+  ],
+  "competencies": [
+    {
+      "id": "cmg91cg620009yqz7tbkb4qvt",
+      "userId": "21TcQYaGrO",
+      "name": "Problem Solving",
+      "framework": "problem_solving",
+      "description": "Identified and fixed fresh issues of CORS",
+      "demonstrationCount": 32,
+      "lastDemonstrated": "2025-10-07T10:02:32.692Z",
+      "createdAt": "2025-10-02T06:29:43.514Z",
+      "updatedAt": "2025-10-07T10:02:32.692Z"
+    },
+    {
+      "id": "cmg931rj50009yqg5z7gigfe8",
+      "userId": "21TcQYaGrO",
+      "name": "Perseverance",
+      "framework": "problem_solving",
+      "description": "Still working on the startup idea despite the frustrations",
+      "demonstrationCount": 29,
+      "lastDemonstrated": "2025-10-06T06:53:51.789Z",
+      "createdAt": "2025-10-02T07:17:24.257Z",
+      "updatedAt": "2025-10-06T06:53:51.789Z"
+    }
+  ],
+  "userSettings": []
+}

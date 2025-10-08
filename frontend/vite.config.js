@@ -18,6 +18,14 @@ export default defineConfig({
         manualChunks: undefined,
       },
     },
+    // Remove console logs in production builds
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
   },
   publicDir: 'public'
 })

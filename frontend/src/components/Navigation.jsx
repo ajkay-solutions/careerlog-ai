@@ -1,6 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Navigation = ({ user, onLogout, currentView = 'journal', onViewChange }) => {
+  const [imageError, setImageError] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  
+  // Reset image state when user changes
+  useEffect(() => {
+    if (user?.profilePhoto) {
+      setImageError(false);
+      setImageLoaded(false);
+      
+      // Small delay to prevent rapid image requests
+      const timer = setTimeout(() => {
+        setImageError(false);
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [user?.id, user?.profilePhoto]);
+  
   const navItems = [
     { id: 'journal', label: 'Journal', icon: '📝', href: '/journal' },
     { id: 'insights', label: 'Insights', icon: '📊', href: '/insights' },
@@ -53,13 +71,26 @@ const Navigation = ({ user, onLogout, currentView = 'journal', onViewChange }) =
             </div>
             
             {/* User avatar */}
-            <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-              {user?.profilePhoto ? (
-                <img
-                  src={user.profilePhoto}
-                  alt={user.displayName}
-                  className="w-8 h-8 rounded-full"
-                />
+            <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
+              {user?.profilePhoto && !imageError ? (
+                <>
+                  <img
+                    key={user.profilePhoto} // Force new image element on URL change
+                    src={user.profilePhoto}
+                    alt={user.displayName}
+                    className={`w-8 h-8 rounded-full object-cover ${imageLoaded ? '' : 'hidden'}`}
+                    onLoad={() => setImageLoaded(true)}
+                    onError={() => {
+                      setImageError(true);
+                    }}
+                    referrerPolicy="no-referrer"
+                  />
+                  {!imageLoaded && (
+                    <span className="text-gray-600 text-sm font-medium">
+                      {(user?.displayName || user?.email || 'U').charAt(0).toUpperCase()}
+                    </span>
+                  )}
+                </>
               ) : (
                 <span className="text-gray-600 text-sm font-medium">
                   {(user?.displayName || user?.email || 'U').charAt(0).toUpperCase()}

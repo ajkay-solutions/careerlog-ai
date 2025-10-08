@@ -1,0 +1,331 @@
+XHRPOST
+https://lnkd.demdex.net/event?d_dil_ver=9.4&_ts=1759937987851
+
+XMLHttpRequest { _sanitizedPath: "/li/track", readyState: 4, timeout: 0, withCredentials: true, upload: XMLHttpRequestUpload, responseURL: "https://www.linkedin.com/li/track", status: 0, statusText: "", responseType: "", response: "" }
+8aidj8cqawduo88wnxdz9a7h0:8:27017
+GET
+https://platform.linkedin.com/litms/utag/checkpoint-frontend/utag.118.js?utv=ut4.51.202507291840
+NS_BINDING_ABORTED
+
+XHRPOST
+https://www.linkedin.com/li/track
+NS_BINDING_ABORTED
+
+Loading failed for the <script> with source “https://platform.linkedin.com/litms/utag/checkpoint-frontend/utag.118.js?utv=ut4.51.202507291840”. login:1:1
+POST
+https://www.linkedin.com/checkpoint/lg/login-submit
+[HTTP/3 303  577ms]
+
+XHRPOST
+https://www.linkedin.com/li/track
+[HTTP/3 200  358ms]
+
+XHRPOST
+https://play.google.com/log?format=json&hasfast=true&authuser=0
+[HTTP/3 200  230ms]
+
+GET
+https://www.linkedin.com/oauth/v2/login-success?app_id=228232280&auth_type=AC&flow={"creationTime":1759937973997,"scope":"openid+profile+email","appId":228232280,"authorizationType":"OAUTH2_AUTHORIZATION_CODE","redirectUri":"http://localhost:3004/auth/linkedin/callback","currentStage":"LOGIN_SUCCESS","currentSubStage":0,"authFlowName":"generic-permission-list"}
+[HTTP/3 303  418ms]
+
+GET
+http://localhost:3004/auth/linkedin/callback?code=AQTsNkyJtqvt3MMdz_9gNFBRG6G27hP_ZncGg8mlHwOx3OP33g7-aHm-AVbFR-mPzRdVy4i2jjsTtBOeLtvlClc4kNOdMYdBDoe2b0AZhLVrgiuoxb4eFGQtV7lAp3SdjnUt8oGSJpZL9VRQ637mXU64QaPir8acZ69zafCAwjqiMn67hhIGB4lZwXDxU9IX6dwOSYuZ0D4nBiUjXgE
+[HTTP/1.1 302 Found 3908ms]
+
+GET
+http://localhost:5173/journal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIxVGNRWWFHck8iLCJwcm92aWRlciI6ImxpbmtlZGluIiwiZGlzcGxheU5hbWUiOiJBcnNhbGFuIEplaGFuZ2lyIEtoYW4iLCJuYW1lIjp7ImZpcnN0IjoiQXJzYWxhbiIsImxhc3QiOiJKZWhhbmdpciBLaGFuIn0sImVtYWlsIjoiYXJzYWxhbi5qZWhhbmdpckBnbWFpbC5jb20iLCJpYXQiOjE3NTk5Mzc5OTIsImV4cCI6MTc2MDAyNDM5Mn0._CbTLY6UXL_KFZheTyJuob3VPDXAJwhhxskEVtJgmxs&auth=success
+[HTTP/1.1 200 OK 10ms]
+
+POST
+https://collector-pxdojv695v.protechts.net/api/v2/msft/beacon
+[HTTP/3 200  374ms]
+
+POST
+https://s.xlgmedia.com/2/2.182.0/724974/A8PfELUVDGfGv0sc/postback?dt=7249741698245123882000&pd=avt&di=linkedin.com&ci=724974&sid=A8PfELUVDGfGv0sc&oz_sc=cc7a7f67c73b9654f2d3e3b1&oz_df=1759937992921&oz_l=362&cv=3
+[HTTP/1.1 200 OK 66ms]
+
+GET
+http://localhost:5173/@vite/client
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/main.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/@react-refresh
+[HTTP/1.1 304 Not Modified 5ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/react.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/src/App.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/index.css
+[HTTP/1.1 200 OK 3ms]
+
+GET
+http://localhost:5173/node_modules/vite/dist/client/env.mjs
+[HTTP/1.1 304 Not Modified 2ms]
+
+[vite] connecting... client.ts:19:8
+GET
+http://localhost:5173/node_modules/.vite/deps/chunk-K5YNGTCN.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/chunk-ZC22LKFR.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/chunk-LAV6FB6A.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/src/services/auth.js
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/components/Navigation.jsx
+[HTTP/1.1 200 OK 2ms]
+
+GET
+http://localhost:5173/src/components/DateNavigation.jsx
+[HTTP/1.1 304 Not Modified 3ms]
+
+GET
+http://localhost:5173/src/components/EntryList.jsx
+[HTTP/1.1 304 Not Modified 3ms]
+
+GET
+http://localhost:5173/src/components/JournalEntry.jsx
+[HTTP/1.1 304 Not Modified 9ms]
+
+GET
+http://localhost:5173/src/components/InsightsDashboard.jsx
+[HTTP/1.1 304 Not Modified 9ms]
+
+GET
+http://localhost:5173/src/pages/GenerateView.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+ws://localhost:5173/?token=sQFlyXlzGucX
+[HTTP/1.1 101 Switching Protocols 2ms]
+
+[vite] connected. client.ts:155:14
+GET
+http://localhost:5173/node_modules/.vite/deps/lucide-react.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/src/components/generate/PerformanceReviewWizard.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/components/generate/ResumeBulletsWizard.jsx
+[HTTP/1.1 304 Not Modified 2ms]
+
+GET
+http://localhost:5173/src/services/api.js
+[HTTP/1.1 200 OK 2ms]
+
+GET
+http://localhost:5173/src/components/AIInsights.jsx
+[HTTP/1.1 304 Not Modified 2ms]
+
+GET
+http://localhost:5173/src/components/TemplateSelector.jsx
+[HTTP/1.1 304 Not Modified 2ms]
+
+GET
+http://localhost:5173/src/components/TipsModal.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/components/TemplateConfirmationModal.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/utils/templatePreferences.js
+[HTTP/1.1 304 Not Modified 5ms]
+
+GET
+http://localhost:5173/src/components/ProjectsModal.jsx
+[HTTP/1.1 304 Not Modified 5ms]
+
+GET
+http://localhost:5173/src/components/SkillsModal.jsx
+[HTTP/1.1 304 Not Modified 6ms]
+
+GET
+http://localhost:5173/src/components/CompetenciesModal.jsx
+[HTTP/1.1 304 Not Modified 5ms]
+
+GET
+http://localhost:5173/src/components/ExportModal.jsx
+[HTTP/1.1 304 Not Modified 6ms]
+
+GET
+http://localhost:5173/src/components/insights/CompetencyChart.jsx
+[HTTP/1.1 304 Not Modified 6ms]
+
+GET
+http://localhost:5173/src/components/insights/TrendChart.jsx
+[HTTP/1.1 304 Not Modified 6ms]
+
+GET
+http://localhost:5173/src/components/insights/ProjectTimeline.jsx
+[HTTP/1.1 304 Not Modified 6ms]
+
+GET
+http://localhost:5173/src/components/insights/SkillsCloud.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/components/generate/GeneratedContentEditor.jsx
+[HTTP/1.1 200 OK 4ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/recharts.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/date-fns.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools react-dom.development.js:29895:16
+XHROPTIONS
+http://localhost:3004/api/user/profile
+[HTTP/1.1 200 OK 3ms]
+
+XHRGET
+http://localhost:3004/api/user/profile
+[HTTP/1.1 200 OK 1094ms]
+
+Error in parsing value for ‘-webkit-text-size-adjust’.  Declaration dropped. journal:122:31
+🔧 Environment check: 
+Object { VITE_API_URL: "http://localhost:3004", NODE_ENV: undefined, MODE: "development" }
+App.jsx:168:14
+🔍 URL params check: 
+Object { token: "eyJhbGciOiJIUzI1NiIs...", authSuccess: "success", pathname: "/journal", search: "?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIxVGNRWWFHck8iLCJwcm92aWRlciI6ImxpbmtlZGluIiwiZGlzcGxheU5hbWUiOiJBcnNhbGFuIEplaGFuZ2lyIEtoYW4iLCJuYW1lIjp7ImZpcnN0IjoiQXJzYWxhbiIsImxhc3QiOiJKZWhhbmdpciBLaGFuIn0sImVtYWlsIjoiYXJzYWxhbi5qZWhhbmdpckBnbWFpbC5jb20iLCJpYXQiOjE3NTk5Mzc5OTIsImV4cCI6MTc2MDAyNDM5Mn0._CbTLY6UXL_KFZheTyJuob3VPDXAJwhhxskEVtJgmxs&auth=success" }
+App.jsx:182:12
+🔑 OAuth token found in URL, processing... App.jsx:190:14
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition. deprecations.ts:9:12
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. deprecations.ts:9:12
+🔍 URL params check: 
+Object { token: "eyJhbGciOiJIUzI1NiIs...", authSuccess: "success", pathname: "/journal", search: "?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIxVGNRWWFHck8iLCJwcm92aWRlciI6ImxpbmtlZGluIiwiZGlzcGxheU5hbWUiOiJBcnNhbGFuIEplaGFuZ2lyIEtoYW4iLCJuYW1lIjp7ImZpcnN0IjoiQXJzYWxhbiIsImxhc3QiOiJKZWhhbmdpciBLaGFuIn0sImVtYWlsIjoiYXJzYWxhbi5qZWhhbmdpckBnbWFpbC5jb20iLCJpYXQiOjE3NTk5Mzc5OTIsImV4cCI6MTc2MDAyNDM5Mn0._CbTLY6UXL_KFZheTyJuob3VPDXAJwhhxskEVtJgmxs&auth=success" }
+App.jsx:182:12
+🔑 OAuth token found in URL, processing... App.jsx:190:14
+GET
+http://localhost:5173/vite.svg
+[HTTP/1.1 200 OK 0ms]
+
+✅ User profile loaded with complete provider data auth.js:46:17
+XHRGET
+http://localhost:3004/api/user/profile
+[HTTP/1.1 304 Not Modified 489ms]
+
+XHRGET
+http://localhost:3004/api/user/profile
+[HTTP/1.1 304 Not Modified 481ms]
+
+✅ User profile loaded with complete provider data 2 auth.js:46:17
+✅ OAuth login - Full user object: 
+Object { id: "21TcQYaGrO", email: "arsalan.jehangir@gmail.com", displayName: "Arsalan Jehangir Khan", profilePhoto: "https://media.licdn.com/dms/image/v2/D4D03AQERPyITfnqq3A/profile-displayphoto-shrink_100_100/B4DZc00foAGUAc-/0/1748937867203?e=1762992000&v=beta&t=tILjcJQZJoXHTKD2DZ5SYQ6xqPpmnskCVzLJyeE3ykk", createdAt: "2025-10-01T17:18:25.621Z", lastLoginAt: "2025-10-08T15:39:51.549Z", providers: (2) […], stats: {…} }
+App.jsx:200:16
+✅ OAuth login successful: Arsalan Jehangir Khan App.jsx:203:18
+🖼️ Profile photo URL: https://media.licdn.com/dms/image/v2/D4D03AQERPyITfnqq3A/profile-displayphoto-shrink_100_100/B4DZc00foAGUAc-/0/1748937867203?e=1762992000&v=beta&t=tILjcJQZJoXHTKD2DZ5SYQ6xqPpmnskCVzLJyeE3ykk App.jsx:204:18
+📧 Email: arsalan.jehangir@gmail.com App.jsx:205:18
+GET
+https://media.licdn.com/dms/image/v2/D4D03AQERPyITfnqq3A/profile-displayphoto-shrink_100_100/B4DZc00foAGUAc-/0/1748937867203?e=1762992000&v=beta&t=tILjcJQZJoXHTKD2DZ5SYQ6xqPpmnskCVzLJyeE3ykk
+NS_BINDING_ABORTED
+
+GET
+https://media.licdn.com/dms/image/v2/D4D03AQERPyITfnqq3A/profile-displayphoto-shrink_100_100/B4DZc00foAGUAc-/0/1748937867203?e=1762992000&v=beta&t=tILjcJQZJoXHTKD2DZ5SYQ6xqPpmnskCVzLJyeE3ykk
+NS_BINDING_ABORTED
+
+GET
+https://media.licdn.com/dms/image/v2/D4D03AQERPyITfnqq3A/profile-displayphoto-shrink_100_100/B4DZc00foAGUAc-/0/1748937867203?e=1762992000&v=beta&t=tILjcJQZJoXHTKD2DZ5SYQ6xqPpmnskCVzLJyeE3ykk
+[HTTP/3 200  0ms]
+
+🔍 Token retrieved from localStorage: 
+Object { length: 348, startsCorrectly: true, hasNewlines: false, hasCarriageReturns: false, firstChars: "eyJhbGciOiJIUzI1NiIs...", lastChars: "...VPDXAJwhhxskEVtJgmxs" }
+api.js:24:15
+🔍 useEffect triggered, loading entry with forceFresh: false JournalEntry.jsx:458:12
+🔍 Loading entry for date: 
+Date Wed Oct 08 2025 21:09:55 GMT+0530 (India Standard Time)
+ <empty string> JournalEntry.jsx:122:12
+🔍 Token retrieved from localStorage: 
+Object { length: 348, startsCorrectly: true, hasNewlines: false, hasCarriageReturns: false, firstChars: "eyJhbGciOiJIUzI1NiIs...", lastChars: "...VPDXAJwhhxskEVtJgmxs" }
+api.js:24:15
+🔍 URL params check: 
+Object { token: null, authSuccess: null, pathname: "/journal", search: "" }
+App.jsx:182:12
+🔍 Token retrieved from localStorage: 
+Object { length: 348, startsCorrectly: true, hasNewlines: false, hasCarriageReturns: false, firstChars: "eyJhbGciOiJIUzI1NiIs...", lastChars: "...VPDXAJwhhxskEVtJgmxs" }
+api.js:24:15
+🔍 useEffect triggered, loading entry with forceFresh: false JournalEntry.jsx:458:12
+🔍 Loading entry for date: 
+Date Wed Oct 08 2025 21:09:55 GMT+0530 (India Standard Time)
+ <empty string> JournalEntry.jsx:122:12
+🔍 Token retrieved from localStorage: 
+Object { length: 348, startsCorrectly: true, hasNewlines: false, hasCarriageReturns: false, firstChars: "eyJhbGciOiJIUzI1NiIs...", lastChars: "...VPDXAJwhhxskEVtJgmxs" }
+api.js:24:15
+XHROPTIONS
+http://localhost:3004/api/entries?limit=50
+[HTTP/1.1 200 OK 1ms]
+
+XHRGET
+http://localhost:3004/api/entries?limit=50
+[HTTP/1.1 304 Not Modified 1156ms]
+
+XHROPTIONS
+http://localhost:3004/api/entries/2025-10-08
+[HTTP/1.1 200 OK 4ms]
+
+XHRGET
+http://localhost:3004/api/entries/2025-10-08
+[HTTP/1.1 304 Not Modified 1137ms]
+
+✅ OAuth login - Full user object: 
+Object { id: "21TcQYaGrO", email: "arsalan.jehangir@gmail.com", displayName: "Arsalan Jehangir Khan", profilePhoto: "https://media.licdn.com/dms/image/v2/D4D03AQERPyITfnqq3A/profile-displayphoto-shrink_100_100/B4DZc00foAGUAc-/0/1748937867203?e=1762992000&v=beta&t=tILjcJQZJoXHTKD2DZ5SYQ6xqPpmnskCVzLJyeE3ykk", createdAt: "2025-10-01T17:18:25.621Z", lastLoginAt: "2025-10-08T15:39:51.549Z", providers: (2) […], stats: {…} }
+App.jsx:200:16
+✅ OAuth login successful: Arsalan Jehangir Khan App.jsx:203:18
+🖼️ Profile photo URL: https://media.licdn.com/dms/image/v2/D4D03AQERPyITfnqq3A/profile-displayphoto-shrink_100_100/B4DZc00foAGUAc-/0/1748937867203?e=1762992000&v=beta&t=tILjcJQZJoXHTKD2DZ5SYQ6xqPpmnskCVzLJyeE3ykk App.jsx:204:18
+📧 Email: arsalan.jehangir@gmail.com App.jsx:205:18
+🔍 URL params check: 
+Object { token: null, authSuccess: null, pathname: "/journal", search: "" }
+App.jsx:182:12
+XHRGET
+http://localhost:3004/api/entries?limit=50
+[HTTP/1.1 304 Not Modified 332ms]
+
+XHRGET
+http://localhost:3004/api/entries/2025-10-08
+[HTTP/1.1 304 Not Modified 326ms]
+
+🔍 Entry load response: 
+Object { success: true, hasData: false, entryId: undefined, textLength: undefined, updatedAt: undefined, forceFresh: false }
+JournalEntry.jsx:129:14
+🔍 No entry found for date, resetting state JournalEntry.jsx:151:16
+🔍 Entry load response: 
+Object { success: true, hasData: false, entryId: undefined, textLength: undefined, updatedAt: undefined, forceFresh: false }
+JournalEntry.jsx:129:14
+🔍 No entry found for date, resetting state JournalEntry.jsx:151:16

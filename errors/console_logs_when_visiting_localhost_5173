@@ -1,0 +1,187 @@
+GET
+http://localhost:5173/
+[HTTP/1.1 304 Not Modified 14ms]
+
+GET
+http://localhost:5173/@vite/client
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/main.jsx
+[HTTP/1.1 304 Not Modified 2ms]
+
+GET
+http://localhost:5173/@react-refresh
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/node_modules/vite/dist/client/env.mjs
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/react.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/src/App.jsx
+[HTTP/1.1 304 Not Modified 2ms]
+
+GET
+http://localhost:5173/src/index.css
+[HTTP/1.1 304 Not Modified 2ms]
+
+[vite] connecting... client.ts:19:8
+GET
+http://localhost:5173/node_modules/.vite/deps/chunk-K5YNGTCN.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/chunk-ZC22LKFR.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/chunk-LAV6FB6A.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/src/services/auth.js
+[HTTP/1.1 304 Not Modified 4ms]
+
+GET
+http://localhost:5173/src/components/Navigation.jsx
+[HTTP/1.1 304 Not Modified 4ms]
+
+GET
+http://localhost:5173/src/components/DateNavigation.jsx
+[HTTP/1.1 304 Not Modified 3ms]
+
+GET
+http://localhost:5173/src/components/EntryList.jsx
+[HTTP/1.1 304 Not Modified 4ms]
+
+GET
+http://localhost:5173/src/components/JournalEntry.jsx
+[HTTP/1.1 304 Not Modified 5ms]
+
+GET
+http://localhost:5173/src/components/InsightsDashboard.jsx
+[HTTP/1.1 304 Not Modified 14ms]
+
+GET
+http://localhost:5173/src/pages/GenerateView.jsx
+[HTTP/1.1 304 Not Modified 8ms]
+
+GET
+ws://localhost:5173/?token=sQFlyXlzGucX
+[HTTP/1.1 101 Switching Protocols 3ms]
+
+[vite] connected. client.ts:155:14
+GET
+http://localhost:5173/src/services/api.js
+[HTTP/1.1 304 Not Modified 2ms]
+
+GET
+http://localhost:5173/src/components/AIInsights.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/components/TemplateSelector.jsx
+[HTTP/1.1 304 Not Modified 4ms]
+
+GET
+http://localhost:5173/src/components/TipsModal.jsx
+[HTTP/1.1 304 Not Modified 4ms]
+
+GET
+http://localhost:5173/src/components/TemplateConfirmationModal.jsx
+[HTTP/1.1 304 Not Modified 3ms]
+
+GET
+http://localhost:5173/src/utils/templatePreferences.js
+[HTTP/1.1 304 Not Modified 2ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/lucide-react.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/src/components/generate/PerformanceReviewWizard.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/components/generate/ResumeBulletsWizard.jsx
+[HTTP/1.1 304 Not Modified 4ms]
+
+GET
+http://localhost:5173/src/components/ProjectsModal.jsx
+[HTTP/1.1 304 Not Modified 3ms]
+
+GET
+http://localhost:5173/src/components/SkillsModal.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/components/CompetenciesModal.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/src/components/ExportModal.jsx
+[HTTP/1.1 304 Not Modified 4ms]
+
+GET
+http://localhost:5173/src/components/insights/CompetencyChart.jsx
+[HTTP/1.1 304 Not Modified 3ms]
+
+GET
+http://localhost:5173/src/components/insights/TrendChart.jsx
+[HTTP/1.1 304 Not Modified 2ms]
+
+GET
+http://localhost:5173/src/components/insights/ProjectTimeline.jsx
+[HTTP/1.1 304 Not Modified 3ms]
+
+GET
+http://localhost:5173/src/components/insights/SkillsCloud.jsx
+[HTTP/1.1 304 Not Modified 3ms]
+
+GET
+http://localhost:5173/src/components/generate/GeneratedContentEditor.jsx
+[HTTP/1.1 304 Not Modified 1ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/recharts.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+GET
+http://localhost:5173/node_modules/.vite/deps/date-fns.js?v=0e6789b2
+[HTTP/1.1 200 OK 0ms]
+
+Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools react-dom.development.js:29895:16
+Error in parsing value for ‘-webkit-text-size-adjust’.  Declaration dropped. localhost:5173:122:31
+GET
+http://localhost:5173/vite.svg
+[HTTP/1.1 200 OK 0ms]
+
+🔧 Environment check: 
+Object { VITE_API_URL: "http://localhost:3004", NODE_ENV: undefined, MODE: "development" }
+App.jsx:168:14
+🔍 URL params check: 
+Object { token: null, authSuccess: null, pathname: "/", search: "" }
+App.jsx:182:12
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition. deprecations.ts:9:12
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. deprecations.ts:9:12
+🔍 URL params check: 
+Object { token: null, authSuccess: null, pathname: "/", search: "" }
+App.jsx:182:12

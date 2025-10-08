@@ -9,42 +9,57 @@ class AuthService {
     this.token = null;
     
     // Check for token in URL on initialization
-    this.checkUrlToken();
+    this.initializeAuth();
   }
   
-  // Check if there's a token in the URL parameters
-  checkUrlToken() {
+  // Initialize authentication state  
+  async initializeAuth() {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
+    
     if (token) {
-      this.setToken(token);
+      // Token from OAuth callback
+      await this.setToken(token);
       // Clean the URL
       window.history.replaceState({}, document.title, window.location.pathname);
     } else {
-      // Try to get token from localStorage
-      this.token = localStorage.getItem('auth_token');
+      // Try to get existing token from localStorage
+      const existingToken = localStorage.getItem('auth_token');
+      if (existingToken) {
+        this.token = existingToken;
+        // Fetch fresh profile data
+        await this.fetchUserProfile();
+      }
     }
   }
   
   // Set authentication token
-  setToken(token) {
+  async setToken(token) {
     this.token = token;
     localStorage.setItem('auth_token', token);
     
-    // Parse user data from JWT payload (basic parsing)
+    // Fetch complete user profile from API instead of parsing JWT
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      this.user = {
-        id: payload.id,
-        email: payload.email,
-        displayName: payload.displayName,
-        provider: payload.provider,
-        profilePhoto: payload.profilePhoto
-      };
-      this.isAuthenticated = true;
-      this.notifyListeners();
+      const profileResult = await this.fetchUserProfile();
+      if (profileResult.success) {
+        // Profile already set in fetchUserProfile
+        // Profile loaded (sensitive data not logged for security)
+      } else {
+        // Fallback: parse basic user data from JWT payload if API fails
+        console.warn('⚠️ Profile API failed, falling back to JWT parsing');
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        this.user = {
+          id: payload.id,
+          email: payload.email,
+          displayName: payload.displayName,
+          provider: payload.provider,
+          profilePhoto: payload.profilePhoto || ''
+        };
+        this.isAuthenticated = true;
+        this.notifyListeners();
+      }
     } catch (error) {
-      console.error('Invalid token format:', error);
+      console.error('Error loading user profile:', error);
       this.clearToken();
     }
   }
@@ -85,6 +100,44 @@ class AuthService {
       }
     } catch (error) {
       console.error('Auth status check failed:', error);
+      return { success: false, message: 'Network error' };
+    }
+  }
+  
+  // Fetch complete user profile with all provider information
+  async fetchUserProfile() {
+    if (!this.token) {
+      return { success: false, message: 'No token found' };
+    }
+    
+    try {
+      const response = await fetch(`${API_BASE}/api/user/profile`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${this.token}`
+        }
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        // Update user with complete profile data including best profile photo
+        this.user = {
+          ...data.data.user,
+          providers: data.data.providers,
+          stats: data.data.stats
+        };
+        this.isAuthenticated = true;
+        this.notifyListeners();
+        return { success: true, data: data.data };
+      } else {
+        if (response.status === 401) {
+          this.clearToken();
+        }
+        return { success: false, message: data.message };
+      }
+    } catch (error) {
+      console.error('User profile fetch failed:', error);
       return { success: false, message: 'Network error' };
     }
   }
@@ -150,6 +203,83 @@ class AuthService {
   // Initiate OAuth login
   login(provider = 'google') {
     window.location.href = this.getLoginUrl(provider);
+  }
+  
+  // Fetch connected providers
+  async fetchProviders() {
+    if (!this.token) {
+      return { success: false, message: 'No token found' };
+    }
+    
+    try {
+      const response = await fetch(`${API_BASE}/api/user/providers`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${this.token}`
+        }
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        return { success: true, providers: data.data };
+      } else {
+        if (response.status === 401) {
+          this.clearToken();
+        }
+        return { success: false, message: data.message };
+      }
+    } catch (error) {
+      console.error('Providers fetch failed:', error);
+      return { success: false, message: 'Network error' };
+    }
+  }
+  
+  // Disconnect a provider
+  async disconnectProvider(provider) {
+    if (!this.token) {
+      return { success: false, message: 'No token found' };
+    }
+    
+    try {
+      const response = await fetch(`${API_BASE}/api/user/providers/${provider}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${this.token}`
+        }
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        // Refresh user profile after disconnecting provider
+        await this.fetchUserProfile();
+        return { success: true, message: data.message };
+      } else {
+        if (response.status === 401) {
+          this.clearToken();
+        }
+        return { success: false, message: data.message };
+      }
+    } catch (error) {
+      console.error('Provider disconnect failed:', error);
+      return { success: false, message: 'Network error' };
+    }
+  }
+  
+  // Get user's profile photo (from best provider)
+  getProfilePhoto() {
+    return this.user?.profilePhoto || '';
+  }
+  
+  // Get connected providers
+  getConnectedProviders() {
+    return this.user?.providers?.filter(p => p.connected) || [];
+  }
+  
+  // Check if user has a specific provider connected
+  hasProvider(provider) {
+    return this.getConnectedProviders().some(p => p.provider === provider);
   }
 }
 

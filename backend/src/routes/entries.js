@@ -4,6 +4,7 @@ const { getJobQueue } = require('../services/ai/jobQueue');
 const dbService = require('../services/database');
 const cachedDbService = require('../services/cachedDatabase');
 const optimizedQueries = require('../services/optimizedQueries');
+const { dbSemaphore } = require('../services/databaseSemaphore');
 
 const router = express.Router();
 
@@ -27,6 +28,8 @@ router.get('/', requireAuth, async (req, res) => {
     const { date, limit = 50, offset = 0 } = req.query;
     const userId = req.user.id;
 
+    console.log('📚 Fetching entries for user:', { userId, date, limit, offset });
+
     const whereClause = { userId };
     
     if (date) {
@@ -35,16 +38,28 @@ router.get('/', requireAuth, async (req, res) => {
     }
 
     // Use optimized queries with caching for best performance
-    const entries = await cachedDbService.getCachedUserEntries(userId, date, async () => {
-      // Use optimized query that leverages indexes and minimal data transfer
-      return await optimizedQueries.getUserEntriesOptimized(userId, {
-        date: date ? formatDate(date) : null,
-        limit: parseInt(limit),
-        offset: parseInt(offset),
-        includeText: true,  // Include text for journal display
-        includeExtractedData: true  // Include AI data for display
+    // Add timeout protection for database queries (increased to 30 seconds for heavy concurrent loads)
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Database query timeout')), 30000)
+    );
+
+    const entriesPromise = dbSemaphore.acquire(async () => {
+      console.log('📊 DB Semaphore status:', dbSemaphore.getStatus());
+      return await cachedDbService.getCachedUserEntries(userId, date, async () => {
+        // Use optimized query that leverages indexes and minimal data transfer
+        return await optimizedQueries.getUserEntriesOptimized(userId, {
+          date: date ? formatDate(date) : null,
+          limit: parseInt(limit),
+          offset: parseInt(offset),
+          includeText: true,  // Include text for journal display
+          includeExtractedData: true  // Include AI data for display
+        });
       });
     });
+
+    const entries = await Promise.race([entriesPromise, timeoutPromise]);
+
+    console.log(`✅ Retrieved ${entries.length} entries for user ${userId}`);
 
     res.json({
       success: true,
@@ -80,24 +95,36 @@ router.get('/:date', requireAuth, async (req, res) => {
       userAgent: req.headers['user-agent']
     });
 
-    let entry;
+    // Add timeout protection for database queries (increased to 30 seconds for heavy concurrent loads)
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Database query timeout')), 30000)
+    );
+
+    let entryPromise;
     
     if (bustCache) {
       console.log('🔍 Cache-busting requested, bypassing cache...');
       // Bypass cache and get fresh data
-      const result = await optimizedQueries.getSingleEntryOptimized(userId, targetDate, true);
-      entry = result;
+      entryPromise = dbSemaphore.acquire(async () => {
+        console.log('📊 DB Semaphore status:', dbSemaphore.getStatus());
+        return await optimizedQueries.getSingleEntryOptimized(userId, targetDate, true);
+      });
     } else {
       console.log('🔍 Using cached data if available...');
       // Use optimized single entry query with caching
-      const singleEntry = await cachedDbService.getCachedUserEntries(userId, req.params.date, async () => {
-        const result = await optimizedQueries.getSingleEntryOptimized(userId, targetDate, true);
-        return result ? [result] : []; // Wrap in array for consistent caching
+      entryPromise = dbSemaphore.acquire(async () => {
+        console.log('📊 DB Semaphore status:', dbSemaphore.getStatus());
+        return await cachedDbService.getCachedUserEntries(userId, req.params.date, async () => {
+          const result = await optimizedQueries.getSingleEntryOptimized(userId, targetDate, true);
+          return result ? [result] : []; // Wrap in array for consistent caching
+        }).then(singleEntry => {
+          // Extract single entry from cached array
+          return Array.isArray(singleEntry) ? singleEntry[0] : singleEntry;
+        });
       });
-      
-      // Extract single entry from cached array
-      entry = Array.isArray(singleEntry) ? singleEntry[0] : singleEntry;
     }
+
+    const entry = await Promise.race([entryPromise, timeoutPromise]);
 
     if (!entry) {
       return res.json({
