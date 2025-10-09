@@ -18,6 +18,7 @@ const dbService = require('../services/database');
 const cachedDbService = require('../services/cachedDatabase');
 const optimizedQueries = require('../services/optimizedQueries');
 const { dbSemaphore } = require('../services/databaseSemaphore');
+const cache = require('../services/cache');
 
 const router = express.Router();
 
@@ -443,7 +444,7 @@ router.delete('/:date', requireAuth, async (req, res) => {
     });
 
     // Invalidate cache after successful deletion
-    await cachedDbService.invalidateUserCache(userId, ['entries', 'counts', 'dashboard']);
+    await cache.invalidateUserCache(userId, ['entries', 'counts', 'dashboard']);
     console.log(`🗑️ Cache invalidated after deleting entry for ${req.params.date}`);
 
     res.json({
