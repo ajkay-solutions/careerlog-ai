@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const { PrismaClient } = require('@prisma/client');
 const ClaudeService = require('./claudeService');
 const { cacheExtraction, getCachedExtraction } = require('../cache');
@@ -199,6 +200,7 @@ class AnalysisService {
           // Create new project
           await prismaClient.project.create({
             data: {
+              id: crypto.randomUUID(),
               userId: userId,
               name: projectData.name,
               description: projectData.context || projectData.description,
@@ -241,6 +243,7 @@ class AnalysisService {
           // Create new skill
           await prismaClient.skill.create({
             data: {
+              id: crypto.randomUUID(),
               userId: userId,
               name: skillData.name,
               category: skillData.category || 'other',
@@ -284,6 +287,7 @@ class AnalysisService {
           // Create new competency
           await prismaClient.competency.create({
             data: {
+              id: crypto.randomUUID(),
               userId: userId,
               name: competencyData.name,
               framework: competencyData.framework || 'custom',

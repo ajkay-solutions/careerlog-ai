@@ -1,0 +1,16 @@
+XHROPTIONS
+https://worklog-ai-backend.onrender.com/api/entries/2025-10-09
+[HTTP/3 200  302ms]
+
+XHRGET
+https://worklog-ai-backend.onrender.com/api/entries/2025-10-09
+[HTTP/3 304  277ms]
+
+XHROPTIONS
+https://worklog-ai-backend.onrender.com/api/ai/analyze/eec77653-2cf0-4e4b-9d95-fd94c1751e75
+[HTTP/3 200  319ms]
+
+XHRPOST
+https://worklog-ai-backend.onrender.com/api/ai/analyze/eec77653-2cf0-4e4b-9d95-fd94c1751e75
+[HTTP/3 200  682ms]
+
