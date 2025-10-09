@@ -41,7 +41,7 @@ class AnalysisService {
   // Analyze an entry and update the database with extracted data
   async analyzeEntry(entryId, options = {}) {
     try {
-      console.log(`🔍 Starting analysis for entry ${entryId}...`);
+      console.log(`🔍 [ISSUE-9-DEBUG] Starting analysis for entry ${entryId}...`);
 
       // Get the entry from database with connection retry
       const entry = await this.withPrismaRetry(async (prismaClient) => {
@@ -53,13 +53,13 @@ class AnalysisService {
                 id: true,
                 displayName: true,
                 email: true,
-                projects: {
+                Project: {
                   select: { name: true }
                 },
-                skills: {
+                Skill: {
                   select: { name: true }
                 },
-                competencies: {
+                Competency: {
                   select: { name: true }
                 }
               }
@@ -71,6 +71,14 @@ class AnalysisService {
       if (!entry) {
         throw new Error('Entry not found');
       }
+
+      console.log(`✅ [ISSUE-9-DEBUG] Entry loaded successfully:`, {
+        entryId: entry.id,
+        hasUser: !!entry.User,
+        userProjects: entry.User?.Project?.length || 0,
+        userSkills: entry.User?.Skill?.length || 0,
+        userCompetencies: entry.User?.Competency?.length || 0
+      });
 
       // Check cache first (optional optimization)
       if (!options.forceRefresh) {
