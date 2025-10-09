@@ -422,6 +422,12 @@ router.put('/:date', requireAuth, async (req, res) => {
 
 // DELETE /api/entries/:date - Delete entry
 router.delete('/:date', requireAuth, async (req, res) => {
+  console.log('🗑️ [ISSUE-8-DEBUG] DELETE ENTRY REQUEST:', {
+    userId: req.user?.id,
+    targetDate: req.params.date,
+    timestamp: new Date().toISOString()
+  });
+  
   try {
     const userId = req.user.id;
     const targetDate = formatDate(req.params.date);
@@ -435,6 +441,10 @@ router.delete('/:date', requireAuth, async (req, res) => {
         }
       }
     });
+
+    // Invalidate cache after successful deletion
+    await cachedDbService.invalidateUserCache(userId, ['entries', 'counts', 'dashboard']);
+    console.log(`🗑️ Cache invalidated after deleting entry for ${req.params.date}`);
 
     res.json({
       success: true,

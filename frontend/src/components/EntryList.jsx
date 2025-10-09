@@ -98,8 +98,12 @@ const EntryList = ({ selectedDate, onDateSelect, refreshTrigger }) => {
 
     try {
       await apiService.deleteEntry(entry.date);
-      // Refresh entries list
-      loadEntries();
+      console.log('🗑️ [ISSUE-8-DEBUG] Entry deleted successfully, refreshing list...');
+      
+      // Force refresh entries list with a small delay to ensure cache invalidation
+      setTimeout(() => {
+        loadEntries();
+      }, 100);
       
       // If this was the selected entry, clear selection
       if (selectedDate && new Date(entry.date).toDateString() === selectedDate.toDateString()) {
