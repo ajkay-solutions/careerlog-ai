@@ -92,10 +92,10 @@ class AnalysisService {
 
       // Prepare user context for better AI analysis
       const userContext = {
-        existingProjects: entry.user.projects?.map(p => p.name) || [],
-        existingSkills: entry.user.skills?.map(s => s.name) || [],
-        existingCompetencies: entry.user.competencies?.map(c => c.name) || [],
-        userName: entry.user.displayName || 'User'
+        existingProjects: entry.User.Project?.map(p => p.name) || [],
+        existingSkills: entry.User.Skill?.map(s => s.name) || [],
+        existingCompetencies: entry.User.Competency?.map(c => c.name) || [],
+        userName: entry.User.displayName || 'User'
       };
 
       // Analyze with Claude AI
