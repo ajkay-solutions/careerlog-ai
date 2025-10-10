@@ -25,11 +25,12 @@ const Navigation = ({ user, onLogout, currentView = 'journal', onViewChange }) =
     if (!user?.profilePhoto) return null;
     
     // Debug logging for production
-    console.log('🔍 Navigation.jsx - Profile image debug:', {
+    console.log('🔍 Navigation.jsx - Profile image debug [v2.0]:', {
       provider: user.provider,
       profilePhoto: user.profilePhoto,
       API_BASE: import.meta.env.VITE_API_URL || 'http://localhost:3004',
-      shouldUseProxy: user.provider === 'linkedin' && user.profilePhoto.startsWith('http')
+      shouldUseProxy: user.provider === 'linkedin' && user.profilePhoto.startsWith('http'),
+      buildTime: '2025-10-10T09:45:00Z'
     });
     
     // If it's a LinkedIn user, use our proxy for any external image
