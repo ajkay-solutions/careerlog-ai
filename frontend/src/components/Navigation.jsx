@@ -19,6 +19,20 @@ const Navigation = ({ user, onLogout, currentView = 'journal', onViewChange }) =
     }
   }, [user?.id, user?.profilePhoto]);
   
+  // Get the appropriate image URL - use proxy for LinkedIn images
+  const getProfileImageUrl = () => {
+    if (!user?.profilePhoto) return null;
+    
+    // If it's a LinkedIn image (blocked by CORS), use our proxy
+    if (user.provider === 'linkedin' && user.profilePhoto.includes('media.licdn.com')) {
+      const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3004';
+      return `${API_BASE}/api/avatar/proxy`;
+    }
+    
+    // For Google images and others, use direct URL
+    return user.profilePhoto;
+  };
+  
   const navItems = [
     { id: 'journal', label: 'Journal', icon: '📝', href: '/journal' },
     { id: 'insights', label: 'Insights', icon: '📊', href: '/insights' },
@@ -72,11 +86,11 @@ const Navigation = ({ user, onLogout, currentView = 'journal', onViewChange }) =
             
             {/* User avatar */}
             <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
-              {user?.profilePhoto && !imageError ? (
+              {getProfileImageUrl() && !imageError ? (
                 <>
                   <img
-                    key={user.profilePhoto} // Force new image element on URL change
-                    src={user.profilePhoto}
+                    key={getProfileImageUrl()} // Force new image element on URL change
+                    src={getProfileImageUrl()}
                     alt={user.displayName}
                     className={`w-8 h-8 rounded-full object-cover ${imageLoaded ? '' : 'hidden'}`}
                     onLoad={() => setImageLoaded(true)}

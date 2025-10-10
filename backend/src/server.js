@@ -22,6 +22,7 @@ const quickTestRoutes = require('./routes/quick-test');
 const exportRoutes = require('./routes/export');
 const generateRoutes = require('./routes/generate');
 const userRoutes = require('./routes/user');
+const avatarRoutes = require('./routes/avatar');
 
 const app = express();
 const PORT = process.env.PORT || 3004;
@@ -114,6 +115,7 @@ app.use('/api/quick-test', quickTestRoutes);
 app.use('/api/export', exportRoutes);
 app.use('/api/generate', generateRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/avatar', avatarRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
