@@ -23,14 +23,6 @@ class LinkedInProvider {
       ? 'https://worklog-ai-backend.onrender.com/auth/linkedin/callback'
       : 'http://localhost:3004/auth/linkedin/callback';
     
-    console.log('🔧 [ISSUE-7-DEBUG] LinkedIn OAuth Config (WorkLog AI):', {
-      NODE_ENV: process.env.NODE_ENV,
-      RENDER: process.env.RENDER,
-      isProduction: isProduction,
-      callbackURL: callbackURL,
-      clientID: process.env.LINKEDIN_CLIENT_ID,
-      hasSupabaseDB: process.env.DATABASE_URL?.includes('supabase.co')
-    });
 
     // Custom LinkedIn OpenID Connect strategy
     this.strategy = new OAuth2Strategy({
@@ -54,12 +46,6 @@ class LinkedInProvider {
         });
         
         const linkedinProfile = profileResponse.data;
-        console.log('✅ [ISSUE-7-DEBUG] LinkedIn Profile fetched:', {
-          sub: linkedinProfile.sub,
-          name: linkedinProfile.name,
-          email: linkedinProfile.email,
-          hasPicture: !!linkedinProfile.picture
-        });
 
         // LinkedIn profile photo from userinfo endpoint
         let profilePhotoUrl = linkedinProfile.picture;
@@ -176,43 +162,12 @@ class LinkedInProvider {
           return done(null, userForJWT);
 
         } catch (dbError) {
-          console.error('❌ [ISSUE-7-DEBUG] LinkedIn Database error:', {
-            error: dbError.message,
-            stack: dbError.stack,
-            code: dbError.code,
-            name: dbError.name,
-            meta: dbError.meta,
-            timestamp: new Date().toISOString(),
-            linkedinProfile: linkedinProfile ? {
-              sub: linkedinProfile.sub,
-              email: linkedinProfile.email,
-              name: linkedinProfile.name
-            } : 'No profile data',
-            userEmail: linkedinProfile?.email || 'Unknown',
-            databaseOperation: 'User and UserProvider creation/update'
-          });
+          console.error('LinkedIn Database error:', dbError);
           await prisma.$disconnect();
           return done(dbError, null);
         }
       } catch (error) {
-        console.error('❌ [ISSUE-7-DEBUG] LinkedIn OAuth Error:', {
-          message: error.message,
-          response: error.response?.data,
-          status: error.response?.status,
-          stack: error.stack,
-          name: error.name,
-          code: error.code,
-          config: error.config ? {
-            url: error.config.url,
-            method: error.config.method,
-            headers: error.config.headers
-          } : 'No config',
-          request: error.request ? 'Request made but no response' : 'No request',
-          accessToken: accessToken ? 'PRESENT' : 'MISSING',
-          refreshToken: refreshToken ? 'PRESENT' : 'MISSING',
-          profileReceived: profile ? 'YES' : 'NO',
-          errorTimestamp: new Date().toISOString()
-        });
+        console.error('LinkedIn OAuth Error:', error);
         return done(error, null);
       }
     });

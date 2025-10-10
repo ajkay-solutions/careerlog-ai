@@ -8,15 +8,6 @@ const JWT_SECRET = process.env.JWT_SECRET || process.env.SESSION_SECRET || 'fall
 
 // Generate JWT token for user
 function generateToken(user) {
-  // Production debugging for Issue #7 (LinkedIn OAuth)
-  console.log('🔑 [ISSUE-7-DEBUG] Generating JWT for user:', {
-    id: user.id,
-    provider: user.provider,
-    displayName: user.displayName,
-    email: user.email,
-    userKeys: Object.keys(user),
-    profilePhotoLength: user.profilePhoto?.length || 0
-  });
   
   // Create payload with basic user info
   const payload = {
@@ -98,21 +89,7 @@ router.get('/linkedin/callback',
       });
       
       if (err) {
-        console.error('❌ [ISSUE-7-DEBUG] LinkedIn authentication error:', {
-          error: err.message,
-          stack: err.stack,
-          name: err.name,
-          code: err.code,
-          response: err.response?.data,
-          status: err.response?.status,
-          timestamp: new Date().toISOString(),
-          requestInfo: {
-            host: req.get('host'),
-            userAgent: req.get('user-agent'),
-            query: req.query,
-            url: req.url
-          }
-        });
+        console.error('LinkedIn authentication error:', err);
         // Detect production environment and redirect to frontend
       const isProduction = process.env.NODE_ENV === 'production' || req.get('host').includes('worklog.ajkaysolutions.com');
       const errorRedirectUrl = isProduction

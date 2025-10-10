@@ -1,15 +1,3 @@
-/*
- * PRODUCTION DEBUGGING: Issues #6 & #7
- * 
- * This file contains targeted debugging logs prefixed with [ISSUE-6-DEBUG] and [ISSUE-7-DEBUG]
- * to help diagnose auto-save failures and OAuth authentication issues.
- * 
- * Issue #6: Auto-save error and left sidebar not refreshing
- * Issue #7: LinkedIn OAuth login failure
- * 
- * These logs can be removed after issues are resolved.
- */
-
 const express = require('express');
 const crypto = require('crypto');
 const { requireAuth } = require('../middleware/auth');
@@ -163,17 +151,6 @@ router.get('/:date', requireAuth, async (req, res) => {
 
 // POST /api/entries - Create new entry
 router.post('/', requireAuth, async (req, res) => {
-  console.log('🔍 [ISSUE-6-DEBUG] CREATE ENTRY REQUEST:', {
-    userId: req.user?.id,
-    userProvider: req.user?.provider,
-    userEmail: req.user?.email,
-    date: req.body.date,
-    rawTextLength: req.body.rawText?.length,
-    isHighlight: req.body.isHighlight,
-    timestamp: new Date().toISOString(),
-    userAgent: req.headers['user-agent']?.substring(0, 50),
-    contentType: req.headers['content-type']
-  });
 
   try {
     const userId = req.user.id;
@@ -190,11 +167,6 @@ router.post('/', requireAuth, async (req, res) => {
     const entryDate = formatDate(date);
     const wordCount = countWords(rawText);
 
-    console.log('🔍 CREATE ENTRY - Processed data:', {
-      entryDate: entryDate.toISOString(),
-      wordCount,
-      rawTextSnippet: rawText.substring(0, 50) + '...'
-    });
 
     // Check if entry already exists for this date
     const existingEntry = await dbService.executeOperation(async (prismaClient) => {
@@ -208,10 +180,6 @@ router.post('/', requireAuth, async (req, res) => {
       });
     }, `check existing entry for user ${userId}`);
 
-    console.log('🔍 CREATE ENTRY - Existing entry check:', {
-      hasExistingEntry: !!existingEntry,
-      existingEntryId: existingEntry?.id
-    });
 
     if (existingEntry) {
       console.log('❌ CREATE ENTRY - Entry already exists for date');
@@ -221,7 +189,6 @@ router.post('/', requireAuth, async (req, res) => {
       });
     }
 
-    console.log('🔍 CREATE ENTRY - About to create new entry...');
     // Generate a unique ID for the entry
     const entryId = crypto.randomUUID();
     
@@ -241,13 +208,6 @@ router.post('/', requireAuth, async (req, res) => {
       }
     }, ['entries', 'counts', 'dashboard']);
 
-    console.log('✅ [ISSUE-6-DEBUG] CREATE ENTRY - Entry created successfully:', {
-      entryId: entry.id,
-      userId: entry.userId,
-      date: entry.date.toISOString(),
-      wordCount: entry.wordCount,
-      createdAt: entry.createdAt.toISOString()
-    });
 
     // Trigger AI analysis asynchronously (non-blocking)
     try {
@@ -260,34 +220,13 @@ router.post('/', requireAuth, async (req, res) => {
       // Don't fail the entry creation if AI queuing fails
     }
 
-    console.log('🔍 CREATE ENTRY - Sending success response');
     res.status(201).json({
       success: true,
       data: entry,
       message: 'Entry created successfully'
     });
   } catch (error) {
-    console.error('❌ [ISSUE-6-DEBUG] Create entry error:', {
-      error: error.message,
-      stack: error.stack,
-      code: error.code,
-      name: error.name,
-      userId: req.user?.id,
-      userProvider: req.user?.provider,
-      date: req.body?.date,
-      userAgent: req.headers['user-agent'],
-      requestHeaders: {
-        'content-type': req.headers['content-type'],
-        'authorization': req.headers['authorization'] ? 'Bearer [PRESENT]' : 'MISSING'
-      },
-      requestBody: {
-        hasDate: !!req.body?.date,
-        hasRawText: !!req.body?.rawText,
-        rawTextLength: req.body?.rawText?.length,
-        bodyKeys: Object.keys(req.body || {})
-      },
-      databaseStatus: 'Unknown - crashed during creation'
-    });
+    console.error('Create entry error:', error);
     res.status(500).json({
       success: false,
       error: 'Failed to create entry'
@@ -297,20 +236,6 @@ router.post('/', requireAuth, async (req, res) => {
 
 // PUT /api/entries/:date - Update existing entry
 router.put('/:date', requireAuth, async (req, res) => {
-  console.log('🔍 [ISSUE-6-DEBUG] UPDATE ENTRY REQUEST (Auto-save):', {
-    userId: req.user?.id,
-    userProvider: req.user?.provider,
-    userEmail: req.user?.email,
-    targetDate: req.params.date,
-    rawTextLength: req.body.rawText?.length,
-    isHighlight: req.body.isHighlight,
-    hasProjectIds: !!req.body.projectIds,
-    hasSkillIds: !!req.body.skillIds,
-    hasCompetencyIds: !!req.body.competencyIds,
-    timestamp: new Date().toISOString(),
-    userAgent: req.headers['user-agent']?.substring(0, 50),
-    contentType: req.headers['content-type']
-  });
 
   // Declare variables outside try block so they're accessible in catch
   const { rawText, isHighlight, projectIds, skillIds, competencyIds } = req.body;
@@ -319,11 +244,6 @@ router.put('/:date', requireAuth, async (req, res) => {
     const userId = req.user.id;
     const targetDate = formatDate(req.params.date);
 
-    console.log('🔍 UPDATE ENTRY - Processed data:', {
-      targetDate: targetDate.toISOString(),
-      rawTextSnippet: rawText ? rawText.substring(0, 50) + '...' : 'unchanged',
-      isHighlight: isHighlight
-    });
 
     const updateData = {};
     
@@ -337,14 +257,8 @@ router.put('/:date', requireAuth, async (req, res) => {
     if (skillIds !== undefined) updateData.skillIds = skillIds;
     if (competencyIds !== undefined) updateData.competencyIds = competencyIds;
 
-    console.log('🔍 UPDATE ENTRY - Update data prepared:', {
-      hasRawText: !!updateData.rawText,
-      wordCount: updateData.wordCount,
-      isHighlight: updateData.isHighlight
-    });
 
     // Update entry and invalidate relevant caches
-    console.log('🔍 UPDATE ENTRY - About to update entry in database...');
     const entry = await cachedDbService.updateAndInvalidateCache('entry', {
       where: {
         userId_date: {
@@ -355,14 +269,6 @@ router.put('/:date', requireAuth, async (req, res) => {
       data: updateData
     }, ['entries', 'dashboard']);
 
-    console.log('✅ [ISSUE-6-DEBUG] UPDATE ENTRY - Auto-save successful:', {
-      entryId: entry.id,
-      userId: entry.userId,
-      date: entry.date.toISOString(),
-      wordCount: entry.wordCount,
-      updatedAt: entry.updatedAt.toISOString(),
-      rawTextLength: entry.rawText?.length
-    });
 
     // Trigger AI analysis if rawText was updated
     try {
@@ -375,7 +281,6 @@ router.put('/:date', requireAuth, async (req, res) => {
       // Don't fail the entry update if AI queuing fails
     }
 
-    console.log('🔍 UPDATE ENTRY - Sending success response');
     res.json({
       success: true,
       data: entry,
@@ -389,31 +294,7 @@ router.put('/:date', requireAuth, async (req, res) => {
       });
     }
     
-    console.error('❌ [ISSUE-6-DEBUG] Update entry error (Auto-save failed):', {
-      error: error.message,
-      stack: error.stack,
-      code: error.code,
-      name: error.name,
-      userId: req.user?.id,
-      userProvider: req.user?.provider,
-      targetDate: req.params?.date,
-      userAgent: req.headers['user-agent'],
-      requestHeaders: {
-        'content-type': req.headers['content-type'],
-        'authorization': req.headers['authorization'] ? 'Bearer [PRESENT]' : 'MISSING'
-      },
-      requestBody: {
-        hasRawText: !!req.body?.rawText,
-        rawTextLength: req.body?.rawText?.length,
-        hasIsHighlight: req.body?.hasOwnProperty('isHighlight'),
-        bodyKeys: Object.keys(req.body || {})
-      },
-      updateDataPrepared: {
-        hadRawText: rawText !== undefined,
-        hadIsHighlight: isHighlight !== undefined
-      },
-      databaseStatus: 'Unknown - crashed during update'
-    });
+    console.error('Update entry error:', error);
     res.status(500).json({
       success: false,
       error: 'Failed to update entry'
@@ -423,11 +304,6 @@ router.put('/:date', requireAuth, async (req, res) => {
 
 // DELETE /api/entries/:date - Delete entry
 router.delete('/:date', requireAuth, async (req, res) => {
-  console.log('🗑️ [ISSUE-8-DEBUG] DELETE ENTRY REQUEST:', {
-    userId: req.user?.id,
-    targetDate: req.params.date,
-    timestamp: new Date().toISOString()
-  });
   
   try {
     const userId = req.user.id;

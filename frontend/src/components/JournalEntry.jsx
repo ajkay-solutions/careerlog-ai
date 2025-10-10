@@ -116,43 +116,22 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
     // Clear the flag once we're loading fresh
     if (needsRefreshTimestamp) {
       localStorage.removeItem(`entry_needs_refresh_${dateKey}`);
-      console.log('🔍 Found localStorage refresh flag, forcing fresh load');
     }
 
-    console.log('🔍 Loading entry for date:', selectedDate, shouldForceFresh ? '(force fresh)' : '');
     setIsLoading(true);
     setError(null);
 
     try {
       const response = await apiService.getEntryByDate(selectedDate, { bustCache: shouldForceFresh });
       
-      console.log('🔍 Entry load response:', {
-        success: response.success,
-        hasData: !!response.data,
-        entryId: response.data?.id,
-        textLength: response.data?.rawText?.length,
-        updatedAt: response.data?.updatedAt,
-        forceFresh: forceFresh
-      });
       
       if (response.success && response.data) {
         setEntry(response.data);
         setRawText(response.data.rawText || '');
         setWordCount(response.data.wordCount || 0);
         setLastSaved(new Date(response.data.updatedAt));
-        
-        console.log('🔍 [ISSUE-6-DEBUG] Entry loaded and state updated:', {
-          entryId: response.data.id,
-          rawTextLength: response.data.rawText?.length,
-          setRawTextLength: response.data.rawText?.length,
-          entryExists: true
-        });
       } else {
         // No entry exists for this date
-        console.log('🔍 [ISSUE-6-DEBUG] No entry found for date, resetting state:', {
-          selectedDate: selectedDate,
-          entryExists: false
-        });
         setEntry(null);
         
         // Apply user's preferred template for new entries
@@ -230,7 +209,6 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
       const timeSinceLastSave = now - lastAutoSaveRef.current;
       
       if (timeSinceLastSave < 2000) {
-        console.log('🔍 Auto-save skipped - rate limited (too soon)');
         // Re-schedule after the rate limit period
         autoSaveTimeoutRef.current = setTimeout(() => {
           debouncedSave(text);
@@ -239,19 +217,10 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
       }
       
       // Perform save logic directly here to avoid dependency on saveEntry
-      console.log('🔍 [ISSUE-6-DEBUG] Auto-save executing...', {
-        selectedDate: selectedDate,
-        textLength: text.length,
-        textEmpty: !text.trim(),
-        hasCurrentEntry: !!entryRef.current
-      });
       
       if (!selectedDate || !text.trim()) {
-        console.log('🔍 Auto-save skipped - missing date or empty text');
         return;
       }
-
-      console.log('🔍 Auto-save proceeding...');
       setIsSaving(true);
       setError(null);
 
@@ -266,27 +235,13 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
         let response;
         if (currentEntry) {
           // Update existing entry
-          console.log('🔍 [ISSUE-6-DEBUG] Auto-save: Updating existing entry:', {
-            currentEntryId: currentEntry.id,
-            selectedDate: selectedDate
-          });
           response = await apiService.updateEntry(selectedDate, entryData);
         } else {
           // Create new entry
-          console.log('🔍 [ISSUE-6-DEBUG] Auto-save: Creating new entry:', {
-            selectedDate: selectedDate,
-            noCurrentEntry: true
-          });
           response = await apiService.createEntry(entryData);
         }
 
         if (response.success) {
-          console.log('✅ [ISSUE-6-DEBUG] Auto-save successful:', {
-            entryId: response.data.id,
-            newTextLength: response.data.rawText?.length,
-            oldTextLength: text.length,
-            updatedAt: response.data.updatedAt
-          });
           
           // Update rate limiting timestamp
           lastAutoSaveRef.current = Date.now();
@@ -301,20 +256,11 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
           // Also store in localStorage to persist across navigation
           const dateKey = selectedDate.toISOString().split('T')[0];
           localStorage.setItem(`entry_needs_refresh_${dateKey}`, Date.now().toString());
-          console.log('🔍 Marked entry for fresh reload on next access (memory + localStorage)');
           
           // Verify the rawText matches what we saved and force reload if mismatch
           if (response.data.rawText !== text) {
-            console.warn('⚠️ Auto-save text mismatch, forcing immediate reload:', {
-              expected: text.length,
-              received: response.data.rawText?.length,
-              expectedSnippet: text.substring(0, 50),
-              receivedSnippet: response.data.rawText?.substring(0, 50)
-            });
-            
             // Force an immediate fresh reload to sync data
             setTimeout(() => {
-              console.log('🔄 Force reloading entry due to mismatch');
               loadEntry(true); // Force fresh load
             }, 500); // Small delay to avoid race conditions
           }
@@ -322,34 +268,17 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
           // Notify parent component of change (for sidebar refresh)
           const currentOnEntryChange = onEntryChangeRef.current;
           if (currentOnEntryChange) {
-            console.log('🔍 [ISSUE-6-DEBUG] Notifying parent component of entry change (should refresh sidebar)');
             currentOnEntryChange(response.data);
-          } else {
-            console.log('🔍 [ISSUE-6-DEBUG] No onEntryChange callback available - sidebar may not refresh');
           }
         } else {
-          console.error('❌ [ISSUE-6-DEBUG] Auto-save failed - server returned error:', response);
+          console.error('Auto-save failed - server returned error:', response);
           
           // If CREATE failed with 409 (conflict), try UPDATE instead
           if (!currentEntry && response.status === 409) {
-            console.log('🔄 [ISSUE-6-DEBUG] CREATE failed with 409, retrying with UPDATE...', {
-              selectedDate: selectedDate,
-              selectedDateISO: selectedDate?.toISOString(),
-              selectedDateFormatted: selectedDate?.toISOString()?.split('T')[0],
-              currentEntryState: currentEntry,
-              responseStatus: response.status
-            });
             try {
-              console.log('🔄 [ISSUE-6-DEBUG] About to retry UPDATE (success path) with:', {
-                updateDate: selectedDate,
-                updateDateISO: selectedDate?.toISOString(),
-                updateDateFormatted: selectedDate?.toISOString()?.split('T')[0],
-                textLength: textToSave.length
-              });
               
               const updateResponse = await apiService.updateEntry(selectedDate, entryData);
               if (updateResponse.success) {
-                console.log('✅ [ISSUE-6-DEBUG] Retry UPDATE succeeded after 409 error');
                 lastAutoSaveRef.current = Date.now();
                 setEntry(updateResponse.data);
                 setLastSaved(new Date());
@@ -362,30 +291,18 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
                 return; // Success, exit early
               }
             } catch (retryError) {
-              console.error('❌ [ISSUE-6-DEBUG] Retry UPDATE also failed:', retryError);
+              console.error('Retry UPDATE also failed:', retryError);
             }
           }
           
           setError('Failed to auto-save entry');
         }
       } catch (err) {
-        console.error('❌ [ISSUE-6-DEBUG] Auto-save failed with exception:', {
-          error: err.message,
-          status: err.status,
-          selectedDate: selectedDate,
-          textLength: text.length
-        });
+        console.error('Auto-save failed with exception:', err);
         
         // Handle 409 conflict error for CREATE operations
         const currentEntry = entryRef.current;
         if (!currentEntry && err.status === 409) {
-          console.log('🔄 [ISSUE-6-DEBUG] CREATE failed with 409 exception, retrying with UPDATE...', {
-            selectedDate: selectedDate,
-            selectedDateISO: selectedDate?.toISOString(),
-            selectedDateFormatted: selectedDate?.toISOString()?.split('T')[0],
-            currentEntryState: currentEntry,
-            errorDetails: err.message
-          });
           try {
             const entryData = {
               date: selectedDate,
@@ -393,16 +310,8 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
               isHighlight: currentEntry?.isHighlight || false
             };
             
-            console.log('🔄 [ISSUE-6-DEBUG] About to retry UPDATE with:', {
-              updateDate: selectedDate,
-              updateDateISO: selectedDate?.toISOString(),
-              updateDateFormatted: selectedDate?.toISOString()?.split('T')[0],
-              textLength: text.length
-            });
-            
             const updateResponse = await apiService.updateEntry(selectedDate, entryData);
             if (updateResponse.success) {
-              console.log('✅ [ISSUE-6-DEBUG] Retry UPDATE succeeded after 409 exception');
               lastAutoSaveRef.current = Date.now();
               setEntry(updateResponse.data);
               setLastSaved(new Date());
@@ -416,7 +325,7 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
               return; // Success, exit early
             }
           } catch (retryError) {
-            console.error('❌ [ISSUE-6-DEBUG] Retry UPDATE also failed after 409 exception:', retryError);
+            console.error('Retry UPDATE also failed after 409 exception:', retryError);
           }
         }
         
@@ -433,12 +342,6 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
     setRawText(newText);
     setWordCount(countWords(newText));
     
-    // Debug logging for auto-save
-    console.log('🔍 Text changed, triggering auto-save...', {
-      textLength: newText.length,
-      hasEntry: !!entryRef.current,
-      selectedDate: selectedDate
-    });
     
     // Trigger auto-save
     debouncedSave(newText);
@@ -554,7 +457,6 @@ const JournalEntry = ({ selectedDate, onEntryChange }) => {
     const shouldForceFresh = needsFreshLoadRef.current;
     needsFreshLoadRef.current = false; // Reset the flag
     
-    console.log('🔍 useEffect triggered, loading entry with forceFresh:', shouldForceFresh);
     loadEntry(shouldForceFresh);
   }, [loadEntry]);
 

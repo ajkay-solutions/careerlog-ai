@@ -101,7 +101,6 @@ function JournalView({ user, onLogout }) {
 
   // Handle entry changes (to refresh list)
   const handleEntryChange = () => {
-    console.log('🔍 [ISSUE-6-DEBUG] handleEntryChange called - triggering sidebar refresh');
     setRefreshTrigger(prev => prev + 1);
   };
 
@@ -266,8 +265,6 @@ function App() {
             }
           } else {
             // Profile fetch failed, clear auth and show helpful message
-            console.log('🔄 [ISSUE-6-7-DEBUG] Authentication needs refresh - redirecting to login');
-            console.log('🔄 [ISSUE-6-7-DEBUG] Profile fetch result:', profileResult);
             authService.clearToken();
             if (location.pathname !== '/') {
               navigate('/?auth_required=true', { replace: true });

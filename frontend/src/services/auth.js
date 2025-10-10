@@ -47,9 +47,6 @@ class AuthService {
       } else {
         // If profile API fails, this might indicate an incompatible JWT token
         // (e.g., from before multi-provider migration)
-        console.warn('⚠️ [ISSUE-6-DEBUG] Profile API failed - this may be an incompatible JWT token from before the multi-provider migration');
-        console.warn('⚠️ [ISSUE-6-DEBUG] Profile result:', profileResult);
-        console.warn('⚠️ [ISSUE-6-DEBUG] Clearing token to force re-authentication...');
         this.clearToken();
         throw new Error('JWT token incompatible with current system - please log in again');
       }
@@ -132,11 +129,7 @@ class AuthService {
         return { success: false, message: data.message };
       }
     } catch (error) {
-      console.error('❌ [ISSUE-6-DEBUG] User profile fetch failed:', {
-        error: error.message,
-        status: error.status,
-        response: error.response
-      });
+      console.error('User profile fetch failed:', error);
       return { success: false, message: 'Network error' };
     }
   }

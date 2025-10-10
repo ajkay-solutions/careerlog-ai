@@ -44,13 +44,9 @@ const EntryList = ({ selectedDate, onDateSelect, refreshTrigger }) => {
       const response = await apiService.getEntries({ limit: 50 });
       
       if (response.success) {
-        console.log('✅ [ISSUE-6-DEBUG] EntryList loaded entries successfully:', {
-          entriesCount: response.data?.length || 0,
-          hasData: !!response.data
-        });
         setEntries(response.data || []);
       } else {
-        console.error('❌ [ISSUE-6-DEBUG] EntryList failed to load entries:', response);
+        console.error('Failed to load entries:', response);
         setError('Failed to load entries');
       }
     } catch (err) {
@@ -98,7 +94,6 @@ const EntryList = ({ selectedDate, onDateSelect, refreshTrigger }) => {
 
     try {
       await apiService.deleteEntry(entry.date);
-      console.log('🗑️ [ISSUE-8-DEBUG] Entry deleted successfully, refreshing list...');
       
       // Force refresh entries list with a small delay to ensure cache invalidation
       setTimeout(() => {
@@ -130,10 +125,6 @@ const EntryList = ({ selectedDate, onDateSelect, refreshTrigger }) => {
 
   // Load entries on mount and when refreshTrigger changes
   useEffect(() => {
-    console.log('🔍 [ISSUE-6-DEBUG] EntryList useEffect triggered - loading entries:', {
-      refreshTrigger: refreshTrigger,
-      hasSelectedDate: !!selectedDate
-    });
     loadEntries();
   }, [loadEntries, refreshTrigger]);
 

@@ -22,14 +22,6 @@ class GoogleProvider {
       ? 'https://worklog-ai-backend.onrender.com/auth/google/callback'
       : 'http://localhost:3004/auth/google/callback';
     
-    console.log('🔧 [ISSUE-7-DEBUG] Google OAuth Configuration:', {
-      NODE_ENV: process.env.NODE_ENV,
-      RENDER: process.env.RENDER,
-      isProduction: isProduction,
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      callbackURL: callbackURL,
-      hasSupabaseDB: process.env.DATABASE_URL?.includes('supabase.co')
-    });
     
     this.strategy = new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
