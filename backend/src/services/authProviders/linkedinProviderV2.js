@@ -47,6 +47,7 @@ class LinkedInProvider {
         
         const linkedinProfile = profileResponse.data;
 
+
         // LinkedIn profile photo from userinfo endpoint
         let profilePhotoUrl = linkedinProfile.picture;
 

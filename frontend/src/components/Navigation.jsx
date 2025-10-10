@@ -23,8 +23,9 @@ const Navigation = ({ user, onLogout, currentView = 'journal', onViewChange }) =
   const getProfileImageUrl = () => {
     if (!user?.profilePhoto) return null;
     
-    // If it's a LinkedIn image (blocked by CORS), use our proxy
-    if (user.provider === 'linkedin' && user.profilePhoto.includes('media.licdn.com')) {
+    // If it's a LinkedIn user, use our proxy for any external image
+    // LinkedIn images can come from various domains and may be blocked by CORS
+    if (user.provider === 'linkedin' && user.profilePhoto.startsWith('http')) {
       const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3004';
       return `${API_BASE}/api/avatar/proxy`;
     }
