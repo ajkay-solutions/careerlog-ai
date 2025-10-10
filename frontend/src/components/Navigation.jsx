@@ -24,11 +24,21 @@ const Navigation = ({ user, onLogout, currentView = 'journal', onViewChange }) =
   const getProfileImageUrl = () => {
     if (!user?.profilePhoto) return null;
     
+    // Debug logging for production
+    console.log('🔍 Navigation.jsx - Profile image debug:', {
+      provider: user.provider,
+      profilePhoto: user.profilePhoto,
+      API_BASE: import.meta.env.VITE_API_URL || 'http://localhost:3004',
+      shouldUseProxy: user.provider === 'linkedin' && user.profilePhoto.startsWith('http')
+    });
+    
     // If it's a LinkedIn user, use our proxy for any external image
     // LinkedIn images can come from various domains and may be blocked by CORS
     if (user.provider === 'linkedin' && user.profilePhoto.startsWith('http')) {
       const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3004';
-      return `${API_BASE}/api/avatar/proxy`;
+      const proxyUrl = `${API_BASE}/api/avatar/proxy`;
+      console.log('🔗 Using LinkedIn avatar proxy:', proxyUrl);
+      return proxyUrl;
     }
     
     // For Google images and others, use direct URL
