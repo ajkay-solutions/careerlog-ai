@@ -20,6 +20,7 @@ const Navigation = ({ user, onLogout, currentView = 'journal', onViewChange }) =
   }, [user?.id, user?.profilePhoto]);
   
   // Get the appropriate image URL - use proxy for LinkedIn images
+  // Force production rebuild for LinkedIn profile picture fix
   const getProfileImageUrl = () => {
     if (!user?.profilePhoto) return null;
     
