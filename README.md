@@ -1,14 +1,14 @@
-# 📊 WorkLog AI
+# 📊 CareerLog AI
 
 > **Never miss a career win** - An AI-powered professional journaling application that systematically tracks daily work accomplishments and transforms them into career insights.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Private](https://img.shields.io/badge/License-Private-red.svg)](https://github.com/ajkay-solutions/careerlog-ai)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/React-18.2+-blue.svg)](https://reactjs.org/)
 
 ## 🎯 Overview
 
-WorkLog AI is a full-stack SaaS application designed for professionals who want to:
+CareerLog AI is a full-stack SaaS application designed for professionals who want to:
 - **Track daily accomplishments** with effortless journaling
 - **Extract career insights** using AI-powered analysis
 - **Generate performance artifacts** (reviews, resume bullets, etc.)
@@ -80,8 +80,8 @@ WorkLog AI is a full-stack SaaS application designed for professionals who want 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/ajkay-solutions/worklog-ai.git
-   cd worklog-ai
+   git clone https://github.com/ajkay-solutions/careerlog-ai.git
+   cd careerlog-ai
    ```
 
 2. **Install dependencies**
@@ -103,7 +103,7 @@ WorkLog AI is a full-stack SaaS application designed for professionals who want 
    
    # Frontend
    cp frontend/.env.example frontend/.env
-   # Set VITE_API_URL=http://localhost:3004
+   # Set VITE_API_URL=http://localhost:3005
    ```
 
 4. **Database setup**
@@ -115,21 +115,25 @@ WorkLog AI is a full-stack SaaS application designed for professionals who want 
 
 5. **Start development servers**
    ```bash
-   # Terminal 1 - Backend (port 3004)
+   # Option 1: Use startup script
+   ./start-careerlog.sh
+   
+   # Option 2: Manual startup
+   # Terminal 1 - Backend (port 3005)
    cd backend && npm run dev
    
-   # Terminal 2 - Frontend (port 5173)  
+   # Terminal 2 - Frontend (port 5174)  
    cd frontend && npm run dev
    ```
 
 6. **Open application**
-   - Visit `http://localhost:5173`
+   - Visit `http://localhost:5174`
    - Login with Google or LinkedIn OAuth
 
 ## 📂 Project Structure
 
 ```
-worklog-ai/
+careerlog-ai/
 ├── frontend/                 # React + Vite frontend
 │   ├── src/
 │   │   ├── components/      # Reusable UI components
@@ -172,7 +176,7 @@ npm run preview     # Preview production build
 - **Backend**: Deployed on Render.com
 - **Frontend**: Static hosting (Render/Vercel/Netlify)
 - **Database**: Supabase PostgreSQL
-- **Domain**: `worklog.ajkaysolutions.com`
+- **Domain**: `careerlog.ai` (planned)
 
 ### **Environment Variables**
 See `.env.example` files for required configuration.
