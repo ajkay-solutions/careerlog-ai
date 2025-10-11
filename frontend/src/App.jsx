@@ -3,7 +3,8 @@ import { Routes, Route, useNavigate, useLocation, useSearchParams } from 'react-
 import { authService } from './services/auth';
 import Navigation from './components/Navigation';
 import DateNavigation from './components/DateNavigation';
-import EntryList from './components/EntryList';
+import EntryListEnhanced from './components/EntryListEnhanced';
+import MobileEntrySheet from './components/MobileEntrySheet';
 import JournalEntry from './components/JournalEntry';
 import InsightsDashboard from './components/InsightsDashboard';
 import GenerateView from './pages/GenerateView';
@@ -130,19 +131,28 @@ function JournalView({ user, onLogout }) {
           />
 
           {/* Main Content */}
-          <div className="flex-1 flex">
-            {/* Entry List Sidebar */}
-            <EntryList
+          <div className="flex-1 flex relative">
+            {/* Entry List Sidebar - Desktop */}
+            <EntryListEnhanced
               selectedDate={selectedDate}
               onDateSelect={handleDateSelect}
               refreshTrigger={refreshTrigger}
             />
 
             {/* Journal Entry Editor */}
-            <JournalEntry
-              selectedDate={selectedDate}
-              onEntryChange={handleEntryChange}
-            />
+            <div className="flex-1 flex flex-col">
+              <JournalEntry
+                selectedDate={selectedDate}
+                onEntryChange={handleEntryChange}
+              />
+              
+              {/* Mobile Entry Sheet */}
+              <MobileEntrySheet
+                selectedDate={selectedDate}
+                onDateSelect={handleDateSelect}
+                refreshTrigger={refreshTrigger}
+              />
+            </div>
           </div>
         </>
       )}

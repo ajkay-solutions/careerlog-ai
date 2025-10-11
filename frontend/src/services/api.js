@@ -1,5 +1,5 @@
 // API service for WorkLog AI
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3004';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3005';
 
 class ApiError extends Error {
   constructor(message, status, data) {
@@ -291,6 +291,11 @@ class ApiService {
   async toggleEntryHighlight(date) {
     const formattedDate = this.formatDateForAPI(date);
     return this.patch(`/api/entries/${formattedDate}/highlight`);
+  }
+
+  async toggleEntryPin(date) {
+    const formattedDate = this.formatDateForAPI(date);
+    return this.patch(`/api/entries/${formattedDate}/pin`);
   }
 
   // Auth methods

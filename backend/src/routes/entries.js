@@ -395,4 +395,56 @@ router.patch('/:date/highlight', requireAuth, async (req, res) => {
   }
 });
 
+// PATCH /api/entries/:date/pin - Toggle pin status
+router.patch('/:date/pin', requireAuth, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const targetDate = formatDate(req.params.date);
+
+    // Get current entry to toggle pin
+    const currentEntry = await dbService.executeOperation(async (prismaClient) => {
+      return await prismaClient.entry.findUnique({
+        where: {
+          userId_date: {
+            userId,
+            date: targetDate
+          }
+        }
+      });
+    }, `find entry for pin toggle user ${userId}`);
+
+    if (!currentEntry) {
+      return res.status(404).json({
+        success: false,
+        error: 'Entry not found'
+      });
+    }
+
+    // Update entry and invalidate relevant caches
+    const entry = await cachedDbService.updateAndInvalidateCache('entry', {
+      where: {
+        userId_date: {
+          userId,
+          date: targetDate
+        }
+      },
+      data: {
+        isPinned: !currentEntry.isPinned
+      }
+    }, ['entries', 'dashboard']);
+
+    res.json({
+      success: true,
+      data: entry,
+      message: `Entry ${entry.isPinned ? 'pinned' : 'unpinned'} successfully`
+    });
+  } catch (error) {
+    console.error('Toggle pin error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to toggle pin'
+    });
+  }
+});
+
 module.exports = router;

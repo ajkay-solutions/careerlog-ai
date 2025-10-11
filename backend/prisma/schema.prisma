@@ -40,6 +40,7 @@ model Entry {
   skillIds      String[] @default([])
   competencyIds String[] @default([])
   isHighlight   Boolean  @default(false)
+  isPinned      Boolean  @default(false)
   sentiment     String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @default(now())
@@ -50,6 +51,7 @@ model Entry {
   @@index([userId, createdAt])
   @@index([userId, date])
   @@index([userId, isHighlight])
+  @@index([userId, isPinned])
   @@index([userId, sentiment])
   @@index([userId, wordCount])
 }
