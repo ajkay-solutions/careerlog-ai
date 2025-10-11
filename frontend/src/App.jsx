@@ -7,9 +7,10 @@ import EntryList from './components/EntryList';
 import JournalEntry from './components/JournalEntry';
 import InsightsDashboard from './components/InsightsDashboard';
 import GenerateView from './pages/GenerateView';
+import { LandingPage } from './pages/LandingPage';
 
-// Landing page component
-function LandingPage({ onLogin }) {
+// Simple landing page component for auth flows
+function SimpleLandingPage({ onLogin }) {
   const [isLoading, setIsLoading] = useState(false);
   const [loadingProvider, setLoadingProvider] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,7 +35,7 @@ function LandingPage({ onLogin }) {
     <div className="h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full mx-4">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">WorkLog AI</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">CareerLog AI</h1>
           <p className="text-gray-600">Never miss a career win</p>
           
           {showMigrationMessage && (
@@ -164,7 +165,7 @@ function LoadingScreen({ isProcessingAuth = false }) {
       <div className="text-center">
         <div className="animate-spin w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
         <p className="text-gray-600">
-          {isProcessingAuth ? 'Completing authentication...' : 'Loading WorkLog AI...'}
+          {isProcessingAuth ? 'Completing authentication...' : 'Loading CareerLog AI...'}
         </p>
       </div>
     </div>
@@ -300,7 +301,7 @@ function App() {
     if (import.meta.env.MODE === 'development') {
       console.log('🖱️ Login button clicked for provider:', provider);
     }
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3004';
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3005';
     const redirectUrl = `${apiUrl}/auth/${provider}`;
     
     // Add a small delay to ensure UI updates are visible
@@ -341,7 +342,7 @@ function App() {
           user ? (
             <JournalView user={user} onLogout={handleLogout} />
           ) : (
-            <LandingPage onLogin={handleLogin} />
+            <LandingPage />
           )
         } 
       />
@@ -353,7 +354,7 @@ function App() {
           user ? (
             <JournalView user={user} onLogout={handleLogout} />
           ) : (
-            <LandingPage onLogin={handleLogin} />
+            <SimpleLandingPage onLogin={handleLogin} />
           )
         } 
       />
@@ -373,7 +374,7 @@ function App() {
               <InsightsDashboard />
             </div>
           ) : (
-            <LandingPage onLogin={handleLogin} />
+            <SimpleLandingPage onLogin={handleLogin} />
           )
         } 
       />
@@ -393,7 +394,7 @@ function App() {
               <GenerateView />
             </div>
           ) : (
-            <LandingPage onLogin={handleLogin} />
+            <SimpleLandingPage onLogin={handleLogin} />
           )
         } 
       />
